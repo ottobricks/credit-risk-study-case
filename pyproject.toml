@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "credit-score"
+version = "0.1.0"
+description = ""
+authors = ["Otto von Sperling <otto@vonsperling.com.br>"]
+readme = "README.md"
+packages = [{include = "credit_score"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyspark = "3.3.1"
+pylint = "^2.17.2"
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
+black = "^23.3.0"
+jupyter-book = "0.15.1"
+
+[tool.pylint.FORMAT]
+max-line-length = 120
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
