@@ -3,7 +3,8 @@
 
 title: Credit Risk - Study Case
 author: Otto von Sperling
-logo: assets/logo.png
+copyright: "2023"
+logo: assets/maxab-logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
@@ -21,12 +22,12 @@ bibtex_bibfiles:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/ottok92/credit-risk-study-case  # Online location of your book
-  path_to_book: credit-risk  # Optional path to your book, relative to the repository root
-  branch: main  # Which branch of the repository should be used when creating links (optional)
+  url: https://github.com/ottok92/credit-risk-study-case # Online location of your book
+  path_to_book: credit-risk # Optional path to your book, relative to the repository root
+  branch: main # Which branch of the repository should be used when creating links (optional)
 
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
-  use_issues_button: true
+  use_issues_button: false
   use_repository_button: true
