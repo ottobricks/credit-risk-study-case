@@ -4,12 +4,13 @@
 title: Credit Risk - Study Case
 author: Otto von Sperling
 copyright: "2023"
-logo: assets/maxab-logo.png
+logo: maxab-logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
   execute_notebooks: force
+  stderr_output: remove
 
 # Define the name of the latex output file for PDF builds
 latex:
