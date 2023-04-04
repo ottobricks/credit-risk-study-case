@@ -4,6 +4,14 @@
 format: jb-book
 root: intro
 parts:
+  - caption: Data and Methodology
+    numbered: True
+    maxdepth: 3
+    chapters:
+      - file: discovery/remarks-about-data.md
+      - file: discovery/data-profile-reports.md
+      - file: discovery/hypothesis.md
+      - file: discovery/methodology.md
   - caption: Exploratory Data Analysis
     numbered: True
     maxdepth: 2
