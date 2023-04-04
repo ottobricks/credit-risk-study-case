@@ -1,3 +1,4 @@
+.vscode/
 data/
 credit-risk/_build/
 *.ipynb
