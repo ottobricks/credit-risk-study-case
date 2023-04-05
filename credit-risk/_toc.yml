@@ -10,6 +10,10 @@ parts:
     chapters:
       - file: discovery/initial-data-discovery.md
       - file: discovery/data-profile-reports.md
+        sections:
+          - file: discovery/data-profile-reports/loans-profile.md
+          - file: discovery/data-profile-reports/fintech-profile.md
+          - file: discovery/data-profile-reports/ecommerce-profile.md
       - file: discovery/hypothesis.md
       - file: discovery/methodology.md
   - caption: Exploratory Data Analysis
