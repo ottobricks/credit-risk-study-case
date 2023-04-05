@@ -92,7 +92,9 @@ pd.read_csv(
 ).iloc[0].sort_index()
 ```
 
-From the column definitions in Loans data, we know `MAIN_SYSTEM_ID` represents the retailer's identity between Fintech and Ecommerce. We also know that Loans data contains `RETAILER_ID` specific to fintech, thus we can infer that it's the same as `ID` in Fintech Data. Let's organize this information in a table:
+From the column definitions in Loans data, we know `MAIN_SYSTEM_ID` represents the retailer's identity between Fintech and Ecommerce. We also know that Loans data contains `RETAILER_ID` specific to fintech, thus we can infer that it's the same as `ID` in Fintech data.
+
+Furthermore, we can already predict that there is strong correlation between
 
 ```{dropdown} Column Description
 
@@ -149,8 +151,7 @@ This dataset is simpler in nature if compared with the other 2, and as expected 
 
 +++
 
----
-**MISC**
+## MISC
 
 +++
 
