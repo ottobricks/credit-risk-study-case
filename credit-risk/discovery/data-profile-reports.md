@@ -1,8 +1,35 @@
+---
+jupytext:
+  cell_metadata_filter: -all
+  formats: ipynb,md:myst
+  main_language: python
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.14.5
+kernelspec:
+  display_name: credit-risk
+  language: python
+  name: python3
+---
+
 # Data Profile Reports
 
-```{tableofcontents}
-```
+In the next 3 sections, I present a full profiler report on the 3 datasets. These reports are generated using Python package [ydata-profiling](https://ydata-profiling.ydata.ai/docs/master/index.html) and aim to provide an overview on the distribution of data in each column, aside from useful statistics, correlation analysis, among other things.
 
+## Low-signal Columns
+These are columns that bring little-to-no information, thus can interfere with ML model training. I'll remove the following columns from any further step:
+  - Loans data
+    - `INITIAL_COST`: constant value (zero)
+    - `FINAL_COST`: constant value (zero)
+    - `INDEX`: another identifier field
+    - `LOAN_ID`: another identifier field
+    - `REPAYMENT_ID`: another identifier field
+
++++
+
+```
 Here is the code to generate each report:
 
 ``````{div} full-width
