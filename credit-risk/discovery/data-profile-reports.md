@@ -29,8 +29,14 @@ These are columns that bring little-to-no information, thus can interfere with M
 
 +++
 
+The sections above were drawn from the following data profile reports:
+
+```{tableofcontents}
 ```
-Here is the code to generate each report:
+
++++
+
+Code to generate each report:
 
 ``````{div} full-width
 
