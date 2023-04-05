@@ -32,7 +32,7 @@ profile = "black"
 multi_line_output = 3
 
 [tool.jupytext]
-formats = "ipynb,py:percent"
+formats = "ipynb,myst"
 
 [build-system]
 requires = ["poetry-core"]
