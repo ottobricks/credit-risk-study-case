@@ -1,0 +1,39 @@
+| Column name             | Description                                                                                                                                                           |
+|:------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| INDEX                   | Negligible number                                                                                                                                                     |
+| MAIN_SYSTEM_ID          | The retailer has two id's on the system:                                                                                                                              |
+|                         | -Main system id: the retailer's common id between e-commerce and fintech                                                                                              |
+|                         | -Retailer id: the retailer's id on the fintech system only                                                                                                            |
+| RETAILER_ID             | Check cell above                                                                                                                                                      |
+| LOAN_ID                 | id of the Loan                                                                                                                                                        |
+| LOAN_ISSUANCE_DATE      | the datetime when the loan was requested                                                                                                                              |
+| LOAN_AMOUNT             | the pricipal amount the retailer requested in credit                                                                                                                  |
+|                         | (value only shows intention, but amount is considered lent once the retailer uses money for transaction)                                                              |
+| INITIAL_COST            | the interest rate (from retailer's credit profile) * loan amount                                                                                                      |
+|                         | (value is also non-binding; is recalculated on consumed credit amounts)                                                                                               |
+| TOTAL_INITIAL_AMOUNT    | initial principal + initial cost                                                                                                                                      |
+| INITIAL_DATE            | Due date of the loan                                                                                                                                                  |
+| LOAN_PAYMENT_DATE       | The finalization date of the loan's first collection order                                                                                                            |
+|                         | (could be different than the initial date for one of two reasons:                                                                                                     |
+|                         | -retailer was visited and requested a delay                                                                                                                           |
+|                         | -the operations team was not able to fulfill the order on the correct date                                                                                            |
+|                         | )                                                                                                                                                                     |
+| PAYMENT_AMOUNT          | The paid amount during the loans's first collection order                                                                                                             |
+| FIRST_TRAIL_DELAYS      | The number of delays received on the first collection order                                                                                                           |
+| SPENT                   | The consumed amount of the loan = total value of transactions fulfilled from the initial credit amount                                                                |
+| FIRST_TRIAL_BALANCE     | The retailer's balance after the payment amount was logged in the wallet.                                                                                             |
+|                         | -If the first trial balance is negative, it means the payment amount did not cover the spent credit amount and the negative amount is now overdue                     |
+|                         | -If the first trial balance >= 0 then it means the payment amount covered the spent credit amount and no amounts are due for the said loan following the payment date |
+| FINAL_COST              | the interest rate (from retailer's credit profile) * spent amount                                                                                                     |
+| TOTAL_FINAL_AMOUNT      | spent amount + final cost (the minimum amount required to collect from the retailer to fulfill due amounts)                                                           |
+| REPAYMENT_ID            | the id of the last cash-in used to repay the loan                                                                                                                     |
+|                         | -if first trial balance >= 0, then it will equal the loan_id                                                                                                          |
+|                         | -if first trial balance < 0 and there were no attempts to recollect yet,  then it will equal the loan_id                                                              |
+|                         | (incorrect design, loan_id does not have a functional purpose in this column)                                                                                         |
+| REPAYMENT_AMOUNT        | amount paid during last collection order used to repay the loan                                                                                                       |
+|                         | -if first trial balance >=0, then = 0 (because loan was already paid)                                                                                                 |
+| REPAYMENT_UPDATED       | the date of the last collection trial                                                                                                                                 |
+| CUMMULATIVE_OUTSTANDING | It's the cummulation of the retailer's balance from the due date until the date it is paid                                                                            |
+|                         | -If it is positive, it means no amounts are unpaid on the said loan level                                                                                             |
+|                         | -If it is negative, it means the retailer's balance is still negative, and there are overdue amounts on the said loan level                                           |
+| PAYMENT_STATUS          | the status of the loan and it can take 3 values paid - unpaid - partialy paid                                                                                         |
