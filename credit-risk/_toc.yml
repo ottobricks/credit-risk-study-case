@@ -28,7 +28,7 @@ parts:
     numbered: True
     maxdepth: 2
     chapters:
-      - file: feature-engineering/markdown-notebooks.md
+      - file: feature-engineering/featuretools.md
   - caption: Model Experiments
     numbered: True
     maxdepth: 2
