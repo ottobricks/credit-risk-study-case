@@ -14,22 +14,21 @@ parts:
           - file: discovery/data-profile-reports/loans-profile.md
           - file: discovery/data-profile-reports/fintech-profile.md
           - file: discovery/data-profile-reports/ecommerce-profile.md
+      - file: discovery/product-understanding.md
       - file: discovery/hypothesis.md
       - file: discovery/methodology.md
   - caption: Exploratory Data Analysis
     numbered: True
     maxdepth: 2
     chapters:
-      - file: exploratory-analysis/anecdotes.ipynb
-      - file: exploratory-analysis/sample-analysis.ipynb
-      - file: exploratory-analysis/results.ipynb
+      - file: exploratory-analysis/anecdotes.md
+      - file: exploratory-analysis/sample-analysis.md
+      - file: exploratory-analysis/results.md
   - caption: Feature Engineering
     numbered: True
     maxdepth: 2
     chapters:
-      - file: feature-engineering/notebooks.ipynb
-      - file: feature-engineering/markdown.ipynb
-      - file: feature-engineering/markdown-notebooks.ipynb
+      - file: feature-engineering/markdown-notebooks.md
   - caption: Model Experiments
     numbered: True
     maxdepth: 2
@@ -42,5 +41,6 @@ parts:
     maxdepth: 2
     chapters:
       - file: decision-api/overview.md
-        sections:
-          - file: decision-api/section1.md
+      - file: decision-api/okrs.md
+      - file: decision-api/tiered-risk-model.md
+      - file: decision-api/user-story.md
