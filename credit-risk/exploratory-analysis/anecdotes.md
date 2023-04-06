@@ -19,13 +19,8 @@ kernelspec:
 
 +++
 
-## Retailers who misse the first collection attempt
+## Retailers who missed the first collection attempt
 In the Loans dataset, there are a few cases when a retailer is not able to pay back the money they borrowed in the first collection attempt. That does not necessarily mean they will default on their payment, perhaps it's just a delay. Let's take a look at the retailer with the most delayed-but-paid loans:
-
-```{code-cell} ipython3
-loans_df
-# 
-```
 
 ```{code-cell} ipython3
 import pandas as pd
