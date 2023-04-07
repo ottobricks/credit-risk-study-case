@@ -23,10 +23,10 @@ These are columns that bring little-to-no information, thus can interfere with M
   - Loans dataset
     - `INITIAL_COST`: constant value (zero), currently not charging retailers
     - `FINAL_COST`: constant value (zero), not currently charging retailers
-    - `FINAL_COST`: constant value (zero)
     - `INDEX`: another identifier field
     - `LOAN_ID`: another identifier field
     - `REPAYMENT_ID`: another identifier field
+    - `RETAILER_ID`: another identifier field
   - Ecommerce dataset
     - `ORDER_ID`: another identifier field
 
