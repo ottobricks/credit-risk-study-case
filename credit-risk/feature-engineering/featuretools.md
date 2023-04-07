@@ -6,23 +6,18 @@ import argparse
 from typing import List, Tuple
 import itertools
 import pandas as pd
+import numpy as np
 import featuretools as ft
-from featuretools.primitives import (
-    AggregationPrimitive,
-    TransformPrimitive
-)
+from featuretools.primitives import AggregationPrimitive, TransformPrimitive
 from featuretools_tsfresh_primitives import (
     comprehensive_fc_parameters,
-    primitives_from_fc_settings
+    primitives_from_fc_settings,
 )
 from featuretools_tsfresh_primitives import primitives as tsfresh_primitives
 from featuretools_tsfresh_primitives.primitives import *
 
 
-
 if __name__ == "__main__":
-
-
     parser = argparse.ArgumentParser(description="Parse CLI args")
     parser.add_argument(
         "--retailerid",
@@ -40,9 +35,9 @@ if __name__ == "__main__":
             [
                 # Low signal columns
                 "INITIAL_COST",
-                "FINAL_COST",
                 "INDEX",
                 "REPAYMENT_ID",
+                "FINAL_COST",
                 "RETAILER_ID",
                 # Columns populated after the fact, thus would lead to data leak
                 "REPAYMENT_UPDATED",
@@ -55,12 +50,63 @@ if __name__ == "__main__":
                 "REPAYMENT_AMOUNT",
                 "CUMMULATIVE_OUTSTANDING",
             ],
-            axis=1
+            axis=1,
         )
         .query(f"MAIN_SYSTEM_ID == {selected_main_system_id}")
+        .assign(
+            MAIN_SYSTEM_ID=lambda x: x["MAIN_SYSTEM_ID"].astype("int64"),
+            LOAN_ID=lambda x: x["LOAN_ID"].astype("int64"),
+            LOAN_ISSUANCE_DATE=lambda x: x["LOAN_ISSUANCE_DATE"].astype("<M8[ns]"),
+            LOAN_AMOUNT=lambda x: x["LOAN_AMOUNT"].astype("float64"),
+            TOTAL_INITIAL_AMOUNT=lambda x: x["TOTAL_INITIAL_AMOUNT"].astype("float64"),
+            INITIAL_DATE=lambda x: x["INITIAL_DATE"].astype("<M8[ns]"),
+            PAYMENT_STATUS=lambda x: x["PAYMENT_STATUS"].astype("O"),
+        )
     )
-    fintech_df = pd.read_csv("data/Retailer_Transactions_Data.csv", header=0).query(f"MAIN_SYSTEM_ID == {selected_main_system_id}")
-    ecommerce_df = pd.read_csv("data/Ecommerce_orders_Data.csv", header=0).query(f"MAIN_SYSTEM_ID == {selected_main_system_id}")
+    fintech_df = (
+        pd.read_csv(
+            "data/Retailer_Transactions_Data.csv",
+            header=0,
+            dtype={
+                "ID": np.dtype("int64"),
+                "CREATED_AT": np.dtype("O"),
+                "UPDATED_AT": np.dtype("O"),
+                "AMOUNT": np.dtype("float64"),
+                "FEES": np.dtype("float64"),
+                "RETAILER_CUT": np.dtype("float64"),
+                "STATUS": np.dtype("O"),
+                "TOTAL_AMOUNT_INCLUDING_TAX": np.dtype("float64"),
+                "TOTAL_AMOUNT_PAID": np.dtype("float64"),
+                "WALLET_BALANCE_BEFORE_TRANSACTION": np.dtype("float64"),
+                "MAIN_SYSTEM_ID": np.dtype("int64"),
+            },
+        )
+        .query(f"MAIN_SYSTEM_ID == {selected_main_system_id}")
+        .assign(
+            CREATED_AT=lambda x: pd.to_datetime(x["CREATED_AT"], infer_datetime_format=True),
+            UPDATED_AT=lambda x: pd.to_datetime(x["UPDATED_AT"], infer_datetime_format=True),
+        )
+    )
+
+    ecommerce_df = (
+        pd.read_csv(
+            "data/Ecommerce_orders_Data.csv",
+            header=0,
+            dtype={
+                "ORDER_ID": np.dtype("int64"),
+                "MAIN_SYSTEM_ID": np.dtype("int64"),
+                "ORDER_PRICE": np.dtype("float64"),
+                "DISCOUNT": np.dtype("float64"),
+                "ORDER_PRICE_AFTER_DISCOUNT": np.dtype("float64"),
+                "ORDER_CREATION_DATE": np.dtype("O"),
+            },
+        )
+        .query(f"MAIN_SYSTEM_ID == {selected_main_system_id}")
+        .assign(
+            ORDER_CREATION_DATE=lambda x: pd.to_datetime(x["ORDER_CREATION_DATE"], infer_datetime_format=True),
+        )
+    )
+
     target_df = loans_df.pop("PAYMENT_STATUS")
     retailer_df = (
         pd.concat(
@@ -71,8 +117,7 @@ if __name__ == "__main__":
             ]
         )
         .drop_duplicates()
-        .reset_index()
-        [["MAIN_SYSTEM_ID"]]
+        .reset_index()[["MAIN_SYSTEM_ID"]]
     )
 
     # Create an entity set and add the retailers entity
@@ -109,12 +154,7 @@ if __name__ == "__main__":
         dataframe=fintech_df,
         index="ID",
         time_index="CREATED_AT",
-        secondary_time_index={
-            "UPDATED_AT": [
-                "STATUS",
-                "TOTAL_AMOUNT_PAID"
-            ]
-        }
+        secondary_time_index={"UPDATED_AT": ["STATUS", "TOTAL_AMOUNT_PAID"]},
     )
 
     # Add the purchases entity
@@ -131,7 +171,7 @@ if __name__ == "__main__":
         parent_dataframe_name="retailers",
         parent_column_name="MAIN_SYSTEM_ID",
         child_dataframe_name="sales",
-        child_column_name="MAIN_SYSTEM_ID"
+        child_column_name="MAIN_SYSTEM_ID",
     )
 
     rel_retailer_purchases = ft.Relationship(
@@ -139,7 +179,7 @@ if __name__ == "__main__":
         parent_dataframe_name="retailers",
         parent_column_name="MAIN_SYSTEM_ID",
         child_dataframe_name="purchases",
-        child_column_name="MAIN_SYSTEM_ID"
+        child_column_name="MAIN_SYSTEM_ID",
     )
 
     rel_retailer_loans = ft.Relationship(
@@ -147,7 +187,7 @@ if __name__ == "__main__":
         parent_dataframe_name="retailers",
         parent_column_name="MAIN_SYSTEM_ID",
         child_dataframe_name="loans",
-        child_column_name="MAIN_SYSTEM_ID"
+        child_column_name="MAIN_SYSTEM_ID",
     )
 
     # Add the relationships to the entity set
@@ -156,15 +196,15 @@ if __name__ == "__main__":
     )
 
     # Create list of Featuretools primitives
-    ft_valid_primitives_tuple = (
-        ft.get_valid_primitives(
-            entity_set,
-            target_dataframe_name="loans",
-            max_depth=2
-        )
+    ft_valid_primitives_tuple = ft.get_valid_primitives(
+        entity_set, target_dataframe_name="loans", max_depth=2
     )
-    FT_AGG_PRIMITIVES: List[str] = list(map(lambda x: x().name, ft_valid_primitives_tuple[0]))
-    FT_TRANSFORM_PRIMITIVES: List[str] = list(map(lambda x: x().name, ft_valid_primitives_tuple[1]))
+    FT_AGG_PRIMITIVES: List[str] = list(
+        map(lambda x: x().name, ft_valid_primitives_tuple[0])
+    )
+    FT_TRANSFORM_PRIMITIVES: List[str] = list(
+        map(lambda x: x().name, ft_valid_primitives_tuple[1])
+    )
 
     # Remove buggy primitive 'expanding_count'
     try:
@@ -181,18 +221,24 @@ if __name__ == "__main__":
             *[
                 primitives_from_fc_settings(
                     {
-                        getattr(tsfresh_primitives, key).name: TSFRESH_PARAMETERS[getattr(tsfresh_primitives, key).name] or [{}]
+                        getattr(tsfresh_primitives, key).name: TSFRESH_PARAMETERS[
+                            getattr(tsfresh_primitives, key).name
+                        ]
+                        or [{}]
                     }
                 )
                 for key in dir(tsfresh_primitives)
                 if key[0].isupper()
-                    and key != "SUPPORTED_PRIMITIVES"
-                    and isinstance(
-                        getattr(tsfresh_primitives, key)(
-                            **(TSFRESH_PARAMETERS[getattr(tsfresh_primitives, key).name] or [{}])[0]
-                        ),
-                        AggregationPrimitive
-                    )
+                and key != "SUPPORTED_PRIMITIVES"
+                and isinstance(
+                    getattr(tsfresh_primitives, key)(
+                        **(
+                            TSFRESH_PARAMETERS[getattr(tsfresh_primitives, key).name]
+                            or [{}]
+                        )[0]
+                    ),
+                    AggregationPrimitive,
+                )
             ]
         )
     )
@@ -203,18 +249,24 @@ if __name__ == "__main__":
             *[
                 primitives_from_fc_settings(
                     {
-                        getattr(tsfresh_primitives, key).name: TSFRESH_PARAMETERS[getattr(tsfresh_primitives, key).name] or [{}]
+                        getattr(tsfresh_primitives, key).name: TSFRESH_PARAMETERS[
+                            getattr(tsfresh_primitives, key).name
+                        ]
+                        or [{}]
                     }
                 )
                 for key in dir(tsfresh_primitives)
                 if key[0].isupper()
-                    and key != "SUPPORTED_PRIMITIVES"
-                    and isinstance(
-                        getattr(tsfresh_primitives, key)(
-                            **(TSFRESH_PARAMETERS[getattr(tsfresh_primitives, key).name] or [{}])[0]
-                        ),
-                        TransformPrimitive
-                    )
+                and key != "SUPPORTED_PRIMITIVES"
+                and isinstance(
+                    getattr(tsfresh_primitives, key)(
+                        **(
+                            TSFRESH_PARAMETERS[getattr(tsfresh_primitives, key).name]
+                            or [{}]
+                        )[0]
+                    ),
+                    TransformPrimitive,
+                )
             ]
         )
     )
@@ -244,22 +296,26 @@ if __name__ == "__main__":
     feature_defs = list(set(ft_feature_defs).union(set(tsf_feature_defs)))
 
     # Clean up the feature frame a bit
-    feature_matrix, feature_defs = ft.selection.remove_highly_null_features(featureframe, pct_null_threshold=.25, features=feature_defs)
-    feature_matrix, feature_defs = ft.selection.remove_low_information_features(featureframe, features=feature_defs)
-    feature_matrix, feature_defs = ft.selection.remove_single_value_features(featureframe, features=feature_defs)
-    feature_matrix, feature_defs = ft.selection.remove_single_value_features(featureframe, features=feature_defs)
-    feature_matrix, feature_defs = ft.selection.remove_highly_correlated_features(
-        featureframe,
-        pct_corr_threshold=0.8,
-        features=feature_defs
+    feature_matrix, feature_defs = ft.selection.remove_highly_null_features(
+        featureframe, pct_null_threshold=0.25, features=feature_defs
     )
-
+    feature_matrix, feature_defs = ft.selection.remove_low_information_features(
+        featureframe, features=feature_defs
+    )
+    feature_matrix, feature_defs = ft.selection.remove_single_value_features(
+        featureframe, features=feature_defs
+    )
+    feature_matrix, feature_defs = ft.selection.remove_single_value_features(
+        featureframe, features=feature_defs
+    )
+    feature_matrix, feature_defs = ft.selection.remove_highly_correlated_features(
+        featureframe, pct_corr_threshold=0.8, features=feature_defs
+    )
 
     feature_matrix.to_parquet(
         f"/home/sagemaker-user/otto/.cred/featureframe.parquet/MAIN_SYSTEM_ID={selected_main_system_id}/",
-        engine="pyarrow"
+        engine="pyarrow",
     )
-
 
 ```
 ````
