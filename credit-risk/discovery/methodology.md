@@ -1,1 +1,19 @@
 # Methodology
+
+
+## Avoiding Data Leak
+DEFINE DATA LEAK
+
+These columns will be removed from feature engineering:
+ - REPAYMENT_ID
+ - FINAL_COST
+ - REPAYMENT_UPDATED
+ - SPENT
+ - TOTAL_FINAL_AMOUNT
+ - FIRST_TRIAL_BALANCE
+ - FIRST_TRAIL_DELAYS
+ - PAYMENT_AMOUNT
+ - LOAN_PAYMENT_DATE
+ - REPAYMENT_AMOUNT
+ - CUMMULATIVE_OUTSTANDING
+ 
