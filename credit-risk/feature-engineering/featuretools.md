@@ -27,6 +27,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     selected_main_system_id = args.retailerid
+    print(f"Start DFS run for MAIN_SYSTEM_ID == {selected_main_system_id}")
 
     # Load datasets
     loans_df = (
@@ -122,48 +123,49 @@ if __name__ == "__main__":
 
     # Create an entity set and add the retailers entity
     entity_set = ft.EntitySet(id="maxab_entity_set")
-    entity_set = entity_set.add_dataframe(
-        dataframe_name="retailers",
-        dataframe=retailer_df,
-        index="MAIN_SYSTEM_ID",
-    )
+    
+    try:
+        entity_set = entity_set.add_dataframe(
+            dataframe_name="retailers",
+            dataframe=retailer_df,
+            index="MAIN_SYSTEM_ID",
+        )
+    except Exception as excpt:
+        raise Exception(f"DFS failed for MAIN_SYSTEM_ID == {selected_main_system_id}") from excpt
 
     # Add the loans entity
-    entity_set = entity_set.add_dataframe(
-        dataframe_name="loans",
-        dataframe=loans_df,
-        index="LOAN_ID",
-        time_index="LOAN_ISSUANCE_DATE",
-        # secondary_time_index={
-        #     "REPAYMENT_UPDATED": [
-        #         "SPENT",
-        #         "TOTAL_FINAL_AMOUNT",
-        #         "FIRST_TRIAL_BALANCE",
-        #         "FIRST_TRAIL_DELAYS",
-        #         "PAYMENT_AMOUNT",
-        #         "LOAN_PAYMENT_DATE",
-        #         "REPAYMENT_AMOUNT",
-        #         "CUMMULATIVE_OUTSTANDING",
-        #     ]
-        # }
-    )
+    try:
+        entity_set = entity_set.add_dataframe(
+            dataframe_name="loans",
+            dataframe=loans_df,
+            index="LOAN_ID",
+            time_index="LOAN_ISSUANCE_DATE",
+        )
+    except Exception as excpt:
+        raise Exception(f"DFS failed for MAIN_SYSTEM_ID == {selected_main_system_id}") from excpt
 
     # Add the sales entity
-    entity_set = entity_set.add_dataframe(
-        dataframe_name="sales",
-        dataframe=fintech_df,
-        index="ID",
-        time_index="CREATED_AT",
-        secondary_time_index={"UPDATED_AT": ["STATUS", "TOTAL_AMOUNT_PAID"]},
-    )
+    try:
+        entity_set = entity_set.add_dataframe(
+            dataframe_name="sales",
+            dataframe=fintech_df,
+            index="ID",
+            time_index="CREATED_AT",
+            secondary_time_index={"UPDATED_AT": ["STATUS", "TOTAL_AMOUNT_PAID"]},
+        )
+    except Exception as excpt:
+        raise Exception(f"DFS failed for MAIN_SYSTEM_ID == {selected_main_system_id}") from excpt
 
     # Add the purchases entity
-    entity_set = entity_set.add_dataframe(
-        dataframe_name="purchases",
-        dataframe=ecommerce_df,
-        index="ORDER_ID",
-        time_index="ORDER_CREATION_DATE",
-    )
+    try:
+        entity_set = entity_set.add_dataframe(
+            dataframe_name="purchases",
+            dataframe=ecommerce_df,
+            index="ORDER_ID",
+            time_index="ORDER_CREATION_DATE",
+        )
+    except Exception as excpt:
+        raise Exception(f"DFS failed for MAIN_SYSTEM_ID == {selected_main_system_id}") from excpt
 
     # Define relationships between the entities
     rel_retailer_sales = ft.Relationship(
