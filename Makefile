@@ -23,7 +23,7 @@ lint:
 .PHONY: publish
 publish:
 	mkdir -p docs/
-	cp -r credit-risk/_build/html/* docs/
+	cp -r credit-risk/_build/* docs/
 	git add docs/ \
 	&& git commit -m "Publish updates" \
 	&& git push
