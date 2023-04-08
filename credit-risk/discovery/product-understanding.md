@@ -19,10 +19,10 @@ kernelspec:
 ## Amount requested vs amount spent
 We evaluate retailers request for a given amount, but allow them to spend only a fraction of it. This means there are 2 related but distinct behaviors to capture: the rationale when requesting funds, and the actual need to spend them. **I predict that there is a considerable delta between the 2**: retailers overestimate their needs for funds but then quickly realize they won't need as much. Let's check if this prediction is valid by looking at how the delta is distributed.
 
-```{dropdown} Personal remark
-I must be honest, this is a part of the current product that puzzles me a little. We are putting ourselves in the position of not being able to accurately forecast our cash flow. The amount allocated to a given retailer cannot be made available to others (otherwise our liquidity can suffer). With a pre-defined amount to calculate our interest, we are able to forecast our margins and liquidity, thus automatically adjust pricing -- we have less money to lend, it should be more expensive. Aside from encouraging behavior that can become irresponsible over time, we are actively creating the opportunity for stale capital since our margin is based on what's spent, not what's borrowed. (is this understanding correct?)
+```{note} 
+This "request loan but only pay for what you spend" functionality is quite appealing and likely to be a big source of engagement with the product. The trade-off being that it's considerably harder to estimate our cash flow and liquidity. As the amount allocated to a given retailer cannot be made available to others (otherwise our liquidity can suffer), we run the risk of creating pools of stale capital that yields no margins.
 
-Of course, my understanding of the product is still limited so I am completely aware that I'm likely missing something in my perspective. I believe this to be a crucial product dynamic and would love to discuss it further.
+It's the growth versus profit conundrum. And I believe a good risk assessment and control engine must provide the ability to tweak its nobs to favor one or the other side. 
 ```
 
 ```{code-cell} ipython3
