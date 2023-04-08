@@ -74,8 +74,6 @@ The sections above were drawn from the following data profile reports:
 
 Code to generate each report:
 
-``````{div} full-width
-
 `````{tab-set}
 
 ````{tab-item} Retailer Loans
@@ -122,7 +120,7 @@ profile.to_file("credit-risk/discovery/data-profile-reports/ecommerce-profile.ht
 
 `````
 
-``````
+---
 
 ````{dropdown} Code for CUMMULATIVE_OUTSTANDING percentage match
 ```{code-block} python
