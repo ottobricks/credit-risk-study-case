@@ -25,7 +25,7 @@ publish:
 	rm -rf credit-risk/_build/
 	rm -rf docs/
 	jupyter-book build --execute credit-risk/
-	cp -r credit-risk/_build docs
+	cp -r credit-risk/_build/html docs
 	git add docs/ \
 	&& git commit -m "Publish updates" \
 	&& git push
