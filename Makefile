@@ -22,7 +22,10 @@ lint:
 
 .PHONY: publish
 publish:
+	rm -rf credit-risk/_build/
+	rm -rf docs/
 	mkdir -p docs/
+	jupyter-book build --execute credit-risk/
 	cp -r credit-risk/_build/* docs/
 	git add docs/ \
 	&& git commit -m "Publish updates" \
