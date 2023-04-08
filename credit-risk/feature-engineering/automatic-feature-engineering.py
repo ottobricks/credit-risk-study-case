@@ -1,5 +1,6 @@
 import argparse
 import joblib
+import os
 import re
 import subprocess
 from typing import List, Tuple
@@ -14,32 +15,6 @@ from featuretools_tsfresh_primitives import (
 )
 from featuretools_tsfresh_primitives import primitives as tsfresh_primitives
 from featuretools_tsfresh_primitives.primitives import *
-
-
-def _fetch_largest_dtype_for_numeric_feature(
-    feature_tup: Tuple[str, np.dtype], original_dtypes: dict
-) -> str:
-    """Function to guarantee schema consistency between MAIN_SYSTEM_ID chunks"""
-    feature, feature_dtype = feature_tup
-    try:
-        dtypes_matched: set = [
-            re.match(r"^[a-zA-Z]+", col_dtype.name).group(0)
-            for col_name, col_dtype in original_dtypes.items()
-            if col_name in feature
-        ]
-    except AttributeError as excpt:
-        raise ValueError(
-            f"Could not match DFS feature '{feature}' to any of the canonical columns: {original_dtypes.keys()}"
-        ) from excpt
-    else:
-        if "float" in dtypes_matched:
-            return "float"
-        elif "int" in dtypes_matched:
-            return "int"
-        elif "bool" in dtypes_matched:
-            return "int"
-        else:
-            return feature_dtype.name if feature_dtype.name != "bool" else "int8"
 
 
 if __name__ == "__main__":
@@ -378,44 +353,39 @@ if __name__ == "__main__":
         featureframe, pct_corr_threshold=0.95, features=feature_defs
     )
 
-    # Force largest dtype to guarantee Spark can merge schema in feature selection
-    original_dtypes_dict = (
-        pd.concat([loans_df.dtypes, fintech_df.dtypes, ecommerce_df.dtypes])
-        .reset_index()
-        .drop_duplicates()
-        .set_index("index")
-        .to_dict()[0]
+    # Re-add column MAIN_SYSTEM_ID
+    featureframe = (
+        featureframe.join(
+            loans_df[["LOAN_ID", "MAIN_SYSTEM_ID"]].drop_duplicates(),
+            on="LOAN_ID",
+            how="left"
+        )
     )
+    if not "LOAN_ID" in featureframe.columns:
+        featureframe = featureframe.reset_index(drop=False)
 
-    featureframe.astype(
+    # Force all numeric columns to float and boolean to int for schema consistency
+    # I will downcast them once Spark is able to merge schema of chunks
+    featureframe = featureframe.astype(
         {
-            col_name: _fetch_largest_dtype_for_numeric_feature(
-                (col_name, col_dtype), original_dtypes_dict
-            )
-            if not col_name in original_dtypes_dict.keys()
-            and col_name
-            in featureframe.select_dtypes(include=["number", "boolean"]).columns
-            else col_dtype
-            for col_name, col_dtype in featureframe.dtypes.to_dict().items()
+            **{
+                key: "float"
+                for key in featureframe.drop(
+                    ["LOAN_ID", "MAIN_SYSTEM_ID"],
+                    axis=1
+                ).select_dtypes(include=["number"])
+            },
+            **{key: "int" for key in featureframe.select_dtypes(include=["boolean"])},
         }
     )
 
-    # _ = subprocess.run(
-    #     [
-    #         "mkdir",
-    #         "-p",
-    #         f"data/featureframe-maxdepth{maxdepth}.parquet/"
-    #         + "MAIN_SYSTEM_ID={selected_main_system_id}",
-    #     ]
-    # )
-    featureframe.to_parquet(
-        f"data/featureframe-maxdepth{maxdepth}.parquet/MAIN_SYSTEM_ID={selected_main_system_id}/part.snappy.parquet",
-        # "s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/"
-        # + f"featureframe-maxdepth{maxdepth}.parquet/"
-        # + "MAIN_SYSTEM_ID={selected_main_system_id}/part.snappy.parquet",
-        engine="pyarrow",
-        compression="snappy",
-    )
+    # Write featureframe to storage
+    # dest_path = f"./data/featureframe-maxdepth{maxdepth}.parquet/MAIN_SYSTEM_ID={selected_main_system_id}/part.snappy.parquet"
+    dest_path = f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/featureframe-maxdepth{maxdepth}.csv/MAIN_SYSTEM_ID={selected_main_system_id}/part.csv.gz"
+    if not os.path.exists(dest_path):
+        _ = subprocess.run(["mkdir", "-p", dest_path.rsplit("/", 1)[-1]])
+
+    featureframe.to_parquet(dest_path, compression="snappy")
 
     _ = subprocess.run(
         f"mkdir -p data/featureframe.parquet/MAIN_SYSTEM_ID={selected_main_system_id}".split()
