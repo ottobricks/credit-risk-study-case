@@ -37,3 +37,17 @@ if __name__ == "__main__":
 
     model = booster.fit(train_df)
     model.transform(train_df).select("prediction", "probability").show(truncate=False)
+
+    binaryEval = BinaryClassificationEvaluator(labelCol="label")
+    binaryMetrics = BinaryClassificationMetrics(predictions.select("prediction", "label").rdd)
+    multiEval = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction")
+
+    aucpr = binaryMetrics.areaUnderPR
+    fbeta2 = multiEval.evaluate(predictions, {multiEval.metricName: "fMeasureByLabel", multiEval.beta: 2.0})
+    fbeta1 = multiEval.evaluate(predictions, {multiEval.metricName: "fMeasureByLabel", multiEval.beta: 1.0})
+    fbeta05 = multiEval.evaluate(predictions, {multiEval.metricName: "fMeasureByLabel", multiEval.beta: 0.5})
+
+    print("AUC-PR: %f" % aucpr)
+    print("F-beta(2): %f" % fbeta2)
+    print("F-beta(1): %f" % fbeta1)
+    print("F-beta(0.5): %f" % fbeta05)
