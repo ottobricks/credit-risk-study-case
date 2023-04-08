@@ -1,0 +1,1296 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>5. Exploring Anecdotal Cases &#8212; Credit Risk - Study Case</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'exploratory-analysis/anecdotes';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. Exploring Sample and Population" href="sample-analysis.html" />
+    <link rel="prev" title="4. Methodology" href="../discovery/methodology.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/maxab-logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/maxab-logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Credit Risk - Case Study
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../discovery/initial-data-discovery.html">1. Initial Data Discovery</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/data-profile-reports.html">2. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/product-understanding.html">3. Product Understanding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/methodology.html">4. Methodology</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Exploring Anecdotal Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sample-analysis.html">6. Exploring Sample and Population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">7. Exploration Results</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature Engineering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../feature-engineering/feature-engineering.html">8. Feature Engineering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/baseline-performance.html">9. Baseline Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Tuning Model Hyperparameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/tuned-model-performance.html">11. Performance Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Credit Risk Decision API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/overview.html">12. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/okrs.html">13. Objectives and Key Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/tiered-risk-model.html">14. Tiered Risk Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/user-story.html">15. User Story</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ottok92/credit-risk-study-case" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/exploratory-analysis/anecdotes.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Exploring Anecdotal Cases</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retailers-who-missed-the-first-collection-attempt">5.1. Retailers who missed the first collection attempt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#misc">5.2. MISC</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="exploring-anecdotal-cases">
+<h1><span class="section-number">5. </span>Exploring Anecdotal Cases<a class="headerlink" href="#exploring-anecdotal-cases" title="Permalink to this heading">#</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#retailers-who-missed-the-first-collection-attempt" id="id1">Retailers who missed the first collection attempt</a></p></li>
+<li><p><a class="reference internal" href="#misc" id="id2">MISC</a></p></li>
+</ul>
+</div>
+<section id="retailers-who-missed-the-first-collection-attempt">
+<h2><a class="toc-backref" href="#id1"><span class="section-number">5.1. </span>Retailers who missed the first collection attempt</a><a class="headerlink" href="#retailers-who-missed-the-first-collection-attempt" title="Permalink to this heading">#</a></h2>
+<p>In the Loans dataset, there are a few cases when a retailer is not able to pay back the money they borrowed in the first collection attempt. That does not necessarily mean they will default on their payment, perhaps it’s just a delay. Let’s take a look at the retailer with the most delayed-but-paid loans:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">loans_df</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">loans_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../data/Loans_Data.xlsx&quot;</span><span class="p">)</span>
+
+<span class="p">(</span>
+    <span class="n">loans_df</span>
+    <span class="c1"># .query(&quot;FIRST_TRIAL_BALANCE &lt; 0 and PAYMENT_STATUS == &#39;Paid&#39;&quot;)</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+        <span class="n">nunique_loan_id</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;nunique&quot;</span><span class="p">),</span>
+        <span class="n">nunique_loan_id_delayed_payment</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="p">[(</span><span class="n">loans_df</span><span class="p">[</span><span class="s2">&quot;FIRST_TRIAL_BALANCE&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">loans_df</span><span class="p">[</span><span class="s2">&quot;PAYMENT_STATUS&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Paid&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+            <span class="c1"># the above is very inefficient compute but I&#39;m a bit rusty with Pandas</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;nunique_loan_id_delayed_payment&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>nunique_loan_id</th>
+      <th>nunique_loan_id_delayed_payment</th>
+    </tr>
+    <tr>
+      <th>MAIN_SYSTEM_ID</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>42714</th>
+      <td>14</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>58316</th>
+      <td>19</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>102778</th>
+      <td>15</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>104839</th>
+      <td>11</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>24063</th>
+      <td>20</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s investigate retailer <code class="docutils literal notranslate"><span class="pre">MAIN_SYSTEM_ID</span> <span class="pre">==</span> <span class="pre">58316</span></code>, first looking at all 10 loans</p>
+</section>
+<hr class="docutils" />
+<section id="misc">
+<h2><a class="toc-backref" href="#id2"><span class="section-number">5.2. </span>MISC</a><a class="headerlink" href="#misc" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loans_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID == 58316&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>INDEX</th>
+      <th>MAIN_SYSTEM_ID</th>
+      <th>RETAILER_ID</th>
+      <th>LOAN_ID</th>
+      <th>LOAN_ISSUANCE_DATE</th>
+      <th>LOAN_AMOUNT</th>
+      <th>INITIAL_COST</th>
+      <th>TOTAL_INITIAL_AMOUNT</th>
+      <th>INITIAL_DATE</th>
+      <th>LOAN_PAYMENT_DATE</th>
+      <th>...</th>
+      <th>FIRST_TRAIL_DELAYS</th>
+      <th>FIRST_TRIAL_BALANCE</th>
+      <th>SPENT</th>
+      <th>FINAL_COST</th>
+      <th>TOTAL_FINAL_AMOUNT</th>
+      <th>REPAYMENT_ID</th>
+      <th>REPAYMENT_AMOUNT</th>
+      <th>REPAYMENT_UPDATED</th>
+      <th>CUMMULATIVE_OUTSTANDING</th>
+      <th>PAYMENT_STATUS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2856</th>
+      <td>549976</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>838411</td>
+      <td>2022-10-04 11:35:42.055</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-05</td>
+      <td>2022-10-07 18:53:27.332</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-139.25</td>
+      <td>139.25</td>
+      <td>0</td>
+      <td>139.25</td>
+      <td>860599</td>
+      <td>200.0</td>
+      <td>2022-10-09 15:41:16.183</td>
+      <td>60.89</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>7866</th>
+      <td>594403</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>750715</td>
+      <td>2022-09-11 23:38:50.204</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-12</td>
+      <td>2022-09-12 19:01:41.513</td>
+      <td>...</td>
+      <td>0</td>
+      <td>230.56</td>
+      <td>69.44</td>
+      <td>0</td>
+      <td>69.44</td>
+      <td>750715</td>
+      <td>0.0</td>
+      <td>2022-09-12 19:01:41.513</td>
+      <td>230.56</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>12992</th>
+      <td>639440</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>816704</td>
+      <td>2022-09-29 19:41:44.898</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-29</td>
+      <td>2022-10-01 17:59:32.282</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-100.96</td>
+      <td>100.96</td>
+      <td>0</td>
+      <td>100.96</td>
+      <td>831639</td>
+      <td>101.0</td>
+      <td>2022-10-02 18:17:29.442</td>
+      <td>0.04</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>14394</th>
+      <td>8532</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>873912</td>
+      <td>2022-10-11 23:30:19.495</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-12</td>
+      <td>2022-10-13 17:11:45.320</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-87.47</td>
+      <td>87.47</td>
+      <td>0</td>
+      <td>87.47</td>
+      <td>891721</td>
+      <td>100.0</td>
+      <td>2022-10-16 12:33:27.146</td>
+      <td>12.53</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>17867</th>
+      <td>38315</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>866013</td>
+      <td>2022-10-09 22:50:35.375</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-10</td>
+      <td>2022-10-11 17:59:21.048</td>
+      <td>...</td>
+      <td>1</td>
+      <td>41.78</td>
+      <td>58.22</td>
+      <td>0</td>
+      <td>58.22</td>
+      <td>866013</td>
+      <td>0.0</td>
+      <td>2022-10-11 17:59:21.048</td>
+      <td>41.78</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>20509</th>
+      <td>60688</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>916292</td>
+      <td>2022-10-21 19:43:51.875</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-22</td>
+      <td>2022-10-23 20:09:05.284</td>
+      <td>...</td>
+      <td>1</td>
+      <td>866.01</td>
+      <td>133.99</td>
+      <td>0</td>
+      <td>133.99</td>
+      <td>917815</td>
+      <td>0.0</td>
+      <td>2022-10-23 20:09:05.284</td>
+      <td>866.01</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>22819</th>
+      <td>80971</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>917815</td>
+      <td>2022-10-22 10:41:49.732</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-22</td>
+      <td>2022-10-23 20:09:05.284</td>
+      <td>...</td>
+      <td>1</td>
+      <td>866.01</td>
+      <td>0.00</td>
+      <td>0</td>
+      <td>0.00</td>
+      <td>917815</td>
+      <td>0.0</td>
+      <td>2022-10-23 20:09:05.284</td>
+      <td>866.01</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>23374</th>
+      <td>86011</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>832285</td>
+      <td>2022-10-02 18:19:08.181</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-02</td>
+      <td>2022-10-03 19:37:34.605</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-100.74</td>
+      <td>100.74</td>
+      <td>0</td>
+      <td>100.74</td>
+      <td>838376</td>
+      <td>130.0</td>
+      <td>2022-10-04 11:33:34.686</td>
+      <td>29.26</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>32303</th>
+      <td>163978</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>964219</td>
+      <td>2022-10-31 20:58:53.714</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-11-01</td>
+      <td>2022-11-02 17:18:39.520</td>
+      <td>...</td>
+      <td>1</td>
+      <td>25.00</td>
+      <td>375.00</td>
+      <td>0</td>
+      <td>375.00</td>
+      <td>964219</td>
+      <td>0.0</td>
+      <td>2022-11-02 17:18:39.520</td>
+      <td>25.00</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>41078</th>
+      <td>242794</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>763590</td>
+      <td>2022-09-15 14:52:35.497</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-15</td>
+      <td>2022-09-16 20:07:58.496</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-84.87</td>
+      <td>84.87</td>
+      <td>0</td>
+      <td>84.87</td>
+      <td>771485</td>
+      <td>250.0</td>
+      <td>2022-09-17 18:28:30.091</td>
+      <td>165.13</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>45487</th>
+      <td>282051</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>902395</td>
+      <td>2022-10-18 23:01:58.502</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-19</td>
+      <td>2022-10-20 17:14:49.627</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-97.98</td>
+      <td>97.98</td>
+      <td>0</td>
+      <td>97.98</td>
+      <td>915284</td>
+      <td>200.0</td>
+      <td>2022-10-21 15:05:55.259</td>
+      <td>102.02</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>47308</th>
+      <td>298520</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>697510</td>
+      <td>2022-09-02 00:38:59.309</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-02</td>
+      <td>2022-09-03 19:27:33.733</td>
+      <td>...</td>
+      <td>1</td>
+      <td>211.36</td>
+      <td>88.64</td>
+      <td>0</td>
+      <td>88.64</td>
+      <td>697510</td>
+      <td>0.0</td>
+      <td>2022-09-03 19:27:33.733</td>
+      <td>211.36</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>49219</th>
+      <td>313904</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>776182</td>
+      <td>2022-09-18 20:55:42.708</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-19</td>
+      <td>2022-09-20 18:41:03.105</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-730.07</td>
+      <td>730.07</td>
+      <td>0</td>
+      <td>730.07</td>
+      <td>782955</td>
+      <td>800.0</td>
+      <td>2022-09-20 20:25:46.865</td>
+      <td>69.93</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>51662</th>
+      <td>334727</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>783557</td>
+      <td>2022-09-21 02:37:30.731</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-21</td>
+      <td>2022-09-22 14:58:35.910</td>
+      <td>...</td>
+      <td>1</td>
+      <td>46.95</td>
+      <td>103.05</td>
+      <td>0</td>
+      <td>103.05</td>
+      <td>783557</td>
+      <td>0.0</td>
+      <td>2022-09-22 14:58:35.910</td>
+      <td>46.95</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>59844</th>
+      <td>405915</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>791325</td>
+      <td>2022-09-23 14:20:37.542</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-23</td>
+      <td>2022-09-24 16:21:40.566</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-108.56</td>
+      <td>108.56</td>
+      <td>0</td>
+      <td>108.56</td>
+      <td>807424</td>
+      <td>150.0</td>
+      <td>2022-09-28 17:50:15.576</td>
+      <td>41.44</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>61535</th>
+      <td>422479</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>894023</td>
+      <td>2022-10-16 22:35:14.941</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-17</td>
+      <td>2022-10-18 17:18:31.248</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-55.42</td>
+      <td>55.42</td>
+      <td>0</td>
+      <td>55.42</td>
+      <td>901669</td>
+      <td>100.0</td>
+      <td>2022-10-18 18:18:48.244</td>
+      <td>44.58</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>62663</th>
+      <td>432451</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>723339</td>
+      <td>2022-09-08 12:32:13.904</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-08</td>
+      <td>2022-09-09 19:42:24.713</td>
+      <td>...</td>
+      <td>1</td>
+      <td>191.46</td>
+      <td>108.54</td>
+      <td>0</td>
+      <td>108.54</td>
+      <td>723339</td>
+      <td>0.0</td>
+      <td>2022-09-09 19:42:24.713</td>
+      <td>191.46</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>63143</th>
+      <td>435219</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>953683</td>
+      <td>2022-10-29 23:46:11.320</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-30</td>
+      <td>2022-10-31 18:43:48.993</td>
+      <td>...</td>
+      <td>1</td>
+      <td>352.39</td>
+      <td>0.00</td>
+      <td>0</td>
+      <td>0.00</td>
+      <td>953683</td>
+      <td>0.0</td>
+      <td>2022-10-31 18:43:48.993</td>
+      <td>352.39</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>68914</th>
+      <td>487963</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>814724</td>
+      <td>2022-09-29 11:34:20.555</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-29</td>
+      <td>2022-09-29 19:17:11.349</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-91.36</td>
+      <td>91.36</td>
+      <td>0</td>
+      <td>91.36</td>
+      <td>816729</td>
+      <td>100.0</td>
+      <td>2022-09-29 20:05:02.673</td>
+      <td>8.64</td>
+      <td>Paid</td>
+    </tr>
+  </tbody>
+</table>
+<p>19 rows × 21 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">loans_df</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">loans_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../data/Loans_Data.xlsx&quot;</span><span class="p">)</span>
+
+<span class="c1"># Are there any LOAN_IDs that have multiple observations, i.e. first collection attempt, second, etc. ?</span>
+<span class="p">(</span>
+    <span class="n">loans_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;FIRST_TRIAL_BALANCE &lt; 0&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;LOAN_ID&quot;</span><span class="p">])</span>
+    <span class="p">[[</span><span class="s2">&quot;REPAYMENT_UPDATED&quot;</span><span class="p">]]</span>
+    <span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;REPAYMENT_UPDATED &gt; 1&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>REPAYMENT_UPDATED</th>
+    </tr>
+    <tr>
+      <th>MAIN_SYSTEM_ID</th>
+      <th>LOAN_ID</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>?? If <code class="docutils literal notranslate"><span class="pre">FIRST_TRIAL_BALANCE</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>, the retailer missed first collection attempt. Can we assume that retailers are given only a second collection attempt before being marked as <code class="docutils literal notranslate"><span class="pre">PAYMENT_STATUS</span> <span class="pre">in</span> <span class="pre">('Unpaid',</span> <span class="pre">'Partialy</span> <span class="pre">paid')</span></code>?</p>
+<p>I’m starting to believe I was given a snapshot of the Loans dataset instead of time series as for the other 2 datasets. We can check that by looking at the following case: retailer misses the first payment but is able to fully pay on following collection attempt. We can represent that as <code class="docutils literal notranslate"><span class="pre">FIRST_TRIAL_BALANCE</span> <span class="pre">&lt;</span> <span class="pre">0</span> <span class="pre">and</span> <span class="pre">PAYMENT_STATUS</span> <span class="pre">=</span> <span class="pre">'Paid'</span></code>, then check if any <code class="docutils literal notranslate"><span class="pre">LOAN_ID</span></code> has more than one observation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">loans_df</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">loans_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../data/Loans_Data.xlsx&quot;</span><span class="p">)</span>
+
+<span class="p">(</span>
+    <span class="n">loans_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;FIRST_TRIAL_BALANCE &lt; 0 and PAYMENT_STATUS == &#39;Paid&#39;&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;LOAN_ID&quot;</span><span class="p">])</span>
+    <span class="p">[[</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;REPAYMENT_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;REPAYMENT_AMOUNT&quot;</span><span class="p">,</span> <span class="s2">&quot;TOTAL_FINAL_AMOUNT&quot;</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MAIN_SYSTEM_ID</th>
+      <th>LOAN_ID</th>
+      <th>REPAYMENT_ID</th>
+      <th>REPAYMENT_AMOUNT</th>
+      <th>TOTAL_FINAL_AMOUNT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>21130</th>
+      <td>388</td>
+      <td>697040</td>
+      <td>710745</td>
+      <td>1000.0</td>
+      <td>463.35</td>
+    </tr>
+    <tr>
+      <th>30622</th>
+      <td>484</td>
+      <td>723923</td>
+      <td>748868</td>
+      <td>2500.0</td>
+      <td>2492.69</td>
+    </tr>
+    <tr>
+      <th>9603</th>
+      <td>1559</td>
+      <td>817070</td>
+      <td>819766</td>
+      <td>5020.0</td>
+      <td>325.34</td>
+    </tr>
+    <tr>
+      <th>68669</th>
+      <td>1653</td>
+      <td>779240</td>
+      <td>787659</td>
+      <td>1000.0</td>
+      <td>855.50</td>
+    </tr>
+    <tr>
+      <th>19165</th>
+      <td>2023</td>
+      <td>722893</td>
+      <td>745754</td>
+      <td>1500.0</td>
+      <td>1487.88</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>717</th>
+      <td>155535</td>
+      <td>850258</td>
+      <td>863752</td>
+      <td>700.0</td>
+      <td>496.52</td>
+    </tr>
+    <tr>
+      <th>12557</th>
+      <td>155535</td>
+      <td>921816</td>
+      <td>933511</td>
+      <td>650.0</td>
+      <td>900.54</td>
+    </tr>
+    <tr>
+      <th>42368</th>
+      <td>155535</td>
+      <td>946771</td>
+      <td>961470</td>
+      <td>600.0</td>
+      <td>575.94</td>
+    </tr>
+    <tr>
+      <th>3043</th>
+      <td>155803</td>
+      <td>866687</td>
+      <td>879437</td>
+      <td>3450.0</td>
+      <td>3449.71</td>
+    </tr>
+    <tr>
+      <th>12433</th>
+      <td>155952</td>
+      <td>901395</td>
+      <td>915464</td>
+      <td>550.0</td>
+      <td>549.18</td>
+    </tr>
+  </tbody>
+</table>
+<p>686 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./exploratory-analysis"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../discovery/methodology.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Methodology</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sample-analysis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Exploring Sample and Population</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retailers-who-missed-the-first-collection-attempt">5.1. Retailers who missed the first collection attempt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#misc">5.2. MISC</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Otto von Sperling
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
