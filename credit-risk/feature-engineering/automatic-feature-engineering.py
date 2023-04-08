@@ -126,6 +126,7 @@ if __name__ == "__main__":
 
     # Create an entity set and add the retailers entity
     entity_set = ft.EntitySet(id="maxab_entity_set")
+    relationships = []
 
     try:
         entity_set = entity_set.add_dataframe(
@@ -146,12 +147,21 @@ if __name__ == "__main__":
             index="LOAN_ID",
             time_index="LOAN_ISSUANCE_DATE",
         )
+        rel_retailer_loans = ft.Relationship(
+            entity_set,
+            parent_dataframe_name="retailers",
+            parent_column_name="MAIN_SYSTEM_ID",
+            child_dataframe_name="loans",
+            child_column_name="MAIN_SYSTEM_ID",
+        )
+        relationships.append(rel_retailer_loans)
     except Exception as excpt:
         raise Exception(
             f"DFS failed for MAIN_SYSTEM_ID == {selected_main_system_id}"
         ) from excpt
+        pass
 
-    # Add the sales entity
+    # Add the sales entity and relationship
     try:
         entity_set = entity_set.add_dataframe(
             dataframe_name="sales",
@@ -160,10 +170,18 @@ if __name__ == "__main__":
             time_index="CREATED_AT",
             secondary_time_index={"UPDATED_AT": ["STATUS", "TOTAL_AMOUNT_PAID"]},
         )
-    except Exception as excpt:
-        raise Exception(
-            f"DFS failed for MAIN_SYSTEM_ID == {selected_main_system_id}"
-        ) from excpt
+        rel_retailer_sales = ft.Relationship(
+            entity_set,
+            parent_dataframe_name="retailers",
+            parent_column_name="MAIN_SYSTEM_ID",
+            child_dataframe_name="sales",
+            child_column_name="MAIN_SYSTEM_ID",
+        )
+        relationships.append(rel_retailer_sales)
+    except Exception:
+        print(
+            f"Fintech dataset seems to be empty for MAIN_SYSTEM_ID '{selected_main_system_id}'"
+        )
 
     # Add the purchases entity
     try:
@@ -173,40 +191,21 @@ if __name__ == "__main__":
             index="ORDER_ID",
             time_index="ORDER_CREATION_DATE",
         )
-    except Exception as excpt:
-        raise Exception(
-            f"DFS failed for MAIN_SYSTEM_ID == {selected_main_system_id}"
-        ) from excpt
-
-    # Define relationships between the entities
-    rel_retailer_sales = ft.Relationship(
-        entity_set,
-        parent_dataframe_name="retailers",
-        parent_column_name="MAIN_SYSTEM_ID",
-        child_dataframe_name="sales",
-        child_column_name="MAIN_SYSTEM_ID",
-    )
-
-    rel_retailer_purchases = ft.Relationship(
-        entity_set,
-        parent_dataframe_name="retailers",
-        parent_column_name="MAIN_SYSTEM_ID",
-        child_dataframe_name="purchases",
-        child_column_name="MAIN_SYSTEM_ID",
-    )
-
-    rel_retailer_loans = ft.Relationship(
-        entity_set,
-        parent_dataframe_name="retailers",
-        parent_column_name="MAIN_SYSTEM_ID",
-        child_dataframe_name="loans",
-        child_column_name="MAIN_SYSTEM_ID",
-    )
+        rel_retailer_purchases = ft.Relationship(
+            entity_set,
+            parent_dataframe_name="retailers",
+            parent_column_name="MAIN_SYSTEM_ID",
+            child_dataframe_name="purchases",
+            child_column_name="MAIN_SYSTEM_ID",
+        )
+        relationships.append(rel_retailer_purchases)
+    except Exception:
+        print(
+            f"Ecommerce dataset seems to be empty for MAIN_SYSTEM_ID '{selected_main_system_id}'"
+        )
 
     # Add the relationships to the entity set
-    entity_set = entity_set.add_relationships(
-        [rel_retailer_sales, rel_retailer_purchases, rel_retailer_loans]
-    )
+    entity_set = entity_set.add_relationships(relationships)
 
     # Create list of Featuretools primitives
     ft_valid_primitives_tuple = ft.get_valid_primitives(
