@@ -2,3 +2,10 @@
 data/
 credit-risk/_build/
 *.ipynb
+metastore_db/
+*.mllib
+*.log
+
+# temporary ignore
+credit-risk/discovery/data-profile-reports/ecommerce-profile-tsmode/
+credit-risk/discovery/data-profile-reports/fintech-profile-tsmode/
