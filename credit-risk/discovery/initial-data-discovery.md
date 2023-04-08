@@ -103,7 +103,7 @@ Furthermore, we can already predict that there is strong correlation between
 |  AMOUNT  |  ?  |  Eq. `invoice_value` before tax and fees  |
 |  CREATED_AT  |  -  |  Timestamp when payment processing started  |
 |  FEES  |  ?  |  MaxAB fee for providing payment processing service, etc  |
-|  ID  |  RETAILER_ID  |  Retailer internal identification in fintech platform  |
+|  ID  |  -  |  Internal identification of payment processing  |
 |  MAIN_SYSTEM_ID  | Table `foreign_key` |  Retailer internal identification across ecommerce and fintech  |
 |  RETAILER_CUT  |  -  |  ? Estimated profit margin of retailer on the sale ?  |
 |  STATUS  |  -  |  Latest status of payment processing according to `UPDATED_AT`  |
