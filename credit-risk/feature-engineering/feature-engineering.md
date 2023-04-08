@@ -18,9 +18,8 @@
 
 ## Split Train and Test Data
 
-
+````{toggle}
 ```{code-block} python
-:tags: [hide-input]
 (
     featureframe.selectExpr(
         "count(label) filter (where label = 1) as positive_in_total",
@@ -35,6 +34,7 @@
 )
 
 ```
+````
 
 |  Class  |  Total  |  Train  |  Validation  |  Test  |
 |---------|---------|---------|--------------|--------|
