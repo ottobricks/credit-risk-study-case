@@ -9,4 +9,8 @@ In order to conduct the case study, I was provided with 3 data sets:
 - fintech transactions by retailer
 - ecommerce orders by retailer
 
-It goes without saying that this exercise can be enriched with many different data sources -- e.g. CBE interest rate, inflation, information about retailers business segment, age of business, etc. But for the sake of brevity, I'll work only with the data sets provided.
+
+## Document
+An web report is generated and available at:
+
+https://ottok92.github.io/credit-risk-study-case/html/intro.html
