@@ -24,7 +24,7 @@ lint:
 publish:
 	rm -rf credit-risk/_build/
 	rm -rf docs/
-	jupyter-book build mybook --execute --builder=html
+	jupyter-book build --builder=html credit-risk/
 	cp -r credit-risk/_build docs
 	rm docs/html/index.html
 	cat << EOF > docs/index.html
