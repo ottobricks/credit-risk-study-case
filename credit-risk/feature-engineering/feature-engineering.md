@@ -1,5 +1,6 @@
 # Feature Engineering
 
+(auto-feat-eng)=
 ## Automatic Feature Engineering
 
 ````{dropdown} Deep Feature Synthesis (DFS)
@@ -16,6 +17,7 @@
 ```
 ````
 
+(holdout)=
 ## Split Train and Test Data
 
 ````{toggle}
