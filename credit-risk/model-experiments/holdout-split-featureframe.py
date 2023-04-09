@@ -1,7 +1,18 @@
 import argparse
 import pandas as pd
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, expr
+from pyspark.sql.functions import col, expr, udf
+from pyspark.sql.types import IntegerType, ArrayType, DoubleType
+from pyspark.ml.linalg import VectorUDT, DenseVector
+
+
+@udf(returnType=IntegerType())
+def vector_size(v: DenseVector):
+    return len(v)
+
+@udf(returnType=ArrayType(DoubleType()))
+def vector_to_array(v: DenseVector):
+    return v.toArray().tolist()
 
 
 if __name__ == "__main__":
@@ -29,8 +40,8 @@ if __name__ == "__main__":
 
     # Load featureframes
     dfs_featureframe = spark.read.parquet(
-        # f"data/pca-featureframe-maxdepth{maxdepth}.parquet"
-        f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/pca-featureframe-maxdepth{maxdepth}.parquet"
+        f"data/pca-featureframe-maxdepth{maxdepth}.parquet"
+        # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/pca-featureframe-maxdepth{maxdepth}.parquet"
     )
     # experiment_featureframe = spark.read.parquet(...)
 
@@ -69,26 +80,50 @@ if __name__ == "__main__":
     ).persist()
 
     # Write test dataset to disk
+    test_df = featureframe.where(
+        "(label = 1 and stratified_split >= 0.7)"
+        + " or (label = 0 and stratified_split >= 0.8)"
+    )
+    # Dataset better suited for Spark ML
     (
-        featureframe.where(
-            "(label = 1 and stratified_split >= 0.7)"
-            + " or (label = 0 and stratified_split >= 0.8)"
+        test_df
+        .write.mode("overwrite")
+        .parquet(
+            f"data/test/pca-featureframe-maxdepth{maxdepth}.parquet"
+            # f"data/test/full-featureframe-maxdepth{maxdepth}.parquet"
+            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/test/pca-featureframe-maxdepth{maxdepth}.parquet"
+        )
+    )
+    # Dataset better suited for Pandas ML
+    vec_size = test_df.select(vector_size(col("pca_features")).alias("vec_size")).take(1)[0].vec_size
+    (
+        test_df.withColumn("pca_array", vector_to_array(col("pca_features")))
+        .select(
+            "LOAN_ID",
+            "MAIN_SYSTEM_ID",
+            "label",
+            *[
+                col("pca_array")[ix].alias(f"principal_component_{ix}")
+                for ix in range(vec_size)
+            ]
         )
         .write.mode("overwrite")
         .parquet(
-            # f"data/test/pca-featureframe-maxdepth{maxdepth}.parquet"
+            f"data/test/pandas-pca-featureframe-maxdepth{maxdepth}.parquet"
             # f"data/test/full-featureframe-maxdepth{maxdepth}.parquet"
-            f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/test/pca-featureframe-maxdepth{maxdepth}.parquet"
+            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/test/pca-featureframe-maxdepth{maxdepth}.parquet"
         )
     )
 
+
     # Write train dataset to disk
+    # Dataset better suited for Spark ML
+    train_df = featureframe.where(
+        "(label = 1 and stratified_split < 0.7)"
+        + " or (label = 0 and stratified_split < 0.8)"
+    )
     (
-        featureframe.where(
-            "(label = 1 and stratified_split < 0.7)"
-            + " or (label = 0 and stratified_split < 0.8)"
-        )
-        .withColumn(
+        train_df.withColumn(
             "validation_set",
             expr(
                 "(label = 1 and stratified_split between 0.5 and 0.7)"
@@ -97,8 +132,27 @@ if __name__ == "__main__":
         )
         .write.mode("overwrite")
         .parquet(
-            # f"data/train/pca-featureframe-maxdepth{maxdepth}.parquet"
+            f"data/train/pca-featureframe-maxdepth{maxdepth}.parquet"
             # f"data/train/full-featureframe-maxdepth{maxdepth}.parquet"
-            f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/train/pca-featureframe-maxdepth{maxdepth}.parquet"
+            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/train/pca-featureframe-maxdepth{maxdepth}.parquet"
+        )
+    )
+    # Dataset better suited for Pandas ML
+    (
+        train_df.withColumn("pca_array", vector_to_array(col("pca_features")))
+        .select(
+            "LOAN_ID",
+            "MAIN_SYSTEM_ID",
+            "label",
+            *[
+                col("pca_array")[ix].alias(f"principal_component_{ix}")
+                for ix in range(vec_size)
+            ]
+        )
+        .write.mode("overwrite")
+        .parquet(
+            f"data/train/pandas-pca-featureframe-maxdepth{maxdepth}.parquet"
+            # f"data/test/full-featureframe-maxdepth{maxdepth}.parquet"
+            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/test/pca-featureframe-maxdepth{maxdepth}.parquet"
         )
     )
