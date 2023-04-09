@@ -42,7 +42,7 @@ loans_df.value_counts("PAYMENT_STATUS")
 ```
 
 ```{code-cell} ipython3
-:tags: [hide-cell]
+:tags: [hide-output]
 
 ecommerce_df = (
     pd.read_csv(
@@ -71,7 +71,6 @@ ecommerce_df.info()
 Compute the rolling mean of amount retailer spent in Ecommerce over 7 and 30 days.
 
 ```{code-cell} ipython3
-:tags: [hide-output]
 ecommerce_df = (
     ecommerce_df.assign(
         ROLLINGMEAN_7DAYS__ORDER_PRICE__=(
@@ -117,7 +116,6 @@ ecommerce_df = (
 Perform **point-in-time correct join** between datasets, accept at max 7-day-old stale rolling_mean.
 
 ```{code-cell} ipython3
-:tags: [hide-output]
 merged_df = pd.merge_asof(
     loans_df,
     ecommerce_df,
@@ -138,7 +136,6 @@ We can't retrieve rolling_mean for 25% of observations (from 57,621 to 43,225), 
 Before pivoting, let's check the sanity of this result by looking at Ecommerce dataset for a couple of cases.
 
 ```{code-cell} ipython3
-:tags: [hide-input]
 retailers_leftout = (
     pd.merge(
         loans_df[["MAIN_SYSTEM_ID"]].drop_duplicates(),
@@ -155,18 +152,15 @@ retailers_leftout = (
 retailers_leftout.count()
 ```
 
-How many of those retailers who were removed actually have observations in Ecommerce?
 ```{code-cell} ipython3
-:tags: [hide-input]
 pd.merge(ecommerce_df, retailers_leftout, on="MAIN_SYSTEM_ID")[
     "MAIN_SYSTEM_ID"
 ].drop_duplicates().count()
 ```
 
-They are in fact mostly present. So it must mean their loan request came after 7 days of their last Ecommerce transaction. Let's expand the accepted staleness to 30 days and see how the number changes.
+They are in fact all present. So it must mean their loan request came after 7 days of their last Ecommerce transaction. Let's expand the accepted staleness to 30 days and see how the number changes.
 
 ```{code-cell} ipython3
-:tags: [hide-output]
 merged_df = (
     pd.merge_asof(
         loans_df,
@@ -213,7 +207,9 @@ merged_df = merged_df.assign(
         .reset_index(drop=True)
     ),
 ).sort_values("ORDER_CREATION_DATE")
+```
 
+```{code-cell} ipython3
 merged_df.value_counts("PAYMENT_STATUS")
 ```
 
@@ -233,7 +229,6 @@ If our tests accept the *null hypothesis*, we will have more confidence that cre
 I'm going to run 1000 trials of the hypothesis test for each aggregation window (7, 30, 120, 360 days) and use random sampling with replacement at each trial. This is a technique known as Bootstrapping and it's great for estimating confidence intervals for tests.
 
 ```{code-cell} ipython3
-:tags: [hide-input]
 # Define the number of bootstrap rounds
 n_bootstrap_rounds = 1000
 

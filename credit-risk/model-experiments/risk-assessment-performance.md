@@ -14,10 +14,6 @@ kernelspec:
 
 # Results
 
-```{warning}
-This section is still under development
-```
-
 ```{code-cell} ipython3
 import pickle
 from flaml import AutoML
@@ -162,7 +158,6 @@ merged_df.info()
  - `LOAN_AMOUNT` does not exceed 2 stddev of Ecommerce 30-days mean
 
 ```{code-cell} ipython3
-
 (
     merged_df.assign(
         SAFE_DECISION=(
@@ -181,10 +176,6 @@ merged_df.info()
     ]]
     .to_csv("../../risk-assessment-decisions.csv", header=True, index=False)
 )
-```
-
-```{code-cell} ipython3
-merged_df.info()
 ```
 
 ```{code-cell} ipython3
