@@ -28,15 +28,11 @@ parts:
       - file: experiments/test-assumption.md
       - file: experiments/test-hypothesis.md
       - file: experiments/results.md
-  - caption: Feature Engineering
+  - caption: ML Experiments
     numbered: True
     maxdepth: 2
     chapters:
-      - file: feature-engineering/feature-engineering.md
-  - caption: Model Experiments
-    numbered: True
-    maxdepth: 2
-    chapters:
+      - file: model-experiments/feature-engineering.md
       - file: model-experiments/baseline-performance.ipynb
       - file: model-experiments/hyperparam-tuning.ipynb
       - file: model-experiments/tuned-model-performance.ipynb

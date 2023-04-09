@@ -13,6 +13,6 @@
 # ---
 
 # %% [markdown]
-# # Tuning Model Hyperparameters
+# # Model Tuning
 
 # %%
