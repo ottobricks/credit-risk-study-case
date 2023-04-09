@@ -130,7 +130,7 @@ merged_df.info()
 ```
 
 (missing-observations)=
-**Missing observations**
+## Missing observations
 
 We can't retrieve rolling_mean for 25% of observations (from 57,621 to 43,225), which means that this approach is inviable as it stands.
 Before pivoting, let's check the sanity of this result by looking at Ecommerce dataset for a couple of cases.
@@ -215,17 +215,23 @@ merged_df.value_counts("PAYMENT_STATUS")
 
 For the sake of time, I will finish this experiment with 20% of missing observations. Unfortunately, 5 out of 9 "not fully paid" observations are left out because of staleness. That would be an interesting tangent for another set of experiments. Something in the shape of "inactive-retailer" segment for credit risk.
 
-However, this leaves us with a smaller section of an already very minor class. It doesn't mean we cannot test our hypothesis, but the confidence in results will be diminished. Not all is lost, though. We can then use Power Analysis to find out how many more observations we woudl require to achieve 95% confidence intervals. But first things first, let's test the first set of hypotheses:
+```{note}
+I was not able to perform Power Analysis mentioned in the next paragraph due to limited time.
+```
+
+However, this leaves us with a smaller section of an already very minor class. It doesn't mean we cannot test our hypothesis, but the confidence in results will be diminished. Not all is lost, though. We can then use Power Analysis to find out how many more observations we would require to achieve 95% confidence intervals. But first things first, let's test the first set of hypotheses:
  - *null hypothesis 1*: retailers who default (fully or partially) on their loan are requesting to borrow amounts **above 1 standard deviation** of their usual ecommerce volume
  - *alternate hypothesis 1*: retailers who default (fully or partially) on their loan are requesting to borrow amounts **within 1 standard deviation** of their usual ecommerce volume
 
-To be very honest this first set of hypotheses becomes rather pointless to test if we only have 4 observations. Let's skip to the second set, which can lead into more insight.
+To be very honest this first set of hypotheses will have very little significance due to us having only 4 observations. I judge it wiser to focus on the second set due to (again) limited time.
 
+The second set of hypothesis is based on the assumption that responsible retailers (the vast majority in the dataset) would be more cautious and tend to request `LOAN_AMOUNT` in the neighborhood of cash flow they are used to; in other words, they won't use us for irresponsible leverage:
 - *null hypothesis 2*: retailers who pay their loans in full are requesting to borrow amounts **within 1 standard deviation** of their usual ecommerce volume
  - *alternate hypothesis 2*: retailers who pay their loans in full are requesting to borrow amounts **above 1 standard deviation** of their usual ecommerce volume
 
 If our tests accept the *null hypothesis*, we will have more confidence that credit risk assessment based on ecommerce volume wouldn't jeopardize our best customers in volume, safeguarding customer experience. But the fact that we can't test set 1 of hypotheses means we would still be opened to financial exposure.
 
+## Results 
 I'm going to run 1000 trials of the hypothesis test for each aggregation window (7, 30, 120, 360 days) and use random sampling with replacement at each trial. This is a technique known as Bootstrapping and it's great for estimating confidence intervals for tests.
 
 ```{code-cell} ipython3

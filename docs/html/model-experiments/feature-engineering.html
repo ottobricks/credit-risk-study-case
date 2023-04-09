@@ -769,17 +769,16 @@ DFS script<div class="sd-summary-down docutils">
 <span class="linenos">379</span>    <span class="p">)</span>
 <span class="linenos">380</span>
 <span class="linenos">381</span>    <span class="c1"># Write featureframe to storage</span>
-<span class="linenos">382</span>    <span class="c1"># dest_path = f&quot;./data/featureframe-maxdepth{maxdepth}.parquet/MAIN_SYSTEM_ID={selected_main_system_id}/part.snappy.parquet&quot;</span>
-<span class="linenos">383</span>    <span class="n">dest_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/featureframe-maxdepth</span><span class="si">{</span><span class="n">maxdepth</span><span class="si">}</span><span class="s2">.parquet/MAIN_SYSTEM_ID=</span><span class="si">{</span><span class="n">selected_main_system_id</span><span class="si">}</span><span class="s2">/part.snappy.parquet&quot;</span>
-<span class="linenos">384</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest_path</span><span class="p">):</span>
-<span class="linenos">385</span>        <span class="n">_</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;mkdir&quot;</span><span class="p">,</span> <span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="n">dest_path</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
-<span class="linenos">386</span>
-<span class="linenos">387</span>    <span class="n">featureframe</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">dest_path</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;snappy&quot;</span><span class="p">)</span>
-<span class="linenos">388</span>
-<span class="linenos">389</span>    <span class="n">_</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-<span class="linenos">390</span>        <span class="sa">f</span><span class="s2">&quot;mkdir -p data/featureframe.parquet/MAIN_SYSTEM_ID=</span><span class="si">{</span><span class="n">selected_main_system_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-<span class="linenos">391</span>    <span class="p">)</span>
-<span class="linenos">392</span>    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">feature_defs</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;data/featureframe-maxdepth</span><span class="si">{</span><span class="n">maxdepth</span><span class="si">}</span><span class="s2">-definitions.joblib&quot;</span><span class="p">)</span>
+<span class="linenos">382</span>    <span class="n">dest_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./data/featureframe-maxdepth</span><span class="si">{</span><span class="n">maxdepth</span><span class="si">}</span><span class="s2">.parquet/MAIN_SYSTEM_ID=</span><span class="si">{</span><span class="n">selected_main_system_id</span><span class="si">}</span><span class="s2">/part.snappy.parquet&quot;</span>
+<span class="linenos">383</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest_path</span><span class="p">):</span>
+<span class="linenos">384</span>        <span class="n">_</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;mkdir&quot;</span><span class="p">,</span> <span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="n">dest_path</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="linenos">385</span>
+<span class="linenos">386</span>    <span class="n">featureframe</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">dest_path</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;snappy&quot;</span><span class="p">)</span>
+<span class="linenos">387</span>
+<span class="linenos">388</span>    <span class="n">_</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+<span class="linenos">389</span>        <span class="sa">f</span><span class="s2">&quot;mkdir -p data/featureframe.parquet/MAIN_SYSTEM_ID=</span><span class="si">{</span><span class="n">selected_main_system_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="linenos">390</span>    <span class="p">)</span>
+<span class="linenos">391</span>    <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">feature_defs</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;data/featureframe-maxdepth</span><span class="si">{</span><span class="n">maxdepth</span><span class="si">}</span><span class="s2">-definitions.joblib&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -818,91 +817,88 @@ Dimensionality reduction, a.k.a feature selection<div class="sd-summary-down doc
 <span class="linenos"> 24</span>    <span class="n">featureframe</span> <span class="o">=</span> <span class="p">(</span>
 <span class="linenos"> 25</span>        <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;mergeSchema&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span>
 <span class="linenos"> 26</span>        <span class="o">.</span><span class="n">parquet</span><span class="p">(</span>
-<span class="linenos"> 27</span>            <span class="sa">f</span><span class="s2">&quot;s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/featureframe-maxdepth</span><span class="si">{</span><span class="n">maxdepth</span><span class="si">}</span><span class="s2">.parquet&quot;</span>
-<span class="linenos"> 28</span>            <span class="c1"># &quot;data/featureframe-maxdepth2.parquet&quot;</span>
-<span class="linenos"> 29</span>        <span class="p">)</span>
-<span class="linenos"> 30</span>        <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;__index_level_0__&quot;</span><span class="p">)</span>
-<span class="linenos"> 31</span>        <span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">getConf</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.executor.instances&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">)))</span>
-<span class="linenos"> 32</span>        <span class="o">.</span><span class="n">persist</span><span class="p">(</span><span class="n">StorageLevel</span><span class="o">.</span><span class="n">MEMORY_AND_DISK</span><span class="p">)</span>
-<span class="linenos"> 33</span>    <span class="p">)</span>
-<span class="linenos"> 34</span>
-<span class="linenos"> 35</span>    <span class="c1"># Parse column names to comply with SparkSQL</span>
-<span class="linenos"> 36</span>    <span class="n">featureframe</span> <span class="o">=</span> <span class="n">featureframe</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-<span class="linenos"> 37</span>        <span class="p">[</span>
-<span class="linenos"> 38</span>            <span class="n">col</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span>
-<span class="linenos"> 39</span>                <span class="n">column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="s2">&quot;__&quot;</span><span class="p">)</span>
-<span class="linenos"> 40</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">,</span> <span class="s2">&quot;__&quot;</span><span class="p">)</span>
-<span class="linenos"> 41</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
-<span class="linenos"> 42</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
-<span class="linenos"> 43</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; % &quot;</span><span class="p">,</span> <span class="s2">&quot;_mod_&quot;</span><span class="p">)</span>
-<span class="linenos"> 44</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; / &quot;</span><span class="p">,</span> <span class="s2">&quot;_div_&quot;</span><span class="p">)</span>
-<span class="linenos"> 45</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; * &quot;</span><span class="p">,</span> <span class="s2">&quot;_mul_&quot;</span><span class="p">)</span>
-<span class="linenos"> 46</span>            <span class="p">)</span>
-<span class="linenos"> 47</span>            <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">featureframe</span><span class="o">.</span><span class="n">columns</span>
-<span class="linenos"> 48</span>        <span class="p">]</span>
-<span class="linenos"> 49</span>    <span class="p">)</span>
-<span class="linenos"> 50</span>
-<span class="linenos"> 51</span>    <span class="c1"># This should no longer be necessary if _fetch_largest_dtype_for_numeric_feature works in dfs</span>
-<span class="linenos"> 52</span>    <span class="c1"># # Convert boolean columns to numeric</span>
-<span class="linenos"> 53</span>    <span class="c1"># featureframe = featureframe.select(</span>
-<span class="linenos"> 54</span>    <span class="c1">#     [</span>
-<span class="linenos"> 55</span>    <span class="c1">#         col(column_name)</span>
-<span class="linenos"> 56</span>    <span class="c1">#         if column_dtype != &quot;boolean&quot;</span>
-<span class="linenos"> 57</span>    <span class="c1">#         else col(column_name).cast(&quot;int&quot;).alias(column_name)</span>
-<span class="linenos"> 58</span>    <span class="c1">#         for column_name, column_dtype in featureframe.dtypes</span>
-<span class="linenos"> 59</span>    <span class="c1">#     ]</span>
-<span class="linenos"> 60</span>    <span class="c1"># )</span>
-<span class="linenos"> 61</span>    <span class="n">metadata_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">]</span>
-<span class="linenos"> 62</span>
-<span class="linenos"> 63</span>    <span class="c1"># Split featureframe into categorical and numeric columns</span>
-<span class="linenos"> 64</span>    <span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span>
-<span class="linenos"> 65</span>        <span class="n">col_name</span> <span class="k">for</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">col_type</span> <span class="ow">in</span> <span class="n">featureframe</span><span class="o">.</span><span class="n">dtypes</span> <span class="k">if</span> <span class="n">col_type</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span>
-<span class="linenos"> 66</span>    <span class="p">]</span>
-<span class="linenos"> 67</span>    <span class="n">num_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-<span class="linenos"> 68</span>        <span class="nb">set</span><span class="p">(</span><span class="n">featureframe</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="o">*</span><span class="n">metadata_cols</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cat_cols</span><span class="p">))</span>
-<span class="linenos"> 69</span>    <span class="p">)</span>
-<span class="linenos"> 70</span>    <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">cat_cols</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">num_cols</span><span class="p">))</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span>
-<span class="linenos"> 71</span>        <span class="p">[]</span>
-<span class="linenos"> 72</span>    <span class="p">),</span> <span class="s2">&quot;Failed to split featureframe into categorical and numeric features&quot;</span>
-<span class="linenos"> 73</span>
-<span class="linenos"> 74</span>    <span class="c1"># Define an encoder for categorical features</span>
-<span class="linenos"> 75</span>    <span class="n">indexer_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_name</span> <span class="o">+</span> <span class="s2">&quot;_index&quot;</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">]</span>
-<span class="linenos"> 76</span>    <span class="n">indexer</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span>
-<span class="linenos"> 77</span>        <span class="n">inputCols</span><span class="o">=</span><span class="n">cat_cols</span><span class="p">,</span> <span class="n">outputCols</span><span class="o">=</span><span class="n">indexer_cols</span><span class="p">,</span> <span class="n">handleInvalid</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span>
-<span class="linenos"> 78</span>    <span class="p">)</span>
-<span class="linenos"> 79</span>
-<span class="linenos"> 80</span>    <span class="c1"># Define mean imputer for numeric columns</span>
-<span class="linenos"> 81</span>    <span class="n">imputer_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_name</span> <span class="o">+</span> <span class="s2">&quot;_imputed&quot;</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">]</span>
-<span class="linenos"> 82</span>    <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputer</span><span class="p">(</span><span class="n">inputCols</span><span class="o">=</span><span class="n">num_cols</span><span class="p">,</span> <span class="n">outputCols</span><span class="o">=</span><span class="n">imputer_cols</span><span class="p">)</span>
-<span class="linenos"> 83</span>
-<span class="linenos"> 84</span>    <span class="c1"># Define a vector assembler</span>
-<span class="linenos"> 85</span>    <span class="n">assembler</span> <span class="o">=</span> <span class="n">VectorAssembler</span><span class="p">(</span>
-<span class="linenos"> 86</span>        <span class="n">inputCols</span><span class="o">=</span><span class="p">[</span><span class="o">*</span><span class="n">imputer_cols</span><span class="p">,</span> <span class="o">*</span><span class="n">indexer_cols</span><span class="p">],</span>
-<span class="linenos"> 87</span>        <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;assembled_features&quot;</span><span class="p">,</span>
-<span class="linenos"> 88</span>    <span class="p">)</span>
-<span class="linenos"> 89</span>
-<span class="linenos"> 90</span>    <span class="c1"># Define a PCA model</span>
-<span class="linenos"> 91</span>    <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;assembled_features&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;pca_features&quot;</span><span class="p">)</span>
-<span class="linenos"> 92</span>
-<span class="linenos"> 93</span>    <span class="c1"># Define a PipelineModel</span>
-<span class="linenos"> 94</span>    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">indexer</span><span class="p">,</span> <span class="n">imputer</span><span class="p">,</span> <span class="n">assembler</span><span class="p">,</span> <span class="n">pca</span><span class="p">])</span>
-<span class="linenos"> 95</span>
-<span class="linenos"> 96</span>    <span class="c1"># Fit the model to the data and persist it</span>
-<span class="linenos"> 97</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">featureframe</span><span class="p">)</span>
-<span class="linenos"> 98</span>    <span class="n">model</span><span class="o">.</span><span class="n">write</span><span class="p">()</span><span class="o">.</span><span class="n">overwrite</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
-<span class="linenos"> 99</span>        <span class="c1"># f&quot;s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/assets/pca-model-maxdepth{maxdepth}.mllib&quot;</span>
-<span class="linenos">100</span>        <span class="sa">f</span><span class="s2">&quot;credit-risk/feature-engineering/pca-model-maxdepth</span><span class="si">{</span><span class="n">maxdepth</span><span class="si">}</span><span class="s2">.mllib&quot;</span>
-<span class="linenos">101</span>    <span class="p">)</span>
-<span class="linenos">102</span>
-<span class="linenos">103</span>    <span class="c1"># Transform the data using the model</span>
-<span class="linenos">104</span>    <span class="n">selected_features</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">featureframe</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-<span class="linenos">105</span>        <span class="o">*</span><span class="n">metadata_cols</span><span class="p">,</span> <span class="s2">&quot;pca_features&quot;</span>
-<span class="linenos">106</span>    <span class="p">)</span>
-<span class="linenos">107</span>
-<span class="linenos">108</span>    <span class="n">selected_features</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">96</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;overwrite&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span>
-<span class="linenos">109</span>        <span class="c1"># f&quot;data/pca-featureframe-maxdepth{maxdepth}.parquet&quot;</span>
-<span class="linenos">110</span>        <span class="sa">f</span><span class="s2">&quot;s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/pca-featureframe-maxdepth</span><span class="si">{</span><span class="n">maxdepth</span><span class="si">}</span><span class="s2">.parquet&quot;</span>
-<span class="linenos">111</span>    <span class="p">)</span>
+<span class="linenos"> 27</span>            <span class="s2">&quot;data/featureframe-maxdepth2.parquet&quot;</span>
+<span class="linenos"> 28</span>        <span class="p">)</span>
+<span class="linenos"> 29</span>        <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;__index_level_0__&quot;</span><span class="p">)</span>
+<span class="linenos"> 30</span>        <span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">getConf</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.executor.instances&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">)))</span>
+<span class="linenos"> 31</span>        <span class="o">.</span><span class="n">persist</span><span class="p">(</span><span class="n">StorageLevel</span><span class="o">.</span><span class="n">MEMORY_AND_DISK</span><span class="p">)</span>
+<span class="linenos"> 32</span>    <span class="p">)</span>
+<span class="linenos"> 33</span>
+<span class="linenos"> 34</span>    <span class="c1"># Parse column names to comply with SparkSQL</span>
+<span class="linenos"> 35</span>    <span class="n">featureframe</span> <span class="o">=</span> <span class="n">featureframe</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+<span class="linenos"> 36</span>        <span class="p">[</span>
+<span class="linenos"> 37</span>            <span class="n">col</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span>
+<span class="linenos"> 38</span>                <span class="n">column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="s2">&quot;__&quot;</span><span class="p">)</span>
+<span class="linenos"> 39</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">,</span> <span class="s2">&quot;__&quot;</span><span class="p">)</span>
+<span class="linenos"> 40</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="linenos"> 41</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="linenos"> 42</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; % &quot;</span><span class="p">,</span> <span class="s2">&quot;_mod_&quot;</span><span class="p">)</span>
+<span class="linenos"> 43</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; / &quot;</span><span class="p">,</span> <span class="s2">&quot;_div_&quot;</span><span class="p">)</span>
+<span class="linenos"> 44</span>                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; * &quot;</span><span class="p">,</span> <span class="s2">&quot;_mul_&quot;</span><span class="p">)</span>
+<span class="linenos"> 45</span>            <span class="p">)</span>
+<span class="linenos"> 46</span>            <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">featureframe</span><span class="o">.</span><span class="n">columns</span>
+<span class="linenos"> 47</span>        <span class="p">]</span>
+<span class="linenos"> 48</span>    <span class="p">)</span>
+<span class="linenos"> 49</span>
+<span class="linenos"> 50</span>    <span class="c1"># This should no longer be necessary if _fetch_largest_dtype_for_numeric_feature works in dfs</span>
+<span class="linenos"> 51</span>    <span class="c1"># # Convert boolean columns to numeric</span>
+<span class="linenos"> 52</span>    <span class="c1"># featureframe = featureframe.select(</span>
+<span class="linenos"> 53</span>    <span class="c1">#     [</span>
+<span class="linenos"> 54</span>    <span class="c1">#         col(column_name)</span>
+<span class="linenos"> 55</span>    <span class="c1">#         if column_dtype != &quot;boolean&quot;</span>
+<span class="linenos"> 56</span>    <span class="c1">#         else col(column_name).cast(&quot;int&quot;).alias(column_name)</span>
+<span class="linenos"> 57</span>    <span class="c1">#         for column_name, column_dtype in featureframe.dtypes</span>
+<span class="linenos"> 58</span>    <span class="c1">#     ]</span>
+<span class="linenos"> 59</span>    <span class="c1"># )</span>
+<span class="linenos"> 60</span>    <span class="n">metadata_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">]</span>
+<span class="linenos"> 61</span>
+<span class="linenos"> 62</span>    <span class="c1"># Split featureframe into categorical and numeric columns</span>
+<span class="linenos"> 63</span>    <span class="n">cat_cols</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos"> 64</span>        <span class="n">col_name</span> <span class="k">for</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">col_type</span> <span class="ow">in</span> <span class="n">featureframe</span><span class="o">.</span><span class="n">dtypes</span> <span class="k">if</span> <span class="n">col_type</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span>
+<span class="linenos"> 65</span>    <span class="p">]</span>
+<span class="linenos"> 66</span>    <span class="n">num_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+<span class="linenos"> 67</span>        <span class="nb">set</span><span class="p">(</span><span class="n">featureframe</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="o">*</span><span class="n">metadata_cols</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cat_cols</span><span class="p">))</span>
+<span class="linenos"> 68</span>    <span class="p">)</span>
+<span class="linenos"> 69</span>    <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">cat_cols</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">num_cols</span><span class="p">))</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span>
+<span class="linenos"> 70</span>        <span class="p">[]</span>
+<span class="linenos"> 71</span>    <span class="p">),</span> <span class="s2">&quot;Failed to split featureframe into categorical and numeric features&quot;</span>
+<span class="linenos"> 72</span>
+<span class="linenos"> 73</span>    <span class="c1"># Define an encoder for categorical features</span>
+<span class="linenos"> 74</span>    <span class="n">indexer_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_name</span> <span class="o">+</span> <span class="s2">&quot;_index&quot;</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">cat_cols</span><span class="p">]</span>
+<span class="linenos"> 75</span>    <span class="n">indexer</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span>
+<span class="linenos"> 76</span>        <span class="n">inputCols</span><span class="o">=</span><span class="n">cat_cols</span><span class="p">,</span> <span class="n">outputCols</span><span class="o">=</span><span class="n">indexer_cols</span><span class="p">,</span> <span class="n">handleInvalid</span><span class="o">=</span><span class="s2">&quot;keep&quot;</span>
+<span class="linenos"> 77</span>    <span class="p">)</span>
+<span class="linenos"> 78</span>
+<span class="linenos"> 79</span>    <span class="c1"># Define mean imputer for numeric columns</span>
+<span class="linenos"> 80</span>    <span class="n">imputer_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col_name</span> <span class="o">+</span> <span class="s2">&quot;_imputed&quot;</span> <span class="k">for</span> <span class="n">col_name</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">]</span>
+<span class="linenos"> 81</span>    <span class="n">imputer</span> <span class="o">=</span> <span class="n">Imputer</span><span class="p">(</span><span class="n">inputCols</span><span class="o">=</span><span class="n">num_cols</span><span class="p">,</span> <span class="n">outputCols</span><span class="o">=</span><span class="n">imputer_cols</span><span class="p">)</span>
+<span class="linenos"> 82</span>
+<span class="linenos"> 83</span>    <span class="c1"># Define a vector assembler</span>
+<span class="linenos"> 84</span>    <span class="n">assembler</span> <span class="o">=</span> <span class="n">VectorAssembler</span><span class="p">(</span>
+<span class="linenos"> 85</span>        <span class="n">inputCols</span><span class="o">=</span><span class="p">[</span><span class="o">*</span><span class="n">imputer_cols</span><span class="p">,</span> <span class="o">*</span><span class="n">indexer_cols</span><span class="p">],</span>
+<span class="linenos"> 86</span>        <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;assembled_features&quot;</span><span class="p">,</span>
+<span class="linenos"> 87</span>    <span class="p">)</span>
+<span class="linenos"> 88</span>
+<span class="linenos"> 89</span>    <span class="c1"># Define a PCA model</span>
+<span class="linenos"> 90</span>    <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;assembled_features&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;pca_features&quot;</span><span class="p">)</span>
+<span class="linenos"> 91</span>
+<span class="linenos"> 92</span>    <span class="c1"># Define a PipelineModel</span>
+<span class="linenos"> 93</span>    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">indexer</span><span class="p">,</span> <span class="n">imputer</span><span class="p">,</span> <span class="n">assembler</span><span class="p">,</span> <span class="n">pca</span><span class="p">])</span>
+<span class="linenos"> 94</span>
+<span class="linenos"> 95</span>    <span class="c1"># Fit the model to the data and persist it</span>
+<span class="linenos"> 96</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">featureframe</span><span class="p">)</span>
+<span class="linenos"> 97</span>    <span class="n">model</span><span class="o">.</span><span class="n">write</span><span class="p">()</span><span class="o">.</span><span class="n">overwrite</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+<span class="linenos"> 98</span>        <span class="sa">f</span><span class="s2">&quot;credit-risk/feature-engineering/pca-model-maxdepth</span><span class="si">{</span><span class="n">maxdepth</span><span class="si">}</span><span class="s2">.mllib&quot;</span>
+<span class="linenos"> 99</span>    <span class="p">)</span>
+<span class="linenos">100</span>
+<span class="linenos">101</span>    <span class="c1"># Transform the data using the model</span>
+<span class="linenos">102</span>    <span class="n">selected_features</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">featureframe</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+<span class="linenos">103</span>        <span class="o">*</span><span class="n">metadata_cols</span><span class="p">,</span> <span class="s2">&quot;pca_features&quot;</span>
+<span class="linenos">104</span>    <span class="p">)</span>
+<span class="linenos">105</span>
+<span class="linenos">106</span>    <span class="n">selected_features</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">96</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">&quot;overwrite&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">parquet</span><span class="p">(</span>
+<span class="linenos">107</span>        <span class="sa">f</span><span class="s2">&quot;data/pca-featureframe-maxdepth</span><span class="si">{</span><span class="n">maxdepth</span><span class="si">}</span><span class="s2">.parquet&quot;</span>
+<span class="linenos">108</span>    <span class="p">)</span>
 </pre></div>
 </div>
 </div>

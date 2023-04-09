@@ -330,7 +330,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -346,6 +348,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-observations">7.1. Missing observations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results">7.2. Results</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -581,7 +592,8 @@ memory usage: 7.4+ MB
 </div>
 </div>
 </div>
-<p id="missing-observations"><strong>Missing observations</strong></p>
+<section id="missing-observations">
+<span id="id1"></span><h2><span class="section-number">7.1. </span>Missing observations<a class="headerlink" href="#missing-observations" title="Permalink to this heading">#</a></h2>
 <p>We can’t retrieve rolling_mean for 25% of observations (from 57,621 to 43,225), which means that this approach is inviable as it stands.
 Before pivoting, let’s check the sanity of this result by looking at Ecommerce dataset for a couple of cases.</p>
 <div class="cell docutils container">
@@ -734,17 +746,25 @@ dtype: int64
 </div>
 </div>
 <p>For the sake of time, I will finish this experiment with 20% of missing observations. Unfortunately, 5 out of 9 “not fully paid” observations are left out because of staleness. That would be an interesting tangent for another set of experiments. Something in the shape of “inactive-retailer” segment for credit risk.</p>
-<p>However, this leaves us with a smaller section of an already very minor class. It doesn’t mean we cannot test our hypothesis, but the confidence in results will be diminished. Not all is lost, though. We can then use Power Analysis to find out how many more observations we woudl require to achieve 95% confidence intervals. But first things first, let’s test the first set of hypotheses:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I was not able to perform Power Analysis mentioned in the next paragraph due to limited time.</p>
+</div>
+<p>However, this leaves us with a smaller section of an already very minor class. It doesn’t mean we cannot test our hypothesis, but the confidence in results will be diminished. Not all is lost, though. We can then use Power Analysis to find out how many more observations we would require to achieve 95% confidence intervals. But first things first, let’s test the first set of hypotheses:</p>
 <ul class="simple">
 <li><p><em>null hypothesis 1</em>: retailers who default (fully or partially) on their loan are requesting to borrow amounts <strong>above 1 standard deviation</strong> of their usual ecommerce volume</p></li>
 <li><p><em>alternate hypothesis 1</em>: retailers who default (fully or partially) on their loan are requesting to borrow amounts <strong>within 1 standard deviation</strong> of their usual ecommerce volume</p></li>
 </ul>
-<p>To be very honest this first set of hypotheses becomes rather pointless to test if we only have 4 observations. Let’s skip to the second set, which can lead into more insight.</p>
+<p>To be very honest this first set of hypotheses will have very little significance due to us having only 4 observations. I judge it wiser to focus on the second set due to (again) limited time.</p>
+<p>The second set of hypothesis is based on the assumption that responsible retailers (the vast majority in the dataset) would be more cautious and tend to request <code class="docutils literal notranslate"><span class="pre">LOAN_AMOUNT</span></code> in the neighborhood of cash flow they are used to; in other words, they won’t use us for irresponsible leverage:</p>
 <ul class="simple">
 <li><p><em>null hypothesis 2</em>: retailers who pay their loans in full are requesting to borrow amounts <strong>within 1 standard deviation</strong> of their usual ecommerce volume</p></li>
 <li><p><em>alternate hypothesis 2</em>: retailers who pay their loans in full are requesting to borrow amounts <strong>above 1 standard deviation</strong> of their usual ecommerce volume</p></li>
 </ul>
 <p>If our tests accept the <em>null hypothesis</em>, we will have more confidence that credit risk assessment based on ecommerce volume wouldn’t jeopardize our best customers in volume, safeguarding customer experience. But the fact that we can’t test set 1 of hypotheses means we would still be opened to financial exposure.</p>
+</section>
+<section id="results">
+<h2><span class="section-number">7.2. </span>Results<a class="headerlink" href="#results" title="Permalink to this heading">#</a></h2>
 <p>I’m going to run 1000 trials of the hypothesis test for each aggregation window (7, 30, 120, 360 days) and use random sampling with replacement at each trial. This is a technique known as Bootstrapping and it’s great for estimating confidence intervals for tests.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -807,34 +827,35 @@ dtype: int64
 	Fail to reject null hypothesis 2
 	Retailers are requesting to borrow amounts **within 1 standard deviation** of their mean volume in the previous 7 days
 	We are 95% confident that between 0.9% and 1.2% of retailers borrow above their mean ecommerce volume
-	95% Confidence Interval: [0.0088, 0.0122]
+	95% Confidence Interval: [0.0087, 0.0121]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results on rolling_mean(ORDER_PRICE over 30 days)
 	Fail to reject null hypothesis 2
 	Retailers are requesting to borrow amounts **within 1 standard deviation** of their mean volume in the previous 30 days
 	We are 95% confident that between 1.6% and 2.0% of retailers borrow above their mean ecommerce volume
-	95% Confidence Interval: [0.0160, 0.0204]
+	95% Confidence Interval: [0.0158, 0.0202]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results on rolling_mean(ORDER_PRICE over 120 days)
 	Fail to reject null hypothesis 2
 	Retailers are requesting to borrow amounts **within 1 standard deviation** of their mean volume in the previous 120 days
 	We are 95% confident that between 2.6% and 3.1% of retailers borrow above their mean ecommerce volume
-	95% Confidence Interval: [0.0256, 0.0310]
+	95% Confidence Interval: [0.0257, 0.0312]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results on rolling_mean(ORDER_PRICE over 360 days)
 	Fail to reject null hypothesis 2
 	Retailers are requesting to borrow amounts **within 1 standard deviation** of their mean volume in the previous 360 days
-	We are 95% confident that between 2.6% and 3.1% of retailers borrow above their mean ecommerce volume
-	95% Confidence Interval: [0.0257, 0.0312]
+	We are 95% confident that between 2.5% and 3.1% of retailers borrow above their mean ecommerce volume
+	95% Confidence Interval: [0.0254, 0.0311]
 </pre></div>
 </div>
 </div>
 </div>
 <p>That’s an encoraging but expected result. Most retailers are responsible businees people who tend to be better at managing money. However, I was not expecting the percentage of retailer who go beyond this “safety zone” to bo so low. And here I can point out that not making that statement previously – what I expect to see – is something that sould always be avoided in experiments. I should have stated that I expected to see it around the 10% mark before commiting to this experiment. Maybe it’s the hurry that’s getting the best of me.</p>
 <p>Anyhow, there is much more to be explored and proposed, but we can confidently add the rolling features. And because there was little difference between 7 and 30 days, and because of <a class="reference internal" href="#missing-observations"><span class="std std-ref">this limitation</span></a> I will take the 30-day window.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -895,6 +916,21 @@ dtype: int64
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-observations">7.1. Missing observations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results">7.2. Results</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
