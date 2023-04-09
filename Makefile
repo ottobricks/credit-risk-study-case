@@ -30,7 +30,7 @@ publish:
 	cat << 'EOF' > docs/index.html
 	<meta http-equiv="Refresh" content="0; url=html/intro.html" />
 	EOF
-	touch .nojekyll
+	touch docs/.nojekyll
 	git add .nojekyll \
 	&& git add docs/ \
 	&& git commit -m "Publish updates" \
