@@ -1,0 +1,947 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>7. Test Hypothesis &#8212; Credit Risk - Study Case</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/test-hypothesis';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8. Feature Engineering" href="../model-experiments/feature-engineering.html" />
+    <link rel="prev" title="6. Testing Assumptions" href="test-assumption.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/maxab-logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/maxab-logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Credit Risk - Case Study
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/methodology.html">1. Methodology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/hypothesis.html">1.1. Hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-leak.html">1.2. Avoiding Data Leak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/evaluation.html">1.3. Evaluation Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/initial-data-discovery.html">2. Initial Data Discovery</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/data-profile-reports.html">3. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/product-understanding.html">4. Product Understanding</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exploratory-analysis.html">5. Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test-assumption.html">6. Testing Assumptions</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Test Hypothesis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ML Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/feature-engineering.html">8. Feature Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/baseline-performance.html">9. Baseline Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Model Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/risk-assessment-performance.html">11. Results</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Credit Risk Decision API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/overview.html">12. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/okrs.html">13. Objectives and Key Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/tiered-risk-model.html">14. Tiered Risk Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/user-story.html">15. User Story</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ottok92/credit-risk-study-case" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/experiments/test-hypothesis.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Test Hypothesis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="test-hypothesis">
+<h1><span class="section-number">7. </span>Test Hypothesis<a class="headerlink" href="#test-hypothesis" title="Permalink to this heading">#</a></h1>
+<p>Before anything else, you must remeber that the objective of testing hypothesis is to force us to clearly state out beliefs (<em>null hypothesis</em>) and try our best to prove we are wrong (a.k.a reject the <em>null hypothesis</em>). So, in very simple terms, we are using evidence to try refute our own beliefs because we want only the strongest of them to last. After all, if you are your most delligent critic to yourself and you are a good critic, you are unlikely to hold misconceptions for long.</p>
+<p>I choose to remove from the Loans dataset all observations where retailers never spent their funds. I will dismiss them as discovery of the product rather than intention to use it. Note that all positive observations (defaults) are still in the dataset after the filter.</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="n">loans_df</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../data/Loans_Data.xlsx&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+        <span class="n">MAIN_SYSTEM_ID</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
+        <span class="n">LOAN_ID</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
+        <span class="n">LOAN_ISSUANCE_DATE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;M8[ns]&quot;</span><span class="p">),</span>
+        <span class="n">LOAN_AMOUNT</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_AMOUNT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+        <span class="n">TOTAL_INITIAL_AMOUNT</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;TOTAL_INITIAL_AMOUNT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+        <span class="n">INITIAL_DATE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;INITIAL_DATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;M8[ns]&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;SPENT &gt; 0&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">loans_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">loans_df</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="s2">&quot;PAYMENT_STATUS&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 57621 entries, 15567 to 68798
+Data columns (total 21 columns):
+ #   Column                   Non-Null Count  Dtype         
+---  ------                   --------------  -----         
+ 0   INDEX                    57621 non-null  int64         
+ 1   MAIN_SYSTEM_ID           57621 non-null  int64         
+ 2   RETAILER_ID              57621 non-null  int64         
+ 3   LOAN_ID                  57621 non-null  int64         
+ 4   LOAN_ISSUANCE_DATE       57621 non-null  datetime64[ns]
+ 5   LOAN_AMOUNT              57621 non-null  float64       
+ 6   INITIAL_COST             57621 non-null  int64         
+ 7   TOTAL_INITIAL_AMOUNT     57621 non-null  float64       
+ 8   INITIAL_DATE             57621 non-null  datetime64[ns]
+ 9   LOAN_PAYMENT_DATE        57621 non-null  datetime64[ns]
+ 10  PAYMENT_AMOUNT           57621 non-null  float64       
+ 11  FIRST_TRAIL_DELAYS       57621 non-null  int64         
+ 12  FIRST_TRIAL_BALANCE      57621 non-null  float64       
+ 13  SPENT                    57621 non-null  float64       
+ 14  FINAL_COST               57621 non-null  int64         
+ 15  TOTAL_FINAL_AMOUNT       57621 non-null  float64       
+ 16  REPAYMENT_ID             57621 non-null  int64         
+ 17  REPAYMENT_AMOUNT         57621 non-null  float64       
+ 18  REPAYMENT_UPDATED        57621 non-null  datetime64[ns]
+ 19  CUMMULATIVE_OUTSTANDING  57621 non-null  float64       
+ 20  PAYMENT_STATUS           57621 non-null  object        
+dtypes: datetime64[ns](4), float64(8), int64(8), object(1)
+memory usage: 9.7+ MB
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PAYMENT_STATUS
+Paid             57612
+Unpaid               6
+Partialy paid        3
+dtype: int64
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecommerce_df</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="s2">&quot;../../data/Ecommerce_orders_Data.csv&quot;</span><span class="p">,</span>
+        <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;ORDER_ID&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;DISCOUNT&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;ORDER_PRICE_AFTER_DISCOUNT&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s2">&quot;O&quot;</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+        <span class="n">ORDER_CREATION_DATE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+            <span class="n">x</span><span class="p">[</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">],</span> <span class="n">infer_datetime_format</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;DISCOUNT&quot;</span><span class="p">,</span> <span class="s2">&quot;ORDER_PRICE_AFTER_DISCOUNT&quot;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">ecommerce_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 656473 entries, 366489 to 237075
+Data columns (total 4 columns):
+ #   Column               Non-Null Count   Dtype         
+---  ------               --------------   -----         
+ 0   ORDER_ID             656473 non-null  int64         
+ 1   MAIN_SYSTEM_ID       656473 non-null  int64         
+ 2   ORDER_PRICE          656473 non-null  float64       
+ 3   ORDER_CREATION_DATE  656473 non-null  datetime64[ns]
+dtypes: datetime64[ns](1), float64(1), int64(2)
+memory usage: 25.0 MB
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Compute the rolling mean of amount retailer spent in Ecommerce over 7 and 30 days.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecommerce_df</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ecommerce_df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+        <span class="n">ROLLINGMEAN_7DAYS__ORDER_PRICE__</span><span class="o">=</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s2">&quot;7D&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)[</span><span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">ROLLINGMEAN_30DAYS__ORDER_PRICE__</span><span class="o">=</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s2">&quot;30D&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)[</span><span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">ROLLINGSTDDEV_7DAYS__ORDER_PRICE__</span><span class="o">=</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s2">&quot;7D&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)[</span><span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">std</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">),</span>
+        <span class="n">ROLLINGSTDDEV_30DAYS__ORDER_PRICE__</span><span class="o">=</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s2">&quot;30D&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)[</span><span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">std</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">)[</span>
+        <span class="p">[</span>
+            <span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ROLLINGMEAN_7DAYS__ORDER_PRICE__&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ROLLINGMEAN_30DAYS__ORDER_PRICE__&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ROLLINGSTDDEV_7DAYS__ORDER_PRICE__&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ROLLINGSTDDEV_30DAYS__ORDER_PRICE__&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">]</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Perform <strong>point-in-time correct join</strong> between datasets, accept at max 7-day-old stale rolling_mean.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">merged_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span>
+    <span class="n">loans_df</span><span class="p">,</span>
+    <span class="n">ecommerce_df</span><span class="p">,</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">,</span>
+    <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">,</span>
+    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span>
+    <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;backward&quot;</span><span class="p">,</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s2">&quot;7d&quot;</span><span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;LOAN_ISSUANCE_DATE &gt; ORDER_CREATION_DATE&quot;</span><span class="p">)</span>
+
+<span class="n">merged_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 34437 entries, 1 to 57618
+Data columns (total 27 columns):
+ #   Column                               Non-Null Count  Dtype         
+---  ------                               --------------  -----         
+ 0   INDEX                                34437 non-null  int64         
+ 1   MAIN_SYSTEM_ID                       34437 non-null  int64         
+ 2   RETAILER_ID                          34437 non-null  int64         
+ 3   LOAN_ID                              34437 non-null  int64         
+ 4   LOAN_ISSUANCE_DATE                   34437 non-null  datetime64[ns]
+ 5   LOAN_AMOUNT                          34437 non-null  float64       
+ 6   INITIAL_COST                         34437 non-null  int64         
+ 7   TOTAL_INITIAL_AMOUNT                 34437 non-null  float64       
+ 8   INITIAL_DATE                         34437 non-null  datetime64[ns]
+ 9   LOAN_PAYMENT_DATE                    34437 non-null  datetime64[ns]
+ 10  PAYMENT_AMOUNT                       34437 non-null  float64       
+ 11  FIRST_TRAIL_DELAYS                   34437 non-null  int64         
+ 12  FIRST_TRIAL_BALANCE                  34437 non-null  float64       
+ 13  SPENT                                34437 non-null  float64       
+ 14  FINAL_COST                           34437 non-null  int64         
+ 15  TOTAL_FINAL_AMOUNT                   34437 non-null  float64       
+ 16  REPAYMENT_ID                         34437 non-null  int64         
+ 17  REPAYMENT_AMOUNT                     34437 non-null  float64       
+ 18  REPAYMENT_UPDATED                    34437 non-null  datetime64[ns]
+ 19  CUMMULATIVE_OUTSTANDING              34437 non-null  float64       
+ 20  PAYMENT_STATUS                       34437 non-null  object        
+ 21  ORDER_CREATION_DATE                  34437 non-null  datetime64[ns]
+ 22  ORDER_PRICE                          34437 non-null  float64       
+ 23  ROLLINGMEAN_7DAYS__ORDER_PRICE__     34437 non-null  float64       
+ 24  ROLLINGMEAN_30DAYS__ORDER_PRICE__    34437 non-null  float64       
+ 25  ROLLINGSTDDEV_7DAYS__ORDER_PRICE__   27689 non-null  float64       
+ 26  ROLLINGSTDDEV_30DAYS__ORDER_PRICE__  33171 non-null  float64       
+dtypes: datetime64[ns](5), float64(13), int64(8), object(1)
+memory usage: 7.4+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<p id="missing-observations"><strong>Missing observations</strong></p>
+<p>We can’t retrieve rolling_mean for 25% of observations (from 57,621 to 43,225), which means that this approach is inviable as it stands.
+Before pivoting, let’s check the sanity of this result by looking at Ecommerce dataset for a couple of cases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retailers_leftout</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">loans_df</span><span class="p">[[</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(),</span>
+        <span class="n">merged_df</span><span class="p">[[</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(),</span>
+        <span class="n">on</span><span class="o">=</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span>
+        <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+        <span class="n">indicator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;_merge == &#39;left_only&#39;&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;_merge&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">retailers_leftout</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MAIN_SYSTEM_ID    1058
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">ecommerce_df</span><span class="p">,</span> <span class="n">retailers_leftout</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)[</span>
+    <span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span>
+<span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>929
+</pre></div>
+</div>
+</div>
+</div>
+<p>They are in fact all present. So it must mean their loan request came after 7 days of their last Ecommerce transaction. Let’s expand the accepted staleness to 30 days and see how the number changes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">merged_df</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span>
+        <span class="n">loans_df</span><span class="p">,</span>
+        <span class="n">ecommerce_df</span><span class="p">,</span>
+        <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">,</span>
+        <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">,</span>
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span>
+        <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;backward&quot;</span><span class="p">,</span>
+        <span class="n">tolerance</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s2">&quot;30d&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;LOAN_ISSUANCE_DATE &gt; ORDER_CREATION_DATE&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">merged_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 46632 entries, 1 to 57620
+Data columns (total 27 columns):
+ #   Column                               Non-Null Count  Dtype         
+---  ------                               --------------  -----         
+ 0   INDEX                                46632 non-null  int64         
+ 1   MAIN_SYSTEM_ID                       46632 non-null  int64         
+ 2   RETAILER_ID                          46632 non-null  int64         
+ 3   LOAN_ID                              46632 non-null  int64         
+ 4   LOAN_ISSUANCE_DATE                   46632 non-null  datetime64[ns]
+ 5   LOAN_AMOUNT                          46632 non-null  float64       
+ 6   INITIAL_COST                         46632 non-null  int64         
+ 7   TOTAL_INITIAL_AMOUNT                 46632 non-null  float64       
+ 8   INITIAL_DATE                         46632 non-null  datetime64[ns]
+ 9   LOAN_PAYMENT_DATE                    46632 non-null  datetime64[ns]
+ 10  PAYMENT_AMOUNT                       46632 non-null  float64       
+ 11  FIRST_TRAIL_DELAYS                   46632 non-null  int64         
+ 12  FIRST_TRIAL_BALANCE                  46632 non-null  float64       
+ 13  SPENT                                46632 non-null  float64       
+ 14  FINAL_COST                           46632 non-null  int64         
+ 15  TOTAL_FINAL_AMOUNT                   46632 non-null  float64       
+ 16  REPAYMENT_ID                         46632 non-null  int64         
+ 17  REPAYMENT_AMOUNT                     46632 non-null  float64       
+ 18  REPAYMENT_UPDATED                    46632 non-null  datetime64[ns]
+ 19  CUMMULATIVE_OUTSTANDING              46632 non-null  float64       
+ 20  PAYMENT_STATUS                       46632 non-null  object        
+ 21  ORDER_CREATION_DATE                  46632 non-null  datetime64[ns]
+ 22  ORDER_PRICE                          46632 non-null  float64       
+ 23  ROLLINGMEAN_7DAYS__ORDER_PRICE__     46632 non-null  float64       
+ 24  ROLLINGMEAN_30DAYS__ORDER_PRICE__    46632 non-null  float64       
+ 25  ROLLINGSTDDEV_7DAYS__ORDER_PRICE__   37523 non-null  float64       
+ 26  ROLLINGSTDDEV_30DAYS__ORDER_PRICE__  44892 non-null  float64       
+dtypes: datetime64[ns](5), float64(13), int64(8), object(1)
+memory usage: 10.0+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are still missing 20% of observations, and increasing this window means less stable estimations and more uncertainty. Let’s add a longer window rolling_mean to adjust for that.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">merged_df</span> <span class="o">=</span> <span class="n">merged_df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+    <span class="n">ROLLINGMEAN_120DAYS__ORDER_PRICE__</span><span class="o">=</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s2">&quot;120D&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)[</span><span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">ROLLINGMEAN_360DAYS__ORDER_PRICE__</span><span class="o">=</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s2">&quot;360D&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)[</span><span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">ROLLINGSTDDEV_120DAYS__ORDER_PRICE__</span><span class="o">=</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s2">&quot;120D&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)[</span><span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="n">ROLLINGSTDDEV_360DAYS__ORDER_PRICE__</span><span class="o">=</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s2">&quot;360D&quot;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)[</span><span class="s2">&quot;ORDER_PRICE&quot;</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">),</span>
+<span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">merged_df</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="s2">&quot;PAYMENT_STATUS&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PAYMENT_STATUS
+Paid             46628
+Partialy paid        2
+Unpaid               2
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the sake of time, I will finish this experiment with 20% of missing observations. Unfortunately, 5 out of 9 “not fully paid” observations are left out because of staleness. That would be an interesting tangent for another set of experiments. Something in the shape of “inactive-retailer” segment for credit risk.</p>
+<p>However, this leaves us with a smaller section of an already very minor class. It doesn’t mean we cannot test our hypothesis, but the confidence in results will be diminished. Not all is lost, though. We can then use Power Analysis to find out how many more observations we woudl require to achieve 95% confidence intervals. But first things first, let’s test the first set of hypotheses:</p>
+<ul class="simple">
+<li><p><em>null hypothesis 1</em>: retailers who default (fully or partially) on their loan are requesting to borrow amounts <strong>above 1 standard deviation</strong> of their usual ecommerce volume</p></li>
+<li><p><em>alternate hypothesis 1</em>: retailers who default (fully or partially) on their loan are requesting to borrow amounts <strong>within 1 standard deviation</strong> of their usual ecommerce volume</p></li>
+</ul>
+<p>To be very honest this first set of hypotheses becomes rather pointless to test if we only have 4 observations. Let’s skip to the second set, which can lead into more insight.</p>
+<ul class="simple">
+<li><p><em>null hypothesis 2</em>: retailers who pay their loans in full are requesting to borrow amounts <strong>within 1 standard deviation</strong> of their usual ecommerce volume</p></li>
+<li><p><em>alternate hypothesis 2</em>: retailers who pay their loans in full are requesting to borrow amounts <strong>above 1 standard deviation</strong> of their usual ecommerce volume</p></li>
+</ul>
+<p>If our tests accept the <em>null hypothesis</em>, we will have more confidence that credit risk assessment based on ecommerce volume wouldn’t jeopardize our best customers in volume, safeguarding customer experience. But the fact that we can’t test set 1 of hypotheses means we would still be opened to financial exposure.</p>
+<p>I’m going to run 1000 trials of the hypothesis test for each aggregation window (7, 30, 120, 360 days) and use random sampling with replacement at each trial. This is a technique known as Bootstrapping and it’s great for estimating confidence intervals for tests.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the number of bootstrap rounds</span>
+<span class="n">n_bootstrap_rounds</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="k">for</span> <span class="n">w_size</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">360</span><span class="p">]:</span>
+    <span class="c1"># Calculate the mean and standard deviation of the usual ecommerce volume</span>
+    <span class="n">mean_usual_ecommerce_volume</span> <span class="o">=</span> <span class="n">merged_df</span><span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;ROLLINGMEAN_</span><span class="si">{</span><span class="n">w_size</span><span class="si">}</span><span class="s2">DAYS__ORDER_PRICE__&quot;</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">std_usual_ecommerce_volume</span> <span class="o">=</span> <span class="n">merged_df</span><span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;ROLLINGSTDDEV_</span><span class="si">{</span><span class="n">w_size</span><span class="si">}</span><span class="s2">DAYS__ORDER_PRICE__&quot;</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+    <span class="c1"># Calculate the 1 standard deviation limit</span>
+    <span class="n">one_std_limit</span> <span class="o">=</span> <span class="n">mean_usual_ecommerce_volume</span> <span class="o">+</span> <span class="n">std_usual_ecommerce_volume</span>
+
+    <span class="c1"># Define function to calculate the proportion of loan_amount greater than one_std_limit</span>
+    <span class="k">def</span> <span class="nf">proportion_above_limit</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span> <span class="o">&gt;</span> <span class="n">one_std_limit</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Initialize an empty array to store bootstrap sample proportions</span>
+    <span class="n">bootstrap_proportions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_bootstrap_rounds</span><span class="p">)</span>
+
+    <span class="c1"># Perform bootstrapping</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bootstrap_rounds</span><span class="p">):</span>
+        <span class="n">bootstrap_sample</span> <span class="o">=</span> <span class="n">merged_df</span><span class="p">[</span><span class="s2">&quot;LOAN_AMOUNT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">bootstrap_proportions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">proportion_above_limit</span><span class="p">(</span><span class="n">bootstrap_sample</span><span class="p">)</span>
+
+    <span class="c1"># Calculate the 95% confidence intervals</span>
+    <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">bootstrap_proportions</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>
+    <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">bootstrap_proportions</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">)</span>
+
+    <span class="c1"># Check if the confidence interval contains 0.5 (equal proportions)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Results on rolling_mean(ORDER_PRICE over </span><span class="si">{</span><span class="n">w_size</span><span class="si">}</span><span class="s2"> days)&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">lower_bound</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Reject null hypothesis 2&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Retailers are requesting to borrow amounts **above 1 standard deviation** of their mean volume in the previous </span><span class="si">{</span><span class="n">w_size</span><span class="si">}</span><span class="s2"> days&quot;</span><span class="p">,</span>
+            <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Fail to reject null hypothesis 2&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Retailers are requesting to borrow amounts **within 1 standard deviation** of their mean volume in the previous </span><span class="si">{</span><span class="n">w_size</span><span class="si">}</span><span class="s2"> days&quot;</span><span class="p">,</span>
+            <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">We are 95% confident that between </span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2"> of retailers &quot;</span>
+        <span class="o">+</span> <span class="s2">&quot;borrow above their mean ecommerce volume&quot;</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">95% Confidence Interval: [</span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results on rolling_mean(ORDER_PRICE over 7 days)
+	Fail to reject null hypothesis 2
+	Retailers are requesting to borrow amounts **within 1 standard deviation** of their mean volume in the previous 7 days
+	We are 95% confident that between 0.9% and 1.2% of retailers borrow above their mean ecommerce volume
+	95% Confidence Interval: [0.0088, 0.0122]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results on rolling_mean(ORDER_PRICE over 30 days)
+	Fail to reject null hypothesis 2
+	Retailers are requesting to borrow amounts **within 1 standard deviation** of their mean volume in the previous 30 days
+	We are 95% confident that between 1.6% and 2.0% of retailers borrow above their mean ecommerce volume
+	95% Confidence Interval: [0.0160, 0.0204]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results on rolling_mean(ORDER_PRICE over 120 days)
+	Fail to reject null hypothesis 2
+	Retailers are requesting to borrow amounts **within 1 standard deviation** of their mean volume in the previous 120 days
+	We are 95% confident that between 2.6% and 3.1% of retailers borrow above their mean ecommerce volume
+	95% Confidence Interval: [0.0256, 0.0310]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results on rolling_mean(ORDER_PRICE over 360 days)
+	Fail to reject null hypothesis 2
+	Retailers are requesting to borrow amounts **within 1 standard deviation** of their mean volume in the previous 360 days
+	We are 95% confident that between 2.6% and 3.1% of retailers borrow above their mean ecommerce volume
+	95% Confidence Interval: [0.0257, 0.0312]
+</pre></div>
+</div>
+</div>
+</div>
+<p>That’s an encoraging but expected result. Most retailers are responsible businees people who tend to be better at managing money. However, I was not expecting the percentage of retailer who go beyond this “safety zone” to bo so low. And here I can point out that not making that statement previously – what I expect to see – is something that sould always be avoided in experiments. I should have stated that I expected to see it around the 10% mark before commiting to this experiment. Maybe it’s the hurry that’s getting the best of me.</p>
+<p>Anyhow, there is much more to be explored and proposed, but we can confidently add the rolling features. And because there was little difference between 7 and 30 days, and because of <a class="reference internal" href="#missing-observations"><span class="std std-ref">this limitation</span></a> I will take the 30-day window.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./experiments"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="test-assumption.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Testing Assumptions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../model-experiments/feature-engineering.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Feature Engineering</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Otto von Sperling
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

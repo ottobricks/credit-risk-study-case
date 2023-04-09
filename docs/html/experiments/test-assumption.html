@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>6. Testing Assumptions &#8212; Credit Risk - Study Case</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/test-assumption';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7. Test Hypothesis" href="test-hypothesis.html" />
+    <link rel="prev" title="5. Exploratory Data Analysis" href="exploratory-analysis.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/maxab-logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/maxab-logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Credit Risk - Case Study
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/methodology.html">1. Methodology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/hypothesis.html">1.1. Hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-leak.html">1.2. Avoiding Data Leak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/evaluation.html">1.3. Evaluation Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/initial-data-discovery.html">2. Initial Data Discovery</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/data-profile-reports.html">3. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/product-understanding.html">4. Product Understanding</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exploratory-analysis.html">5. Exploratory Data Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Testing Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test-hypothesis.html">7. Test Hypothesis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ML Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/feature-engineering.html">8. Feature Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/baseline-performance.html">9. Baseline Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Model Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/risk-assessment-performance.html">11. Results</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Credit Risk Decision API</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/overview.html">12. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/okrs.html">13. Objectives and Key Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/tiered-risk-model.html">14. Tiered Risk Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/user-story.html">15. User Story</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ottok92/credit-risk-study-case" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/experiments/test-assumption.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Testing Assumptions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecommerce-dataset-completeness">6.1. Ecommerce dataset completeness</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="testing-assumptions">
+<h1><span class="section-number">6. </span>Testing Assumptions<a class="headerlink" href="#testing-assumptions" title="Permalink to this heading">#</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>I couldn’t complete this exploration in a timely manner, so I decided to assume it to be true and move forward. Not ideal, but necessary to finish in time.</p>
+</div>
+<p>As mentioned in <a class="reference internal" href="../discovery/hypothesis.html#assumptions"><span class="std std-ref">this methodology section</span></a>, …</p>
+<section id="ecommerce-dataset-completeness">
+<span id="id1"></span><h2><span class="section-number">6.1. </span>Ecommerce dataset completeness<a class="headerlink" href="#ecommerce-dataset-completeness" title="Permalink to this heading">#</a></h2>
+<p>Before inspecting the data, my first assumption about our datasets is that Fintech and Ecommerce contain retailers’ time series data regarding their use of the platform. I expect to see at least columns equivalent to <code class="docutils literal notranslate"><span class="pre">user_id</span></code>, <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> and <code class="docutils literal notranslate"><span class="pre">invoice_value</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">ydata_profiling.visualisation.plot</span> <span class="kn">import</span> <span class="n">timeseries_heatmap</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/Retailer_Transactions_Data.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">timeseries_heatmap</span><span class="p">(</span>
+    <span class="n">dataframe</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
+    <span class="n">entity_column</span><span class="o">=</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span>
+    <span class="n">sortby</span><span class="o">=</span><span class="s2">&quot;CREATED_AT&quot;</span><span class="p">,</span>
+    <span class="n">max_entities</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e4013692e4ff013b6737845f89109bf04db94d734ba59596a12e93a8188e731b.png" src="../_images/e4013692e4ff013b6737845f89109bf04db94d734ba59596a12e93a8188e731b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">ydata_profiling.visualisation.plot</span> <span class="kn">import</span> <span class="n">timeseries_heatmap</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/Ecommerce_orders_Data.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">timeseries_heatmap</span><span class="p">(</span>
+    <span class="n">dataframe</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
+    <span class="n">entity_column</span><span class="o">=</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span>
+    <span class="n">sortby</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">,</span>
+    <span class="n">max_entities</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0b11dd59b1c46c0bbe0ad65b5cedd94c4381a8ab32911577ea1cc6e9f2b27cd6.png" src="../_images/0b11dd59b1c46c0bbe0ad65b5cedd94c4381a8ab32911577ea1cc6e9f2b27cd6.png" />
+</div>
+</div>
+<p>One interesting thought that came to my mind during the previous investigation is whether we can reconstruct <code class="docutils literal notranslate"><span class="pre">SPENT</span></code> from Ecommerce dataset. My assumption is that we can if the dataset is complete for every retailer present in Loans dataset.</p>
+<p>Why is that an interesting question? Due to the nature of retailing in general, one can argue that inventory purchases follow a repeating pattern (e.g. purchased every 2 weeks) and also a seasonal one (e.g. cold beverages purchases go up in Summer). These patterns can be very helpful to predict when the retailer is likely to need a loan, but also how much more (or less) they are likely to purchase in the next cycle. Among many other use-cases, I believe this is crucial when it comes to priority retailers – retailers with whom we have a long-term relationship and are willing to reserve liquidity for them (even at a lower margin) to keep the relationship healthy.</p>
+<p>Let’s test this assumption next. For every single loan, I will reconstruct <code class="docutils literal notranslate"><span class="pre">SPENT</span></code> from Ecommerce dataset and validate alignment between my aggregation and ground truth. If values mismatch, it means we have incomplete data in Ecommerce dataset. If the dataset is incomplete just for a portion of retailers in Loans datasets, then I must decide whether to only filter them in or to pivot to another approach.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># try:</span>
+<span class="c1">#     _ = ecommerce_df</span>
+<span class="c1"># except NameError:</span>
+<span class="c1">#     ecommerce_df = (</span>
+<span class="c1">#         pd.read_csv(&quot;../../data/Ecommerce_orders_Data.csv&quot;, header=0)</span>
+<span class="c1">#         .assign(</span>
+<span class="c1">#             ORDER_CREATION_DATE=lambda df: pd.to_datetime(</span>
+<span class="c1">#                 df[&quot;ORDER_CREATION_DATE&quot;],</span>
+<span class="c1">#                 infer_datetime_format=True</span>
+<span class="c1">#             )</span>
+<span class="c1">#         )</span>
+<span class="c1">#     )</span>
+
+<span class="c1"># (</span>
+<span class="c1">#     ecommerce_df</span>
+<span class="c1">#     .query(</span>
+<span class="c1">#         &quot;MAIN_SYSTEM_ID == 83079&quot;</span>
+<span class="c1">#         + &quot;and ORDER_CREATION_DATE &gt;= @pd.to_datetime(&#39;2022-08-01&#39;)&quot;</span>
+<span class="c1">#         + &quot;and ORDER_CREATION_DATE &lt; @pd.to_datetime(&#39;2022-10-01&#39;)&quot;</span>
+<span class="c1">#     )</span>
+<span class="c1">#     .sort_values(&quot;ORDER_CREATION_DATE&quot;)</span>
+<span class="c1"># )</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span><span class="p">,</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">del</span> <span class="n">loans_df</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">ecommerce_sdf</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">ecommerce_sdf</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;../../data/Ecommerce_orders_Data.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span>
+            <span class="s2">&quot;cast(ORDER_ID as long) as ORDER_ID&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cast(MAIN_SYSTEM_ID as long) as MAIN_SYSTEM_ID&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cast(ORDER_PRICE as float) as ORDER_PRICE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cast(DISCOUNT as float) as DISCOUNT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cast(ORDER_PRICE_AFTER_DISCOUNT as float) as ORDER_PRICE_AFTER_DISCOUNT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;to_timestamp(ORDER_CREATION_DATE) as ORDER_CREATION_DATE&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">loans_sdf</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">loans_sdf</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../data/Loans_Data.xlsx&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/04/10 00:07:57 WARN Utils: Your hostname, RyzenPc resolves to a loopback address: 127.0.1.1; using 192.168.129.225 instead (on interface wlp6s0)
+23/04/10 00:07:57 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>:: loading settings :: url = jar:file:/home/ottok92/.spark/spark-3.3.1-bin-hadoop3/jars/ivy-2.5.0.jar!/org/apache/ivy/core/settings/ivysettings.xml
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/04/10 00:07:59 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/04/10 00:07:59 WARN SparkConf: Note that spark.local.dir will be overridden by the value set by the cluster manager (via SPARK_LOCAL_DIRS in mesos/standalone/kubernetes and LOCAL_DIRS in YARN).
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># del ecommerce_sdf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># try:</span>
+<span class="c1">#     _ = fintech_df</span>
+<span class="c1"># except NameError:</span>
+<span class="c1">#     fintech_df = (</span>
+<span class="c1">#         pd.read_csv(&quot;../../data/Retailer_Transactions_Data.csv&quot;, header=0)</span>
+<span class="c1">#         .assign(</span>
+<span class="c1">#             CREATED_AT=lambda df: pd.to_datetime(</span>
+<span class="c1">#                 df[&quot;CREATED_AT&quot;],</span>
+<span class="c1">#                 infer_datetime_format=True</span>
+<span class="c1">#             ),</span>
+<span class="c1">#             UPDATED_AT=lambda df: pd.to_datetime(</span>
+<span class="c1">#                 df[&quot;UPDATED_AT&quot;],</span>
+<span class="c1">#                 infer_datetime_format=True</span>
+<span class="c1">#             )</span>
+<span class="c1">#         )</span>
+<span class="c1">#     )</span>
+
+<span class="c1"># (</span>
+<span class="c1">#     fintech_df</span>
+<span class="c1">#     .query(</span>
+<span class="c1">#         &quot;MAIN_SYSTEM_ID == 83079&quot;</span>
+<span class="c1">#         + &quot;and CREATED_AT &gt;= @pd.to_datetime(&#39;2022-09-01&#39;)&quot;</span>
+<span class="c1">#         # + &quot;and CREATED_AT &lt; @pd.to_datetime(&#39;2022-10-01&#39;)&quot;</span>
+<span class="c1">#     )</span>
+<span class="c1">#     .sort_values(&quot;CREATED_AT&quot;)</span>
+<span class="c1"># )</span>
+
+<span class="c1"># # del fintech_df</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./experiments"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="exploratory-analysis.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Exploratory Data Analysis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="test-hypothesis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>Test Hypothesis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecommerce-dataset-completeness">6.1. Ecommerce dataset completeness</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Otto von Sperling
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
