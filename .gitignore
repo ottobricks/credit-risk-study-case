@@ -5,6 +5,7 @@ credit-risk/_build/
 metastore_db/
 *.mllib
 *.log
+*.pkl
 
 # temporary ignore
 credit-risk/discovery/data-profile-reports/ecommerce-profile-tsmode/
