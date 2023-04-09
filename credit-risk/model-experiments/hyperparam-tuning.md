@@ -46,13 +46,9 @@ automl_settings = {
     "n_splits": 5,
     "split_type": "time",
     "early_stop": True,
-    # "n_jobs": 32,
-    # "n_concurrent_trials": 3,
     "n_jobs": -1,
     "n_concurrent_trials": 1,
-    # "use_spark": True,
-    # "time_budget": 180,  # in seconds
-    "time_budget": 15,  # in seconds
+    "time_budget": 3600,  # in seconds
     "log_file_name": "tune.log",
     "verbose": 2,
 }
@@ -95,11 +91,11 @@ print(f"Root Mean Squared Error (RMSE): {rmse:.4f}")
 print(f"R-squared (R2): {r2:.4f}")
 ```
 
-- Best Model: rf
-- Mean Absolute Error (MAE): 0.0004
-- Mean Squared Error (MSE): 0.0001
-- Root Mean Squared Error (RMSE): 0.0121
-- R-squared (R2): 0.5624
+Best Model: rf
+Mean Absolute Error (MAE): 0.0004
+Mean Squared Error (MSE): 0.0001
+Root Mean Squared Error (RMSE): 0.0121
+R-squared (R2): 0.5624
 
 ```{code-block} python
 # time_history, best_valid_loss_history, valid_loss_history, config_history, metric_history =
