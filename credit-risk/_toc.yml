@@ -8,6 +8,7 @@ parts:
     numbered: 2
     maxdepth: 2
     chapters:
+      - file: discovery/methodology.md
       - file: discovery/initial-data-discovery.md
       - file: discovery/data-profile-reports.md
         sections:
@@ -15,7 +16,6 @@ parts:
           - file: discovery/data-profile-reports/fintech-profile.md
           - file: discovery/data-profile-reports/ecommerce-profile.md
       - file: discovery/product-understanding.md
-      - file: discovery/methodology.md
   - caption: Exploratory Data Analysis
     numbered: True
     maxdepth: 2
