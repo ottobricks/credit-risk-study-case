@@ -13,10 +13,14 @@ kernelspec:
 
 # Testing Assumptions
 
+```{warning}
+I couldn't complete this exploration in a timely manner, so I decided to assume it to be true and move forward. Not ideal, but necessary to finish in time.
+```
+
 As mentioned in [this methodology section](assumptions), ...
 
 (testing-assumptions)=
-### Ecommerce dataset completeness
+## Ecommerce dataset completeness
 Before inspecting the data, my first assumption about our datasets is that Fintech and Ecommerce contain retailers' time series data regarding their use of the platform. I expect to see at least columns equivalent to `user_id`, `timestamp` and `invoice_value`.
 
 ```{code-cell} ipython3

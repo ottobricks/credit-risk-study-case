@@ -13,12 +13,6 @@ It goes without saying that this exercise can be enriched with many different da
 
 I decided to set aside some time to go over the design and components of my (proposal) for a more mature automated decision-making system and suggestions about the current loan process in chapter [Credit Risk Decision API](./decision-api/overview.md). Of course, it won't be extensive nor exhaustive of the possibilities since I must time-box it.
 
-## Binary Classification Results
-Lorem Ipsum
-
-## Dynamic Risk Control Results
-Lorem Ipsum if I have time
-
 ---
 
 The chapters in this book are meant to be read in order as they reflect the natural flow of exploration, then experimentation, then results.

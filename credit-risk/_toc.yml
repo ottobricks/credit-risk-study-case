@@ -27,15 +27,14 @@ parts:
       - file: experiments/exploratory-analysis.md
       - file: experiments/test-assumption.md
       - file: experiments/test-hypothesis.md
-      - file: experiments/results.md
   - caption: ML Experiments
     numbered: True
     maxdepth: 2
     chapters:
       - file: model-experiments/feature-engineering.md
-      - file: model-experiments/baseline-performance.ipynb
-      - file: model-experiments/hyperparam-tuning.ipynb
-      - file: model-experiments/tuned-model-performance.ipynb
+      - file: model-experiments/baseline-performance.md
+      - file: model-experiments/hyperparam-tuning.md
+      - file: model-experiments/risk-assessment-performance.md
   - caption: Credit Risk Decision API
     numbered: True
     maxdepth: 2

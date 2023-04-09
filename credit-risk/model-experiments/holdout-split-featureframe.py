@@ -48,6 +48,7 @@ if __name__ == "__main__":
     # Load targets
     targets = spark.createDataFrame(
         pd.read_excel("data/Loans_Data.xlsx")
+        .query("SPENT > 0")
         [[
             "LOAN_ID",
             "SPENT",
@@ -109,9 +110,9 @@ if __name__ == "__main__":
         )
         .write.mode("overwrite")
         .parquet(
-            f"data/test/pandas-pca-featureframe-maxdepth{maxdepth}.parquet"
-            # f"data/test/full-featureframe-maxdepth{maxdepth}.parquet"
-            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/test/pca-featureframe-maxdepth{maxdepth}.parquet"
+            f"data/test/pandas-pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
+            # f"data/test/pandas-full-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
+            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/test/pandas-pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
         )
     )
 
@@ -132,9 +133,9 @@ if __name__ == "__main__":
         )
         .write.mode("overwrite")
         .parquet(
-            f"data/train/pca-featureframe-maxdepth{maxdepth}.parquet"
-            # f"data/train/full-featureframe-maxdepth{maxdepth}.parquet"
-            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/train/pca-featureframe-maxdepth{maxdepth}.parquet"
+            f"data/train/pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
+            # f"data/train/full-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
+            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/train/pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
         )
     )
     # Dataset better suited for Pandas ML
@@ -151,8 +152,8 @@ if __name__ == "__main__":
         )
         .write.mode("overwrite")
         .parquet(
-            f"data/train/pandas-pca-featureframe-maxdepth{maxdepth}.parquet"
-            # f"data/test/full-featureframe-maxdepth{maxdepth}.parquet"
-            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/test/pca-featureframe-maxdepth{maxdepth}.parquet"
+            f"data/train/pandas-pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
+            # f"data/train/pandas-full-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
+            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/train/pandas-pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
         )
     )
