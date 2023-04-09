@@ -26,6 +26,7 @@ It's the growth versus profit conundrum. And I believe a good risk assessment an
 ```
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -66,6 +67,7 @@ Well, this is unexpected. The plot above shows us that a large percentage of ret
 What is the percentage of retailers that contract loans but spend nothing of it? Let's look at the quantiles of the delta series:
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 (loans_df["SPENT"] / loans_df["LOAN_AMOUNT"]).quantile(
     [.01, .1, .15, .20, .205, .21, .215, .225]
 )
@@ -84,6 +86,7 @@ You'll see that after investigation in this section, I have better understanding
 Let's first uncover how frequently this happens in this dataset. We start by inspecting the history of loans of a retailer that shows this behavior.
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 (
     loans_df[(loans_df["SPENT"] / loans_df["LOAN_AMOUNT"]) > 1]
     [[
@@ -101,6 +104,7 @@ The following plot is transposed so that we can fit all data points of interest 
 ```
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 (
     loans_df.query("MAIN_SYSTEM_ID == 83079")
     .sort_values("LOAN_ISSUANCE_DATE")
