@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Exploration Results
+# Experiment Results
 
 ```{contents}
 :local:

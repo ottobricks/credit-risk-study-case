@@ -20,13 +20,14 @@ parts:
           - file: discovery/data-profile-reports/fintech-profile.md
           - file: discovery/data-profile-reports/ecommerce-profile.md
       - file: discovery/product-understanding.md
-  - caption: Exploratory Data Analysis
+  - caption: Experiments
     numbered: True
     maxdepth: 2
     chapters:
-      - file: exploratory-analysis/anecdotes.md
-      - file: exploratory-analysis/sample-analysis.md
-      - file: exploratory-analysis/results.md
+      - file: experiments/exploratory-analysis.md
+      - file: experiments/test-assumption.md
+      - file: experiments/test-hypothesis.md
+      - file: experiments/results.md
   - caption: Feature Engineering
     numbered: True
     maxdepth: 2
