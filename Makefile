@@ -31,6 +31,7 @@ publish:
 	<meta http-equiv="Refresh" content="0; url=html/intro.html" />
 	EOF
 	touch .nojekyll
-	git add docs/ \
+	git add .nojekyll \
+	&& git add docs/ \
 	&& git commit -m "Publish updates" \
 	&& git push
