@@ -127,7 +127,7 @@ test_df.info()
 ## Load model and get predictions
 
 ```{code-cell} ipython3
-with open("assets/sagemaker-flaml-automl-regression-maxdepth2-targetSPENT-2.pkl", "rb") as fp:
+with open("assets/sagemaker-flaml-automl-regression-maxdepth2-targetSPENT-3.pkl", "rb") as fp:
     automl = pickle.load(fp)
 
 test_df = test_df.assign(
@@ -179,10 +179,14 @@ merged_df.info()
         "SAFE_DECISION",
         "AMBITIOUS_DECISION"
     ]]
-    .to_csv("../../docs/risk-assessment-decisions.csv", header=True, index=False)
+    .to_csv("../../risk-assessment-decisions.csv", header=True, index=False)
 )
 ```
 
 ```{code-cell} ipython3
 merged_df.info()
+```
+
+```{code-cell} ipython3
+
 ```
