@@ -11,13 +11,11 @@ kernelspec:
   name: python3
 ---
 
-# Exploring Anecdotal Cases
+# Exploratory Data Analysis
 
-```{contents}
-:local:
+```{warning}
+I decided not to actively pursue my ideas for exploration due to already having a strong set of hypotheses to test and the time constraint. Consider this page just a brain dump, please skip to [next section](./test-assumption.md)
 ```
-
-+++
 
 ## Retailers who missed the first collection attempt
 In the Loans dataset, there are a few cases when a retailer is not able to pay back the money they borrowed in the first collection attempt. That does not necessarily mean they will default on their payment, perhaps it's just a delay. Let's take a look at the retailer with the most delayed-but-paid loans:
@@ -50,12 +48,9 @@ except NameError:
 
 Let's investigate retailer `MAIN_SYSTEM_ID == 58316`, first looking at all 10 loans
 
----
-
-## MISC
 
 ```{code-cell} ipython3
-loans_df.query("MAIN_SYSTEM_ID == 58316")
+loans_df.query("MAIN_SYSTEM_ID == 58316").sort_values("LOAN_ISSUANCE_DATE")
 ```
 
 ```{code-cell} ipython3
@@ -76,7 +71,7 @@ except NameError:
 )
 ```
 
-?? If `FIRST_TRIAL_BALANCE < 0`, the retailer missed first collection attempt. Can we assume that retailers are given only a second collection attempt before being marked as `PAYMENT_STATUS in ('Unpaid', 'Partialy paid')`?
+?? If `FIRST_TRIAL_BALANCE < 0`, the retailer missed first collection attempt. Can we assume that retailers are given only a second collection attempt before being marked as `PAYMENT_STATUS in ('Unpaid', 'Partially paid')`?
 
 I'm starting to believe I was given a snapshot of the Loans dataset instead of time series as for the other 2 datasets. We can check that by looking at the following case: retailer misses the first payment but is able to fully pay on following collection attempt. We can represent that as `FIRST_TRIAL_BALANCE < 0 and PAYMENT_STATUS = 'Paid'`, then check if any `LOAN_ID` has more than one observation.
 

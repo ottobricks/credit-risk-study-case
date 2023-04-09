@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>1. Initial Data Discovery &#8212; Credit Risk - Study Case</title>
+    <title>2. Initial Data Discovery &#8212; Credit Risk - Study Case</title>
   
   
   
@@ -64,8 +64,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'discovery/initial-data-discovery';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2. Data Profile Reports" href="data-profile-reports.html" />
-    <link rel="prev" title="Credit Risk - Case Study" href="../intro.html" />
+    <link rel="next" title="3. Data Profile Reports" href="data-profile-reports.html" />
+    <link rel="prev" title="1.3. Evaluation Method" href="evaluation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -158,31 +158,33 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Initial Data Discovery</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="data-profile-reports.html">2. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="methodology.html">1. Methodology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="hypothesis.html">1.1. Hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-leak.html">1.2. Avoiding Data Leak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation.html">1.3. Evaluation Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Initial Data Discovery</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data-profile-reports.html">3. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="product-understanding.html">3. Product Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="methodology.html">4. Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="product-understanding.html">4. Product Understanding</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../exploratory-analysis/anecdotes.html">5. Exploring Anecdotal Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exploratory-analysis/sample-analysis.html">6. Exploring Sample and Population</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exploratory-analysis/results.html">7. Exploration Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/exploratory-analysis.html">5. Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/test-assumption.html">6. Testing Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/test-hypothesis.html">7. Test Hypothesis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature Engineering</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ML Experiments</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../feature-engineering/feature-engineering.html">8. Feature Engineering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Experiments</span></p>
-<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/feature-engineering.html">8. Feature Engineering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-experiments/baseline-performance.html">9. Baseline Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Tuning Model Hyperparameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model-experiments/tuned-model-performance.html">11. Performance Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Model Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/risk-assessment-performance.html">11. Results</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Credit Risk Decision API</span></p>
 <ul class="nav bd-sidenav">
@@ -351,14 +353,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-points">1.1. Data points</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-points">2.1. Data points</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loans-data">Loans data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fintech-data">Fintech data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ecommerce-data">Ecommerce data</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-between-datasets">1.2. Relationship between datasets</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#misc">1.3. MISC</a></li>
 </ul>
             </nav>
         </div>
@@ -371,7 +371,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="initial-data-discovery">
-<h1><span class="section-number">1. </span>Initial Data Discovery<a class="headerlink" href="#initial-data-discovery" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">2. </span>Initial Data Discovery<a class="headerlink" href="#initial-data-discovery" title="Permalink to this heading">#</a></h1>
 <p>My understanding of the datasets is that:</p>
 <ul class="simple">
 <li><p>Ecommerce Data relates to inventory purchase retailers make on MaxAB</p></li>
@@ -379,7 +379,7 @@ document.write(`
 <li><p>Loans Data relates to micro-loans retailers request to purchase iventory through MaxAB</p></li>
 </ul>
 <section id="data-points">
-<h2><span class="section-number">1.1. </span>Data points<a class="headerlink" href="#data-points" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.1. </span>Data points<a class="headerlink" href="#data-points" title="Permalink to this heading">#</a></h2>
 <p>Although Retailer Loans dataset contains definition of columns, the other 2 datasets do not. So first order of business is to inspect them and infer what their columns mean.</p>
 <section id="loans-data">
 <h3>Loans data<a class="headerlink" href="#loans-data" title="Permalink to this heading">#</a></h3>
@@ -545,7 +545,7 @@ Name: 0, dtype: object
 </div>
 </div>
 </div>
-<p>From the column definitions in Loans data, we know <code class="docutils literal notranslate"><span class="pre">MAIN_SYSTEM_ID</span></code> represents the retailer’s identity between Fintech and Ecommerce. We also know that Loans data contains <code class="docutils literal notranslate"><span class="pre">RETAILER_ID</span></code> specific to fintech, thus we can infer that it’s the same as <code class="docutils literal notranslate"><span class="pre">ID</span></code> in Fintech data.</p>
+<p>From the column definitions in Loans data, we know <code class="docutils literal notranslate"><span class="pre">MAIN_SYSTEM_ID</span></code> represents the retailer’s identity between Fintech and Ecommerce.</p>
 <p>Furthermore, we can already predict that there is strong correlation between</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
@@ -557,53 +557,41 @@ Column Description<div class="sd-summary-down docutils">
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p class="sd-card-text"><strong>Column</strong></p></th>
-<th class="head"><p class="sd-card-text"><strong>Map to Loans</strong></p></th>
 <th class="head"><p class="sd-card-text"><strong>Description</strong></p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p class="sd-card-text">AMOUNT</p></td>
-<td><p class="sd-card-text">?</p></td>
 <td><p class="sd-card-text">Eq. <code class="docutils literal notranslate"><span class="pre">invoice_value</span></code> before tax and fees</p></td>
 </tr>
 <tr class="row-odd"><td><p class="sd-card-text">CREATED_AT</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text">Timestamp when payment processing started</p></td>
 </tr>
 <tr class="row-even"><td><p class="sd-card-text">FEES</p></td>
-<td><p class="sd-card-text">?</p></td>
 <td><p class="sd-card-text">MaxAB fee for providing payment processing service, etc</p></td>
 </tr>
 <tr class="row-odd"><td><p class="sd-card-text">ID</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text">Internal identification of payment processing</p></td>
 </tr>
 <tr class="row-even"><td><p class="sd-card-text">MAIN_SYSTEM_ID</p></td>
-<td><p class="sd-card-text">Table <code class="docutils literal notranslate"><span class="pre">foreign_key</span></code></p></td>
-<td><p class="sd-card-text">Retailer internal identification across ecommerce and fintech</p></td>
+<td><p class="sd-card-text">Retailer internal identification across ecommerce and fintech, table <code class="docutils literal notranslate"><span class="pre">foreign_key</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p class="sd-card-text">RETAILER_CUT</p></td>
-<td><p class="sd-card-text">-</p></td>
-<td><p class="sd-card-text">? Estimated profit margin of retailer on the sale ?</p></td>
+<td><p class="sd-card-text">Estimated profit margin of retailer on the sale (?)</p></td>
 </tr>
 <tr class="row-even"><td><p class="sd-card-text">STATUS</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text">Latest status of payment processing according to <code class="docutils literal notranslate"><span class="pre">UPDATED_AT</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p class="sd-card-text">TOTAL_AMOUNT_INCLUDING_TAX</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">AMOUNT</span></code> + <code class="docutils literal notranslate"><span class="pre">FEES</span></code> + <code class="docutils literal notranslate"><span class="pre">TAX</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p class="sd-card-text">TOTAL_AMOUNT_PAID</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text">The amount paid to the retailer by their customer</p></td>
 </tr>
 <tr class="row-odd"><td><p class="sd-card-text">UPDATED_AT</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text">Timestamp of the current <code class="docutils literal notranslate"><span class="pre">STATUS</span></code> update</p></td>
 </tr>
 <tr class="row-even"><td><p class="sd-card-text">WALLET_BALANCE_BEFORE_TRANSACTION</p></td>
-<td><p class="sd-card-text">?</p></td>
 <td><p class="sd-card-text">Retailer balance before the current sale</p></td>
 </tr>
 </tbody>
@@ -653,84 +641,32 @@ Column Description<div class="sd-summary-down docutils">
 <table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p class="sd-card-text"><strong>Column</strong></p></th>
-<th class="head"><p class="sd-card-text"><strong>Map to Loans</strong></p></th>
 <th class="head"><p class="sd-card-text"><strong>Description</strong></p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p class="sd-card-text">DISCOUNT</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text">Amount to be deducted from <code class="docutils literal notranslate"><span class="pre">ORDER_PRICE</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p class="sd-card-text">MAIN_SYSTEM_ID</p></td>
-<td><p class="sd-card-text">Table <code class="docutils literal notranslate"><span class="pre">foreign_key</span></code></p></td>
-<td><p class="sd-card-text">Retailer internal identification across ecommerce and fintech</p></td>
+<td><p class="sd-card-text">Retailer internal identification across ecommerce and fintech, table <code class="docutils literal notranslate"><span class="pre">foreign_key</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p class="sd-card-text">ORDER_CREATION_DATE</p></td>
-<td><p class="sd-card-text">-</p></td>
-<td><p class="sd-card-text">Timestamp when iventory purchase order is created</p></td>
+<td><p class="sd-card-text">Timestamp when inventory purchase order is created</p></td>
 </tr>
 <tr class="row-odd"><td><p class="sd-card-text">ORDER_ID</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text">Table index, unique identifier for orders</p></td>
 </tr>
 <tr class="row-even"><td><p class="sd-card-text">ORDER_PRICE</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text">Invoice value <em>before</em> <code class="docutils literal notranslate"><span class="pre">DISCOUNT</span></code> is applied</p></td>
 </tr>
 <tr class="row-odd"><td><p class="sd-card-text">ORDER_PRICE_AFTER_DISCOUNT</p></td>
-<td><p class="sd-card-text">-</p></td>
 <td><p class="sd-card-text">Invoice value <em>after</em> <code class="docutils literal notranslate"><span class="pre">DISCOUNT</span></code> is applied</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details></section>
-</section>
-<section id="relationship-between-datasets">
-<h2><span class="section-number">1.2. </span>Relationship between datasets<a class="headerlink" href="#relationship-between-datasets" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="misc">
-<h2><span class="section-number">1.3. </span>MISC<a class="headerlink" href="#misc" title="Permalink to this heading">#</a></h2>
-<p>Before inspecting the data, my first assumption about our datasets is that Fintech and Ecommerce contain retailers’ time series data regarding their use of the platform. I expect to see at least columns equivalent to <code class="docutils literal notranslate"><span class="pre">user_id</span></code>, <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> and <code class="docutils literal notranslate"><span class="pre">invoice_value</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">ydata_profiling.visualisation.plot</span> <span class="kn">import</span> <span class="n">timeseries_heatmap</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/Retailer_Transactions_Data.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">timeseries_heatmap</span><span class="p">(</span>
-    <span class="n">dataframe</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
-    <span class="n">entity_column</span><span class="o">=</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span>
-    <span class="n">sortby</span><span class="o">=</span><span class="s2">&quot;CREATED_AT&quot;</span><span class="p">,</span>
-    <span class="n">max_entities</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/e4013692e4ff013b6737845f89109bf04db94d734ba59596a12e93a8188e731b.png" src="../_images/e4013692e4ff013b6737845f89109bf04db94d734ba59596a12e93a8188e731b.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">ydata_profiling.visualisation.plot</span> <span class="kn">import</span> <span class="n">timeseries_heatmap</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/Ecommerce_orders_Data.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">timeseries_heatmap</span><span class="p">(</span>
-    <span class="n">dataframe</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
-    <span class="n">entity_column</span><span class="o">=</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">,</span>
-    <span class="n">sortby</span><span class="o">=</span><span class="s2">&quot;ORDER_CREATION_DATE&quot;</span><span class="p">,</span>
-    <span class="n">max_entities</span><span class="o">=</span><span class="mi">10</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/0b11dd59b1c46c0bbe0ad65b5cedd94c4381a8ab32911577ea1cc6e9f2b27cd6.png" src="../_images/0b11dd59b1c46c0bbe0ad65b5cedd94c4381a8ab32911577ea1cc6e9f2b27cd6.png" />
-</div>
-</div>
 </section>
 </section>
 
@@ -766,12 +702,12 @@ Column Description<div class="sd-summary-down docutils">
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../intro.html"
+       href="evaluation.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Credit Risk - Case Study</p>
+        <p class="prev-next-title"><span class="section-number">1.3. </span>Evaluation Method</p>
       </div>
     </a>
     <a class="right-next"
@@ -779,7 +715,7 @@ Column Description<div class="sd-summary-down docutils">
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>Data Profile Reports</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Data Profile Reports</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -801,14 +737,12 @@ Column Description<div class="sd-summary-down docutils">
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-points">1.1. Data points</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-points">2.1. Data points</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loans-data">Loans data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fintech-data">Fintech data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ecommerce-data">Ecommerce data</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-between-datasets">1.2. Relationship between datasets</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#misc">1.3. MISC</a></li>
 </ul>
   </nav></div>
 

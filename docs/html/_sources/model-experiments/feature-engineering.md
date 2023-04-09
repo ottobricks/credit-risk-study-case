@@ -1,14 +1,30 @@
 # Feature Engineering
 
+(auto-feat-eng)=
 ## Automatic Feature Engineering
 
-````{dropdown} Deep Feature Synthesis (DFS)
+Due to Deep Feature Synthesis (DFS) being a computationally expensive process, I decided to split it into retailer chunks, i.e. one execution per retailer, to maximize parallelism. Provided a list of `MAIN_SYSTEM_ID`, one can parallelize the execution in bash with:
+```{code-block} bash
+PYARROW_IGNORE_TIMEZONE=1 \
+    time parallel \
+    -j 200% \
+    -a data/retailer_ids.csv \
+    python automatic-feature-engineering.py \
+        --retailerid {} \
+        --maxdepth 2
+```
+
+And here is the script itself (loaded from repository):
+````{dropdown} DFS script
 ```{literalinclude} automatic-feature-engineering.py
    :language: python
    :linenos:
 ```
 ````
 
+Because DFS generates a large number of combinations of aggregations and transformations, a lot of them will be correlated. It may be counterintuitive, but a large number of features is not helpful for ML models to learn, this is known as the Dimensionality Curse.
+
+There are many techniques to address such problem. Since this is a case study, interpretability of final features can be sacrificed in favor of time. So, I decide to use PCA to drastically reduce dimensionality from +1K columns to 10 in hope those principal components will capture most of the variance in the featureframe. Here is the script for dimensionality reduction:
 ````{dropdown} Dimensionality reduction, a.k.a feature selection
 ```{literalinclude} feature-selection.py
    :language: python
@@ -16,6 +32,7 @@
 ```
 ````
 
+(holdout)=
 ## Split Train and Test Data
 
 ````{toggle}

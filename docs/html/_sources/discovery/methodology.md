@@ -20,8 +20,8 @@ The best way to mitigate the risk of one's conscious and unconscious bias is to 
 All of those steps make up an experiment, which is the Scientific Method materialized, and that's what Data Science can bring to the table.
 
 **Predictions we make are also known as hypotheses:**
- - null hypothesis is what you believe to be true, your prediction
- - alternate hypothesis is the competing prediction with yours, that would take *enough* evidence for you to be convinced
+ - *null hypothesis* is what you believe to be true, your prediction
+ - *alternate hypothesis* is the competing prediction with yours, that would take *enough* evidence for you to be convinced
 
 Now, what does *enough* mean anyways? One may say: "I want to be 100% sure about that!", but we know that in the real world only death and taxes are guaranteed. Instead, we have to understand that every experiment comes with its trade-offs and uncertainties. For instance, this case study. I would love to have a whole month just to dissect every angle and test every possible hypothesis, but my time is constrained -- a trade-off must be made between depth and breadth.
 
@@ -29,26 +29,8 @@ Now, what does *enough* mean anyways? One may say: "I want to be 100% sure about
  
 That's where Statistics comes in. It basically boils down to processes, techniques, theorems, etc, to help us estimate uncertainty in our tests of hypothesis, in order to understand what's required to minimize it. Just like our conscious and unconscious bias, we must address uncertainty loudly and clearly. Gladly, Statistics is here to help.
 
-Now, let's start with my predictions for this case study. Note that I have done [initial data discovery](./initial-data-discovery.md), and that's in fact required in order for me to understand the product and domain. Of course, I also brushed up a bit on some concepts related to credit risk. However, I did not analyze the data itself in order to gain insight into the target (credit risk estimation) before proposing the following hypotheses.
+Now, let's start with my predictions for this case study. Note that I have done [initial data discovery](./initial-data-discovery.md), and that's in fact required in order for me to understand the product and domain. Of course, I also brushed up a bit on some concepts related to credit risk. However, I did not analyze the data itself in order to gain insight into the target (credit risk estimation) before proposing the my hypotheses.
 
-## Hypothesis
-Lorem Ipsum
-
-
-
-## Avoiding Data Leak
-DEFINE DATA LEAK
-
-These columns will be removed from feature engineering:
- - REPAYMENT_ID
- - FINAL_COST
- - REPAYMENT_UPDATED
- - SPENT
- - TOTAL_FINAL_AMOUNT
- - FIRST_TRIAL_BALANCE
- - FIRST_TRAIL_DELAYS
- - PAYMENT_AMOUNT
- - LOAN_PAYMENT_DATE
- - REPAYMENT_AMOUNT
- - CUMMULATIVE_OUTSTANDING
- 
+In the next sections, I will address my hypotheses, caveats, experimental risks and evaluation methodology:
+```{tableofcontents}
+```

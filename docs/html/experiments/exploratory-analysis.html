@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>5. Exploring Anecdotal Cases &#8212; Credit Risk - Study Case</title>
+    <title>5. Exploratory Data Analysis &#8212; Credit Risk - Study Case</title>
   
   
   
@@ -61,11 +61,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'exploratory-analysis/anecdotes';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'experiments/exploratory-analysis';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="6. Exploring Sample and Population" href="sample-analysis.html" />
-    <link rel="prev" title="4. Methodology" href="../discovery/methodology.html" />
+    <link rel="next" title="6. Testing Assumptions" href="test-assumption.html" />
+    <link rel="prev" title="4. Product Understanding" href="../discovery/product-understanding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -158,31 +158,33 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../discovery/initial-data-discovery.html">1. Initial Data Discovery</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/data-profile-reports.html">2. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/methodology.html">1. Methodology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/hypothesis.html">1.1. Hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-leak.html">1.2. Avoiding Data Leak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/evaluation.html">1.3. Evaluation Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/initial-data-discovery.html">2. Initial Data Discovery</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/data-profile-reports.html">3. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../discovery/product-understanding.html">3. Product Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../discovery/methodology.html">4. Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/product-understanding.html">4. Product Understanding</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Exploring Anecdotal Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sample-analysis.html">6. Exploring Sample and Population</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">7. Exploration Results</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test-assumption.html">6. Testing Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test-hypothesis.html">7. Test Hypothesis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature Engineering</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ML Experiments</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../feature-engineering/feature-engineering.html">8. Feature Engineering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Experiments</span></p>
-<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/feature-engineering.html">8. Feature Engineering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-experiments/baseline-performance.html">9. Baseline Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Tuning Model Hyperparameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model-experiments/tuned-model-performance.html">11. Performance Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Model Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/risk-assessment-performance.html">11. Results</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Credit Risk Decision API</span></p>
 <ul class="nav bd-sidenav">
@@ -259,7 +261,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/exploratory-analysis/anecdotes.md" target="_blank"
+      <li><a href="../_sources/experiments/exploratory-analysis.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -341,7 +343,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Exploring Anecdotal Cases</h1>
+    <h1>Exploratory Data Analysis</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -352,7 +354,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retailers-who-missed-the-first-collection-attempt">5.1. Retailers who missed the first collection attempt</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#misc">5.2. MISC</a></li>
 </ul>
             </nav>
         </div>
@@ -364,16 +365,14 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="exploring-anecdotal-cases">
-<h1><span class="section-number">5. </span>Exploring Anecdotal Cases<a class="headerlink" href="#exploring-anecdotal-cases" title="Permalink to this heading">#</a></h1>
-<div class="contents local topic" id="contents">
-<ul class="simple">
-<li><p><a class="reference internal" href="#retailers-who-missed-the-first-collection-attempt" id="id1">Retailers who missed the first collection attempt</a></p></li>
-<li><p><a class="reference internal" href="#misc" id="id2">MISC</a></p></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="exploratory-data-analysis">
+<h1><span class="section-number">5. </span>Exploratory Data Analysis<a class="headerlink" href="#exploratory-data-analysis" title="Permalink to this heading">#</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>I decided not to actively pursue my ideas for exploration due to already having a strong set of hypotheses to test and the time constraint. Consider this page just a brain dump, please skip to <a class="reference internal" href="test-assumption.html"><span class="doc std std-doc">next section</span></a></p>
 </div>
 <section id="retailers-who-missed-the-first-collection-attempt">
-<h2><a class="toc-backref" href="#id1"><span class="section-number">5.1. </span>Retailers who missed the first collection attempt</a><a class="headerlink" href="#retailers-who-missed-the-first-collection-attempt" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">5.1. </span>Retailers who missed the first collection attempt<a class="headerlink" href="#retailers-who-missed-the-first-collection-attempt" title="Permalink to this heading">#</a></h2>
 <p>In the Loans dataset, there are a few cases when a retailer is not able to pay back the money they borrowed in the first collection attempt. That does not necessarily mean they will default on their payment, perhaps it’s just a delay. Let’s take a look at the retailer with the most delayed-but-paid loans:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -462,13 +461,9 @@ document.write(`
 </div></div></div>
 </div>
 <p>Let’s investigate retailer <code class="docutils literal notranslate"><span class="pre">MAIN_SYSTEM_ID</span> <span class="pre">==</span> <span class="pre">58316</span></code>, first looking at all 10 loans</p>
-</section>
-<hr class="docutils" />
-<section id="misc">
-<h2><a class="toc-backref" href="#id2"><span class="section-number">5.2. </span>MISC</a><a class="headerlink" href="#misc" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loans_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID == 58316&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loans_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;MAIN_SYSTEM_ID == 58316&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -516,27 +511,51 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>2856</th>
-      <td>549976</td>
+      <th>47308</th>
+      <td>298520</td>
       <td>58316</td>
       <td>66776</td>
-      <td>838411</td>
-      <td>2022-10-04 11:35:42.055</td>
+      <td>697510</td>
+      <td>2022-09-02 00:38:59.309</td>
       <td>1000.0</td>
       <td>0</td>
       <td>1000.0</td>
-      <td>2022-10-05</td>
-      <td>2022-10-07 18:53:27.332</td>
+      <td>2022-09-02</td>
+      <td>2022-09-03 19:27:33.733</td>
       <td>...</td>
       <td>1</td>
-      <td>-139.25</td>
-      <td>139.25</td>
+      <td>211.36</td>
+      <td>88.64</td>
       <td>0</td>
-      <td>139.25</td>
-      <td>860599</td>
-      <td>200.0</td>
-      <td>2022-10-09 15:41:16.183</td>
-      <td>60.89</td>
+      <td>88.64</td>
+      <td>697510</td>
+      <td>0.0</td>
+      <td>2022-09-03 19:27:33.733</td>
+      <td>211.36</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>62663</th>
+      <td>432451</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>723339</td>
+      <td>2022-09-08 12:32:13.904</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-08</td>
+      <td>2022-09-09 19:42:24.713</td>
+      <td>...</td>
+      <td>1</td>
+      <td>191.46</td>
+      <td>108.54</td>
+      <td>0</td>
+      <td>108.54</td>
+      <td>723339</td>
+      <td>0.0</td>
+      <td>2022-09-09 19:42:24.713</td>
+      <td>191.46</td>
       <td>Paid</td>
     </tr>
     <tr>
@@ -564,174 +583,6 @@ document.write(`
       <td>Paid</td>
     </tr>
     <tr>
-      <th>12992</th>
-      <td>639440</td>
-      <td>58316</td>
-      <td>66776</td>
-      <td>816704</td>
-      <td>2022-09-29 19:41:44.898</td>
-      <td>1000.0</td>
-      <td>0</td>
-      <td>1000.0</td>
-      <td>2022-09-29</td>
-      <td>2022-10-01 17:59:32.282</td>
-      <td>...</td>
-      <td>1</td>
-      <td>-100.96</td>
-      <td>100.96</td>
-      <td>0</td>
-      <td>100.96</td>
-      <td>831639</td>
-      <td>101.0</td>
-      <td>2022-10-02 18:17:29.442</td>
-      <td>0.04</td>
-      <td>Paid</td>
-    </tr>
-    <tr>
-      <th>14394</th>
-      <td>8532</td>
-      <td>58316</td>
-      <td>66776</td>
-      <td>873912</td>
-      <td>2022-10-11 23:30:19.495</td>
-      <td>1000.0</td>
-      <td>0</td>
-      <td>1000.0</td>
-      <td>2022-10-12</td>
-      <td>2022-10-13 17:11:45.320</td>
-      <td>...</td>
-      <td>1</td>
-      <td>-87.47</td>
-      <td>87.47</td>
-      <td>0</td>
-      <td>87.47</td>
-      <td>891721</td>
-      <td>100.0</td>
-      <td>2022-10-16 12:33:27.146</td>
-      <td>12.53</td>
-      <td>Paid</td>
-    </tr>
-    <tr>
-      <th>17867</th>
-      <td>38315</td>
-      <td>58316</td>
-      <td>66776</td>
-      <td>866013</td>
-      <td>2022-10-09 22:50:35.375</td>
-      <td>1000.0</td>
-      <td>0</td>
-      <td>1000.0</td>
-      <td>2022-10-10</td>
-      <td>2022-10-11 17:59:21.048</td>
-      <td>...</td>
-      <td>1</td>
-      <td>41.78</td>
-      <td>58.22</td>
-      <td>0</td>
-      <td>58.22</td>
-      <td>866013</td>
-      <td>0.0</td>
-      <td>2022-10-11 17:59:21.048</td>
-      <td>41.78</td>
-      <td>Paid</td>
-    </tr>
-    <tr>
-      <th>20509</th>
-      <td>60688</td>
-      <td>58316</td>
-      <td>66776</td>
-      <td>916292</td>
-      <td>2022-10-21 19:43:51.875</td>
-      <td>1000.0</td>
-      <td>0</td>
-      <td>1000.0</td>
-      <td>2022-10-22</td>
-      <td>2022-10-23 20:09:05.284</td>
-      <td>...</td>
-      <td>1</td>
-      <td>866.01</td>
-      <td>133.99</td>
-      <td>0</td>
-      <td>133.99</td>
-      <td>917815</td>
-      <td>0.0</td>
-      <td>2022-10-23 20:09:05.284</td>
-      <td>866.01</td>
-      <td>Paid</td>
-    </tr>
-    <tr>
-      <th>22819</th>
-      <td>80971</td>
-      <td>58316</td>
-      <td>66776</td>
-      <td>917815</td>
-      <td>2022-10-22 10:41:49.732</td>
-      <td>1000.0</td>
-      <td>0</td>
-      <td>1000.0</td>
-      <td>2022-10-22</td>
-      <td>2022-10-23 20:09:05.284</td>
-      <td>...</td>
-      <td>1</td>
-      <td>866.01</td>
-      <td>0.00</td>
-      <td>0</td>
-      <td>0.00</td>
-      <td>917815</td>
-      <td>0.0</td>
-      <td>2022-10-23 20:09:05.284</td>
-      <td>866.01</td>
-      <td>Paid</td>
-    </tr>
-    <tr>
-      <th>23374</th>
-      <td>86011</td>
-      <td>58316</td>
-      <td>66776</td>
-      <td>832285</td>
-      <td>2022-10-02 18:19:08.181</td>
-      <td>1000.0</td>
-      <td>0</td>
-      <td>1000.0</td>
-      <td>2022-10-02</td>
-      <td>2022-10-03 19:37:34.605</td>
-      <td>...</td>
-      <td>1</td>
-      <td>-100.74</td>
-      <td>100.74</td>
-      <td>0</td>
-      <td>100.74</td>
-      <td>838376</td>
-      <td>130.0</td>
-      <td>2022-10-04 11:33:34.686</td>
-      <td>29.26</td>
-      <td>Paid</td>
-    </tr>
-    <tr>
-      <th>32303</th>
-      <td>163978</td>
-      <td>58316</td>
-      <td>66776</td>
-      <td>964219</td>
-      <td>2022-10-31 20:58:53.714</td>
-      <td>1000.0</td>
-      <td>0</td>
-      <td>1000.0</td>
-      <td>2022-11-01</td>
-      <td>2022-11-02 17:18:39.520</td>
-      <td>...</td>
-      <td>1</td>
-      <td>25.00</td>
-      <td>375.00</td>
-      <td>0</td>
-      <td>375.00</td>
-      <td>964219</td>
-      <td>0.0</td>
-      <td>2022-11-02 17:18:39.520</td>
-      <td>25.00</td>
-      <td>Paid</td>
-    </tr>
-    <tr>
       <th>41078</th>
       <td>242794</td>
       <td>58316</td>
@@ -753,54 +604,6 @@ document.write(`
       <td>250.0</td>
       <td>2022-09-17 18:28:30.091</td>
       <td>165.13</td>
-      <td>Paid</td>
-    </tr>
-    <tr>
-      <th>45487</th>
-      <td>282051</td>
-      <td>58316</td>
-      <td>66776</td>
-      <td>902395</td>
-      <td>2022-10-18 23:01:58.502</td>
-      <td>1000.0</td>
-      <td>0</td>
-      <td>1000.0</td>
-      <td>2022-10-19</td>
-      <td>2022-10-20 17:14:49.627</td>
-      <td>...</td>
-      <td>1</td>
-      <td>-97.98</td>
-      <td>97.98</td>
-      <td>0</td>
-      <td>97.98</td>
-      <td>915284</td>
-      <td>200.0</td>
-      <td>2022-10-21 15:05:55.259</td>
-      <td>102.02</td>
-      <td>Paid</td>
-    </tr>
-    <tr>
-      <th>47308</th>
-      <td>298520</td>
-      <td>58316</td>
-      <td>66776</td>
-      <td>697510</td>
-      <td>2022-09-02 00:38:59.309</td>
-      <td>1000.0</td>
-      <td>0</td>
-      <td>1000.0</td>
-      <td>2022-09-02</td>
-      <td>2022-09-03 19:27:33.733</td>
-      <td>...</td>
-      <td>1</td>
-      <td>211.36</td>
-      <td>88.64</td>
-      <td>0</td>
-      <td>88.64</td>
-      <td>697510</td>
-      <td>0.0</td>
-      <td>2022-09-03 19:27:33.733</td>
-      <td>211.36</td>
       <td>Paid</td>
     </tr>
     <tr>
@@ -876,6 +679,150 @@ document.write(`
       <td>Paid</td>
     </tr>
     <tr>
+      <th>68914</th>
+      <td>487963</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>814724</td>
+      <td>2022-09-29 11:34:20.555</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-29</td>
+      <td>2022-09-29 19:17:11.349</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-91.36</td>
+      <td>91.36</td>
+      <td>0</td>
+      <td>91.36</td>
+      <td>816729</td>
+      <td>100.0</td>
+      <td>2022-09-29 20:05:02.673</td>
+      <td>8.64</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>12992</th>
+      <td>639440</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>816704</td>
+      <td>2022-09-29 19:41:44.898</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-09-29</td>
+      <td>2022-10-01 17:59:32.282</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-100.96</td>
+      <td>100.96</td>
+      <td>0</td>
+      <td>100.96</td>
+      <td>831639</td>
+      <td>101.0</td>
+      <td>2022-10-02 18:17:29.442</td>
+      <td>0.04</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>23374</th>
+      <td>86011</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>832285</td>
+      <td>2022-10-02 18:19:08.181</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-02</td>
+      <td>2022-10-03 19:37:34.605</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-100.74</td>
+      <td>100.74</td>
+      <td>0</td>
+      <td>100.74</td>
+      <td>838376</td>
+      <td>130.0</td>
+      <td>2022-10-04 11:33:34.686</td>
+      <td>29.26</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>2856</th>
+      <td>549976</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>838411</td>
+      <td>2022-10-04 11:35:42.055</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-05</td>
+      <td>2022-10-07 18:53:27.332</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-139.25</td>
+      <td>139.25</td>
+      <td>0</td>
+      <td>139.25</td>
+      <td>860599</td>
+      <td>200.0</td>
+      <td>2022-10-09 15:41:16.183</td>
+      <td>60.89</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>17867</th>
+      <td>38315</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>866013</td>
+      <td>2022-10-09 22:50:35.375</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-10</td>
+      <td>2022-10-11 17:59:21.048</td>
+      <td>...</td>
+      <td>1</td>
+      <td>41.78</td>
+      <td>58.22</td>
+      <td>0</td>
+      <td>58.22</td>
+      <td>866013</td>
+      <td>0.0</td>
+      <td>2022-10-11 17:59:21.048</td>
+      <td>41.78</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>14394</th>
+      <td>8532</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>873912</td>
+      <td>2022-10-11 23:30:19.495</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-12</td>
+      <td>2022-10-13 17:11:45.320</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-87.47</td>
+      <td>87.47</td>
+      <td>0</td>
+      <td>87.47</td>
+      <td>891721</td>
+      <td>100.0</td>
+      <td>2022-10-16 12:33:27.146</td>
+      <td>12.53</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
       <th>61535</th>
       <td>422479</td>
       <td>58316</td>
@@ -900,27 +847,75 @@ document.write(`
       <td>Paid</td>
     </tr>
     <tr>
-      <th>62663</th>
-      <td>432451</td>
+      <th>45487</th>
+      <td>282051</td>
       <td>58316</td>
       <td>66776</td>
-      <td>723339</td>
-      <td>2022-09-08 12:32:13.904</td>
+      <td>902395</td>
+      <td>2022-10-18 23:01:58.502</td>
       <td>1000.0</td>
       <td>0</td>
       <td>1000.0</td>
-      <td>2022-09-08</td>
-      <td>2022-09-09 19:42:24.713</td>
+      <td>2022-10-19</td>
+      <td>2022-10-20 17:14:49.627</td>
       <td>...</td>
       <td>1</td>
-      <td>191.46</td>
-      <td>108.54</td>
+      <td>-97.98</td>
+      <td>97.98</td>
       <td>0</td>
-      <td>108.54</td>
-      <td>723339</td>
+      <td>97.98</td>
+      <td>915284</td>
+      <td>200.0</td>
+      <td>2022-10-21 15:05:55.259</td>
+      <td>102.02</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>20509</th>
+      <td>60688</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>916292</td>
+      <td>2022-10-21 19:43:51.875</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-22</td>
+      <td>2022-10-23 20:09:05.284</td>
+      <td>...</td>
+      <td>1</td>
+      <td>866.01</td>
+      <td>133.99</td>
+      <td>0</td>
+      <td>133.99</td>
+      <td>917815</td>
       <td>0.0</td>
-      <td>2022-09-09 19:42:24.713</td>
-      <td>191.46</td>
+      <td>2022-10-23 20:09:05.284</td>
+      <td>866.01</td>
+      <td>Paid</td>
+    </tr>
+    <tr>
+      <th>22819</th>
+      <td>80971</td>
+      <td>58316</td>
+      <td>66776</td>
+      <td>917815</td>
+      <td>2022-10-22 10:41:49.732</td>
+      <td>1000.0</td>
+      <td>0</td>
+      <td>1000.0</td>
+      <td>2022-10-22</td>
+      <td>2022-10-23 20:09:05.284</td>
+      <td>...</td>
+      <td>1</td>
+      <td>866.01</td>
+      <td>0.00</td>
+      <td>0</td>
+      <td>0.00</td>
+      <td>917815</td>
+      <td>0.0</td>
+      <td>2022-10-23 20:09:05.284</td>
+      <td>866.01</td>
       <td>Paid</td>
     </tr>
     <tr>
@@ -948,27 +943,27 @@ document.write(`
       <td>Paid</td>
     </tr>
     <tr>
-      <th>68914</th>
-      <td>487963</td>
+      <th>32303</th>
+      <td>163978</td>
       <td>58316</td>
       <td>66776</td>
-      <td>814724</td>
-      <td>2022-09-29 11:34:20.555</td>
+      <td>964219</td>
+      <td>2022-10-31 20:58:53.714</td>
       <td>1000.0</td>
       <td>0</td>
       <td>1000.0</td>
-      <td>2022-09-29</td>
-      <td>2022-09-29 19:17:11.349</td>
+      <td>2022-11-01</td>
+      <td>2022-11-02 17:18:39.520</td>
       <td>...</td>
       <td>1</td>
-      <td>-91.36</td>
-      <td>91.36</td>
+      <td>25.00</td>
+      <td>375.00</td>
       <td>0</td>
-      <td>91.36</td>
-      <td>816729</td>
-      <td>100.0</td>
-      <td>2022-09-29 20:05:02.673</td>
-      <td>8.64</td>
+      <td>375.00</td>
+      <td>964219</td>
+      <td>0.0</td>
+      <td>2022-11-02 17:18:39.520</td>
+      <td>25.00</td>
       <td>Paid</td>
     </tr>
   </tbody>
@@ -1029,7 +1024,7 @@ document.write(`
 </table>
 </div></div></div>
 </div>
-<p>?? If <code class="docutils literal notranslate"><span class="pre">FIRST_TRIAL_BALANCE</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>, the retailer missed first collection attempt. Can we assume that retailers are given only a second collection attempt before being marked as <code class="docutils literal notranslate"><span class="pre">PAYMENT_STATUS</span> <span class="pre">in</span> <span class="pre">('Unpaid',</span> <span class="pre">'Partialy</span> <span class="pre">paid')</span></code>?</p>
+<p>?? If <code class="docutils literal notranslate"><span class="pre">FIRST_TRIAL_BALANCE</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>, the retailer missed first collection attempt. Can we assume that retailers are given only a second collection attempt before being marked as <code class="docutils literal notranslate"><span class="pre">PAYMENT_STATUS</span> <span class="pre">in</span> <span class="pre">('Unpaid',</span> <span class="pre">'Partially</span> <span class="pre">paid')</span></code>?</p>
 <p>I’m starting to believe I was given a snapshot of the Loans dataset instead of time series as for the other 2 datasets. We can check that by looking at the following case: retailer misses the first payment but is able to fully pay on following collection attempt. We can represent that as <code class="docutils literal notranslate"><span class="pre">FIRST_TRIAL_BALANCE</span> <span class="pre">&lt;</span> <span class="pre">0</span> <span class="pre">and</span> <span class="pre">PAYMENT_STATUS</span> <span class="pre">=</span> <span class="pre">'Paid'</span></code>, then check if any <code class="docutils literal notranslate"><span class="pre">LOAN_ID</span></code> has more than one observation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1184,7 +1179,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./exploratory-analysis"
+            path: "./experiments"
         },
         predefinedOutput: true
     }
@@ -1203,20 +1198,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../discovery/methodology.html"
+       href="../discovery/product-understanding.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>Methodology</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Product Understanding</p>
       </div>
     </a>
     <a class="right-next"
-       href="sample-analysis.html"
+       href="test-assumption.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">6. </span>Exploring Sample and Population</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Testing Assumptions</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1239,7 +1234,6 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retailers-who-missed-the-first-collection-attempt">5.1. Retailers who missed the first collection attempt</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#misc">5.2. MISC</a></li>
 </ul>
   </nav></div>
 

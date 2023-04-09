@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>11. Performance Overview &#8212; Credit Risk - Study Case</title>
+    <title>1.3. Evaluation Method &#8212; Credit Risk - Study Case</title>
   
   
   
@@ -61,11 +61,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'model-experiments/tuned-model-performance';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'discovery/evaluation';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="12. Overview" href="../decision-api/overview.html" />
-    <link rel="prev" title="10. Tuning Model Hyperparameters" href="hyperparam-tuning.html" />
+    <link rel="next" title="2. Initial Data Discovery" href="initial-data-discovery.html" />
+    <link rel="prev" title="1.2. Avoiding Data Leak" href="data-leak.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -157,32 +159,34 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../discovery/initial-data-discovery.html">1. Initial Data Discovery</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/data-profile-reports.html">2. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="methodology.html">1. Methodology</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hypothesis.html">1.1. Hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-leak.html">1.2. Avoiding Data Leak</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">1.3. Evaluation Method</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../discovery/product-understanding.html">3. Product Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../discovery/methodology.html">4. Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initial-data-discovery.html">2. Initial Data Discovery</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data-profile-reports.html">3. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="product-understanding.html">4. Product Understanding</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../exploratory-analysis/anecdotes.html">5. Exploring Anecdotal Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exploratory-analysis/sample-analysis.html">6. Exploring Sample and Population</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exploratory-analysis/results.html">7. Exploration Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/exploratory-analysis.html">5. Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/test-assumption.html">6. Testing Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/test-hypothesis.html">7. Test Hypothesis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature Engineering</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ML Experiments</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../feature-engineering/feature-engineering.html">8. Feature Engineering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Experiments</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="baseline-performance.html">9. Baseline Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hyperparam-tuning.html">10. Tuning Model Hyperparameters</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">11. Performance Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/feature-engineering.html">8. Feature Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/baseline-performance.html">9. Baseline Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Model Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/risk-assessment-performance.html">11. Results</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Credit Risk Decision API</span></p>
 <ul class="nav bd-sidenav">
@@ -259,7 +263,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/model-experiments/tuned-model-performance.ipynb" target="_blank"
+      <li><a href="../_sources/discovery/evaluation.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -269,7 +273,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -341,7 +345,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Performance Overview</h1>
+    <h1>Evaluation Method</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -351,8 +355,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-model">11.1. Baseline Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuned-model">11.2. Tuned Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-targets">Prediction Targets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-ml-dataset">Splitting ML dataset</a></li>
 </ul>
             </nav>
         </div>
@@ -364,13 +368,28 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="performance-overview">
-<h1><span class="section-number">11. </span>Performance Overview<a class="headerlink" href="#performance-overview" title="Permalink to this heading">#</a></h1>
-<section id="baseline-model">
-<h2><span class="section-number">11.1. </span>Baseline Model<a class="headerlink" href="#baseline-model" title="Permalink to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="evaluation-method">
+<h1><span class="section-number">1.3. </span>Evaluation Method<a class="headerlink" href="#evaluation-method" title="Permalink to this heading">#</a></h1>
+<section id="prediction-targets">
+<h2>Prediction Targets<a class="headerlink" href="#prediction-targets" title="Permalink to this heading">#</a></h2>
+<p>As mentioned in the introduction, the problem is presented as binary classification because in the end a decision must be made: approve or deny a loan. Many may jump straight into using <code class="docutils literal notranslate"><span class="pre">PAYMENT_STATUS</span></code> as the target, spin up a large instance on AWS and give an AutoML package time and compute to brute-force the solution. Also as mentioned before, this inevitably leads to good performance in development and disappointment in production.</p>
+<p>Instead, I choose to stick to the rationale in <a class="reference internal" href="hypothesis.html"><span class="doc std std-doc">Hypothesis</span></a> section and make the decision based on estimated <code class="docutils literal notranslate"><span class="pre">SPENT</span></code> versus requested <code class="docutils literal notranslate"><span class="pre">LOAN_AMOUNT</span></code>. This is a much more realistic approach and allows for flexibility when making the decision to take overall objective (growth vs. profit) into account.</p>
+<p>Therefore, I will generate forecasts for retailers’ ecommerce volume and use the following formula to yield our credit risk score for this case study:</p>
+<div class="math notranslate nohighlight">
+\[
+Lorem Ipsum
+\]</div>
+<p>Then, I will generate a Decision dataset with “yes/no” answers for loans based on 2 scenarios at fixed risk exposure: maximize profit, maximize growth. Note that this heavily depends on my <a class="reference internal" href="hypothesis.html#assumptions"><span class="std std-ref">assumption</span></a> that we have enough observations in Ecommerce to be able to forecast retailers’ expenses with suppliers over time. Therefore, we must turn to results in <a class="reference internal" href="../experiments/test-assumption.html"><span class="doc std std-doc">Testing Underlying Assumptions</span></a> to validate the sanity of this approach.</p>
+<p>Conversely, if the assumption does not hold, I will take the dummy approach mentioned a couple paragraphs above due to time constraints.</p>
 </section>
-<section id="tuned-model">
-<h2><span class="section-number">11.2. </span>Tuned Model<a class="headerlink" href="#tuned-model" title="Permalink to this heading">#</a></h2>
+<section id="splitting-ml-dataset">
+<h2>Splitting ML dataset<a class="headerlink" href="#splitting-ml-dataset" title="Permalink to this heading">#</a></h2>
+<p>Once again, in order to avoid Data Leak, we split our ML dataset (featureframe) into 3: Train, Validation and Test datasets. The Test dataset is used to generate final results and is not used during development. In real-life experiments, we shouldn’t even process feature engineering scripts on them, but rather transform the data just before final evaluation of results. But due to time constraints, I decided that an adaptation of <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html" target="_blank">TimeSeriesSplit</a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html" target="_blank">StratifiedKFold</a> with holdout split are enough to mitigate Data Leak for the case study.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I choose to use custom holdout split instead of cross-validation due to small datasets and time constraint.</p>
+</div>
+<p>The Python script used to split our featureframe is available in <a class="reference internal" href="../model-experiments/feature-engineering.html#holdout"><span class="std std-ref">Feature Engineering</span></a>.</p>
 </section>
 </section>
 
@@ -387,7 +406,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./model-experiments"
+            path: "./discovery"
         },
         predefinedOutput: true
     }
@@ -406,20 +425,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="hyperparam-tuning.html"
+       href="data-leak.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">10. </span>Tuning Model Hyperparameters</p>
+        <p class="prev-next-title"><span class="section-number">1.2. </span>Avoiding Data Leak</p>
       </div>
     </a>
     <a class="right-next"
-       href="../decision-api/overview.html"
+       href="initial-data-discovery.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">12. </span>Overview</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Initial Data Discovery</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -441,8 +460,8 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-model">11.1. Baseline Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuned-model">11.2. Tuned Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-targets">Prediction Targets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-ml-dataset">Splitting ML dataset</a></li>
 </ul>
   </nav></div>
 

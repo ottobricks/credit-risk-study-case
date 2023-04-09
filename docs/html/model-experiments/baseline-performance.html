@@ -64,8 +64,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'model-experiments/baseline-performance';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="10. Tuning Model Hyperparameters" href="hyperparam-tuning.html" />
-    <link rel="prev" title="8. Feature Engineering" href="../feature-engineering/feature-engineering.html" />
+    <link rel="next" title="10. Model Tuning" href="hyperparam-tuning.html" />
+    <link rel="prev" title="8. Feature Engineering" href="feature-engineering.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -158,31 +158,33 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../discovery/initial-data-discovery.html">1. Initial Data Discovery</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/data-profile-reports.html">2. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/methodology.html">1. Methodology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/hypothesis.html">1.1. Hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/data-leak.html">1.2. Avoiding Data Leak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../discovery/evaluation.html">1.3. Evaluation Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/initial-data-discovery.html">2. Initial Data Discovery</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/data-profile-reports.html">3. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../discovery/product-understanding.html">3. Product Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../discovery/methodology.html">4. Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../discovery/product-understanding.html">4. Product Understanding</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../exploratory-analysis/anecdotes.html">5. Exploring Anecdotal Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exploratory-analysis/sample-analysis.html">6. Exploring Sample and Population</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exploratory-analysis/results.html">7. Exploration Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/exploratory-analysis.html">5. Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/test-assumption.html">6. Testing Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/test-hypothesis.html">7. Test Hypothesis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature Engineering</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../feature-engineering/feature-engineering.html">8. Feature Engineering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Experiments</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ML Experiments</span></p>
 <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="feature-engineering.html">8. Feature Engineering</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">9. Baseline Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hyperparam-tuning.html">10. Tuning Model Hyperparameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tuned-model-performance.html">11. Performance Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hyperparam-tuning.html">10. Model Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="risk-assessment-performance.html">11. Results</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Credit Risk Decision API</span></p>
 <ul class="nav bd-sidenav">
@@ -259,7 +261,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/model-experiments/baseline-performance.ipynb" target="_blank"
+      <li><a href="../_sources/model-experiments/baseline-performance.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -269,7 +271,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -355,6 +357,61 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="baseline-model">
 <h1><span class="section-number">9. </span>Baseline Model<a class="headerlink" href="#baseline-model" title="Permalink to this heading">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">pyspark.ml</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">PipelineModel</span>
+<span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">VectorAssembler</span>
+<span class="linenos"> 4</span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">SparkSession</span>
+<span class="linenos"> 5</span><span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">coalesce</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">lit</span>
+<span class="linenos"> 6</span><span class="kn">from</span> <span class="nn">pyspark.sql.utils</span> <span class="kn">import</span> <span class="n">AnalysisException</span>
+<span class="linenos"> 7</span><span class="kn">from</span> <span class="nn">pyspark.ml.evaluation</span> <span class="kn">import</span> <span class="n">BinaryClassificationEvaluator</span><span class="p">,</span> <span class="n">BinaryClassificationMetrics</span><span class="p">,</span> <span class="n">MulticlassClassificationEvaluator</span>
+<span class="linenos"> 8</span><span class="kn">from</span> <span class="nn">xgboost.spark</span> <span class="kn">import</span> <span class="n">SparkXGBClassifier</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">12</span>    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Baseline model fit and eval step&quot;</span><span class="p">)</span>
+<span class="linenos">13</span>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+<span class="linenos">14</span>        <span class="s2">&quot;--maxdepth&quot;</span><span class="p">,</span>
+<span class="linenos">15</span>        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+<span class="linenos">16</span>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Decide which featureframe to run model fit on based on --maxdepth&quot;</span>
+<span class="linenos">17</span>        <span class="o">+</span> <span class="s2">&quot; used in the automatic feature engineering step&quot;</span><span class="p">,</span>
+<span class="linenos">18</span>    <span class="p">)</span>
+<span class="linenos">19</span>    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<span class="linenos">20</span>    <span class="n">maxdepth</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">maxdepth</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="c1"># Start or fetch active Spark session</span>
+<span class="linenos">23</span>    <span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span>    <span class="n">xgb_classifier</span> <span class="o">=</span> <span class="n">SparkXGBClassifier</span><span class="p">(</span>
+<span class="linenos">26</span>        <span class="n">max_depth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="linenos">27</span>        <span class="n">missing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+<span class="linenos">28</span>        <span class="n">n_trees</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="linenos">29</span>        <span class="n">weight_col</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span>
+<span class="linenos">30</span>        <span class="n">validation_indicator_col</span><span class="o">=</span><span class="s2">&quot;is_validation&quot;</span><span class="p">,</span>
+<span class="linenos">31</span>        <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="linenos">32</span>        <span class="n">eval_metric</span><span class="o">=</span><span class="s2">&quot;aucpr&quot;</span><span class="p">,</span>
+<span class="linenos">33</span>        <span class="n">num_workers</span><span class="o">=</span><span class="mi">36</span><span class="p">,</span>
+<span class="linenos">34</span>        <span class="n">label_col</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span>
+<span class="linenos">35</span>        <span class="n">features_col</span><span class="o">=</span><span class="s2">&quot;features&quot;</span>
+<span class="linenos">36</span>    <span class="p">)</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">booster</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_df</span><span class="p">)</span>
+<span class="linenos">39</span>    <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train_df</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span> <span class="s2">&quot;probability&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span>    <span class="n">binaryEval</span> <span class="o">=</span> <span class="n">BinaryClassificationEvaluator</span><span class="p">(</span><span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
+<span class="linenos">42</span>    <span class="n">binaryMetrics</span> <span class="o">=</span> <span class="n">BinaryClassificationMetrics</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;prediction&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span><span class="p">)</span>
+<span class="linenos">43</span>    <span class="n">multiEval</span> <span class="o">=</span> <span class="n">MulticlassClassificationEvaluator</span><span class="p">(</span><span class="n">labelCol</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">predictionCol</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span>    <span class="n">aucpr</span> <span class="o">=</span> <span class="n">binaryMetrics</span><span class="o">.</span><span class="n">areaUnderPR</span>
+<span class="linenos">46</span>    <span class="n">fbeta2</span> <span class="o">=</span> <span class="n">multiEval</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="p">{</span><span class="n">multiEval</span><span class="o">.</span><span class="n">metricName</span><span class="p">:</span> <span class="s2">&quot;fMeasureByLabel&quot;</span><span class="p">,</span> <span class="n">multiEval</span><span class="o">.</span><span class="n">beta</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">})</span>
+<span class="linenos">47</span>    <span class="n">fbeta1</span> <span class="o">=</span> <span class="n">multiEval</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="p">{</span><span class="n">multiEval</span><span class="o">.</span><span class="n">metricName</span><span class="p">:</span> <span class="s2">&quot;fMeasureByLabel&quot;</span><span class="p">,</span> <span class="n">multiEval</span><span class="o">.</span><span class="n">beta</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">})</span>
+<span class="linenos">48</span>    <span class="n">fbeta05</span> <span class="o">=</span> <span class="n">multiEval</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="p">{</span><span class="n">multiEval</span><span class="o">.</span><span class="n">metricName</span><span class="p">:</span> <span class="s2">&quot;fMeasureByLabel&quot;</span><span class="p">,</span> <span class="n">multiEval</span><span class="o">.</span><span class="n">beta</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
+<span class="linenos">49</span>
+<span class="linenos">50</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AUC-PR: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">aucpr</span><span class="p">)</span>
+<span class="linenos">51</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;F-beta(2): </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fbeta2</span><span class="p">)</span>
+<span class="linenos">52</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;F-beta(1): </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fbeta1</span><span class="p">)</span>
+<span class="linenos">53</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;F-beta(0.5): </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fbeta05</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -389,7 +446,7 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../feature-engineering/feature-engineering.html"
+       href="feature-engineering.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
@@ -402,7 +459,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">10. </span>Tuning Model Hyperparameters</p>
+        <p class="prev-next-title"><span class="section-number">10. </span>Model Tuning</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

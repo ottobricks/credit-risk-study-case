@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>6. Exploring Sample and Population &#8212; Credit Risk - Study Case</title>
+    <title>1.2. Avoiding Data Leak &#8212; Credit Risk - Study Case</title>
   
   
   
@@ -61,11 +61,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'exploratory-analysis/sample-analysis';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'discovery/data-leak';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="7. Exploration Results" href="results.html" />
-    <link rel="prev" title="5. Exploring Anecdotal Cases" href="anecdotes.html" />
+    <link rel="next" title="1.3. Evaluation Method" href="evaluation.html" />
+    <link rel="prev" title="1.1. Hypothesis" href="hypothesis.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -157,32 +157,34 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../discovery/initial-data-discovery.html">1. Initial Data Discovery</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../discovery/data-profile-reports.html">2. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../discovery/data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="methodology.html">1. Methodology</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hypothesis.html">1.1. Hypothesis</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">1.2. Avoiding Data Leak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation.html">1.3. Evaluation Method</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../discovery/product-understanding.html">3. Product Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../discovery/methodology.html">4. Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initial-data-discovery.html">2. Initial Data Discovery</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data-profile-reports.html">3. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="anecdotes.html">5. Exploring Anecdotal Cases</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Exploring Sample and Population</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">7. Exploration Results</a></li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="product-understanding.html">4. Product Understanding</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature Engineering</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../feature-engineering/feature-engineering.html">8. Feature Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/exploratory-analysis.html">5. Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/test-assumption.html">6. Testing Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments/test-hypothesis.html">7. Test Hypothesis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Experiments</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ML Experiments</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/feature-engineering.html">8. Feature Engineering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../model-experiments/baseline-performance.html">9. Baseline Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Tuning Model Hyperparameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../model-experiments/tuned-model-performance.html">11. Performance Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/hyperparam-tuning.html">10. Model Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model-experiments/risk-assessment-performance.html">11. Results</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Credit Risk Decision API</span></p>
 <ul class="nav bd-sidenav">
@@ -259,7 +261,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/exploratory-analysis/sample-analysis.md" target="_blank"
+      <li><a href="../_sources/discovery/data-leak.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -339,7 +341,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Exploring Sample and Population</h1>
+    <h1>Avoiding Data Leak</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -353,8 +355,28 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="exploring-sample-and-population">
-<h1><span class="section-number">6. </span>Exploring Sample and Population<a class="headerlink" href="#exploring-sample-and-population" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="avoiding-data-leak">
+<h1><span class="section-number">1.2. </span>Avoiding Data Leak<a class="headerlink" href="#avoiding-data-leak" title="Permalink to this heading">#</a></h1>
+<p>One of the most common shortcomings in Machine Learning experiments is the delta in performance between development and production. Very often you’ll hear cases when models perform beautifully while being developed but then fail to reach the same performance once deployed. Why does that happen?</p>
+<p>More often than not, the performance delta is a symptom of Data Leak. The model has access to data during training that it cannot possibly have in production, let me give a concrete example.</p>
+<p>We can see in <a class="reference internal" href="initial-data-discovery.html"><span class="doc std std-doc">Initial Data Discovery</span></a> that Loans dataset is in fact a composite of 3 stages in the lifetime of a loan: issuance, collection and balance rollover. We need to assess credit risk before issuing the loan, but we won’t have information about collection and rollover until after the loan is granted or denied. This means using some data points that are present in the row will lead the model to have a “vision of the future”, in other words, <strong>Data Leak</strong>.</p>
+<p>In order to avoid Data Leak, these columns will be removed from feature engineering:</p>
+<ul class="simple">
+<li><p>REPAYMENT_ID</p></li>
+<li><p>FINAL_COST</p></li>
+<li><p>REPAYMENT_UPDATED</p></li>
+<li><p>SPENT</p></li>
+<li><p>TOTAL_FINAL_AMOUNT</p></li>
+<li><p>FIRST_TRIAL_BALANCE</p></li>
+<li><p>FIRST_TRAIL_DELAYS</p></li>
+<li><p>PAYMENT_AMOUNT</p></li>
+<li><p>LOAN_PAYMENT_DATE</p></li>
+<li><p>REPAYMENT_AMOUNT</p></li>
+<li><p>CUMMULATIVE_OUTSTANDING</p></li>
+</ul>
+<p>Of course, there are many techniques that can be applied to handle Data Leak better than just throwing data points out (e.g. adding lag) but I won’t have the time to explore them in this case study.</p>
+<p><strong>What about Data Leak from other datasets?</strong></p>
+<p>We address this during <a class="reference internal" href="../model-experiments/feature-engineering.html#auto-feat-eng"><span class="std std-ref">Automatic Feature Engineering</span></a> via time-aware <a href="https://featuretools.alteryx.com/en/stable/getting_started/using_entitysets.html" target="_blank">EntitySets</a> and secondary time indexes.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -370,7 +392,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./exploratory-analysis"
+            path: "./discovery"
         },
         predefinedOutput: true
     }
@@ -389,20 +411,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="anecdotes.html"
+       href="hypothesis.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>Exploring Anecdotal Cases</p>
+        <p class="prev-next-title"><span class="section-number">1.1. </span>Hypothesis</p>
       </div>
     </a>
     <a class="right-next"
-       href="results.html"
+       href="evaluation.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">7. </span>Exploration Results</p>
+        <p class="prev-next-title"><span class="section-number">1.3. </span>Evaluation Method</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

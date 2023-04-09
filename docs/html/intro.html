@@ -64,7 +64,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="1. Initial Data Discovery" href="discovery/initial-data-discovery.html" />
+    <link rel="next" title="1. Methodology" href="discovery/methodology.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -157,31 +157,33 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="discovery/initial-data-discovery.html">1. Initial Data Discovery</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="discovery/data-profile-reports.html">2. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="discovery/methodology.html">1. Methodology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="discovery/hypothesis.html">1.1. Hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery/data-leak.html">1.2. Avoiding Data Leak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery/evaluation.html">1.3. Evaluation Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="discovery/initial-data-discovery.html">2. Initial Data Discovery</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="discovery/data-profile-reports.html">3. Data Profile Reports</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="discovery/data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery/data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery/data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="discovery/product-understanding.html">3. Product Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discovery/methodology.html">4. Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discovery/product-understanding.html">4. Product Understanding</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="exploratory-analysis/anecdotes.html">5. Exploring Anecdotal Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exploratory-analysis/sample-analysis.html">6. Exploring Sample and Population</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exploratory-analysis/results.html">7. Exploration Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/exploratory-analysis.html">5. Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/test-assumption.html">6. Testing Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/test-hypothesis.html">7. Test Hypothesis</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature Engineering</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ML Experiments</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="feature-engineering/feature-engineering.html">8. Feature Engineering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Experiments</span></p>
-<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="model-experiments/feature-engineering.html">8. Feature Engineering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-experiments/baseline-performance.html">9. Baseline Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model-experiments/hyperparam-tuning.html">10. Tuning Model Hyperparameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model-experiments/tuned-model-performance.html">11. Performance Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-experiments/hyperparam-tuning.html">10. Model Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-experiments/risk-assessment-performance.html">11. Results</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Credit Risk Decision API</span></p>
 <ul class="nav bd-sidenav">
@@ -351,8 +353,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classification-results">Binary Classification Results</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-risk-control-results">Dynamic Risk Control Results</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chapters">Chapters</a><ul class="nav section-nav flex-column">
 </ul>
 </li>
@@ -380,14 +380,6 @@ document.write(`
 </ul>
 <p>It goes without saying that this exercise can be enriched with many different data sources – e.g. CBE interest rate, inflation, information about retailers business segment, age of business, etc. But for the sake of brevity, I’ll work only with the data sets provided.</p>
 <p>I decided to set aside some time to go over the design and components of my (proposal) for a more mature automated decision-making system and suggestions about the current loan process in chapter <a class="reference internal" href="decision-api/overview.html"><span class="doc std std-doc">Credit Risk Decision API</span></a>. Of course, it won’t be extensive nor exhaustive of the possibilities since I must time-box it.</p>
-</section>
-<section id="binary-classification-results">
-<h2>Binary Classification Results<a class="headerlink" href="#binary-classification-results" title="Permalink to this heading">#</a></h2>
-<p>Lorem Ipsum</p>
-</section>
-<section id="dynamic-risk-control-results">
-<h2>Dynamic Risk Control Results<a class="headerlink" href="#dynamic-risk-control-results" title="Permalink to this heading">#</a></h2>
-<p>Lorem Ipsum if I have time</p>
 <hr class="docutils" />
 <p>The chapters in this book are meant to be read in order as they reflect the natural flow of exploration, then experimentation, then results.</p>
 </section>
@@ -396,37 +388,37 @@ document.write(`
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data and Methodology</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="discovery/initial-data-discovery.html">1. Initial Data Discovery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discovery/data-profile-reports.html">2. Data Profile Reports</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="discovery/methodology.html">1. Methodology</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="discovery/hypothesis.html">1.1. Hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery/data-leak.html">1.2. Avoiding Data Leak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery/evaluation.html">1.3. Evaluation Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="discovery/initial-data-discovery.html">2. Initial Data Discovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discovery/data-profile-reports.html">3. Data Profile Reports</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="discovery/data-profile-reports/loans-profile.html">Loans Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery/data-profile-reports/fintech-profile.html">Fintech Data Profile Report</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery/data-profile-reports/ecommerce-profile.html">Ecommerce Data Profile Report</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="discovery/product-understanding.html">3. Product Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discovery/methodology.html">4. Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discovery/product-understanding.html">4. Product Understanding</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploratory Data Analysis</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="exploratory-analysis/anecdotes.html">5. Exploring Anecdotal Cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exploratory-analysis/sample-analysis.html">6. Exploring Sample and Population</a></li>
-<li class="toctree-l1"><a class="reference internal" href="exploratory-analysis/results.html">7. Exploration Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/exploratory-analysis.html">5. Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/test-assumption.html">6. Testing Assumptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments/test-hypothesis.html">7. Test Hypothesis</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Feature Engineering</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ML Experiments</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="feature-engineering/feature-engineering.html">8. Feature Engineering</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Experiments</span></p>
-<ul>
+<li class="toctree-l1"><a class="reference internal" href="model-experiments/feature-engineering.html">8. Feature Engineering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-experiments/baseline-performance.html">9. Baseline Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model-experiments/hyperparam-tuning.html">10. Tuning Model Hyperparameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model-experiments/tuned-model-performance.html">11. Performance Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-experiments/hyperparam-tuning.html">10. Model Tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model-experiments/risk-assessment-performance.html">11. Results</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -473,11 +465,11 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="right-next"
-       href="discovery/initial-data-discovery.html"
+       href="discovery/methodology.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>Initial Data Discovery</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>Methodology</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -500,8 +492,6 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classification-results">Binary Classification Results</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-risk-control-results">Dynamic Risk Control Results</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chapters">Chapters</a><ul class="nav section-nav flex-column">
 </ul>
 </li>

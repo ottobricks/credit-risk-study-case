@@ -55,12 +55,6 @@ These are data points that capture the same underlying phenomenon, thus behave c
 
 Although there is strong correlation between columns of "*Loan invoice details*" and "*Retailer consumption of loan*", I choose to keep them separate groups. The reasoning is based on how the credit product is implemented at the moment. We evaluate retailers request for a given amount, but allow them to spend only a fraction of that amount. This means there are 2 related but distinct behaviors to capture: the rationale when requesting funds, and the actual need to spend them.
 
-
-## Time Series Data
-At first glance, I believe the 3 datasets are some form of time series data plus aggregations on those series. However, not all time series data are equal. We need to find out whether these are changelog tables (contain all change events) or latest snapshot per entity. How can we check that?
-
-
-
 ---
 
 +++
@@ -73,8 +67,6 @@ The sections above were drawn from the following data profile reports:
 +++
 
 Code to generate each report:
-
-``````{div} full-width
 
 `````{tab-set}
 
@@ -122,7 +114,7 @@ profile.to_file("credit-risk/discovery/data-profile-reports/ecommerce-profile.ht
 
 `````
 
-``````
+---
 
 ````{dropdown} Code for CUMMULATIVE_OUTSTANDING percentage match
 ```{code-block} python
