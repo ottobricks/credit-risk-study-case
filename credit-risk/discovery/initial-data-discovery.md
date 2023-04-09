@@ -92,25 +92,25 @@ pd.read_csv(
 ).iloc[0].sort_index()
 ```
 
-From the column definitions in Loans data, we know `MAIN_SYSTEM_ID` represents the retailer's identity between Fintech and Ecommerce. We also know that Loans data contains `RETAILER_ID` specific to fintech, thus we can infer that it's the same as `ID` in Fintech data.
+From the column definitions in Loans data, we know `MAIN_SYSTEM_ID` represents the retailer's identity between Fintech and Ecommerce.
 
 Furthermore, we can already predict that there is strong correlation between
 
 ```{dropdown} Column Description
 
-|  **Column**  |  **Map to Loans**  |  **Description**  |
-|--------------|------------------------|------------------|
-|  AMOUNT  |  ?  |  Eq. `invoice_value` before tax and fees  |
-|  CREATED_AT  |  -  |  Timestamp when payment processing started  |
-|  FEES  |  ?  |  MaxAB fee for providing payment processing service, etc  |
-|  ID  |  -  |  Internal identification of payment processing  |
-|  MAIN_SYSTEM_ID  | Table `foreign_key` |  Retailer internal identification across ecommerce and fintech  |
-|  RETAILER_CUT  |  -  |  ? Estimated profit margin of retailer on the sale ?  |
-|  STATUS  |  -  |  Latest status of payment processing according to `UPDATED_AT`  |
-|  TOTAL_AMOUNT_INCLUDING_TAX  |  -  |  `AMOUNT` + `FEES` + `TAX`  |
-|  TOTAL_AMOUNT_PAID  |  -  |  The amount paid to the retailer by their customer  |
-|  UPDATED_AT  |  -  |  Timestamp of the current `STATUS` update  |
-|  WALLET_BALANCE_BEFORE_TRANSACTION  |  ?  |  Retailer balance before the current sale  |
+|  **Column**  |  **Description**  |
+|--------------|------------------|
+|  AMOUNT  |  Eq. `invoice_value` before tax and fees  |
+|  CREATED_AT  |  Timestamp when payment processing started  |
+|  FEES  |  MaxAB fee for providing payment processing service, etc  |
+|  ID  |  Internal identification of payment processing  |
+|  MAIN_SYSTEM_ID  |  Retailer internal identification across ecommerce and fintech, table `foreign_key`  |
+|  RETAILER_CUT  |  Estimated profit margin of retailer on the sale (?)  |
+|  STATUS  |  Latest status of payment processing according to `UPDATED_AT`  |
+|  TOTAL_AMOUNT_INCLUDING_TAX  |  `AMOUNT` + `FEES` + `TAX`  |
+|  TOTAL_AMOUNT_PAID  |  The amount paid to the retailer by their customer  |
+|  UPDATED_AT  |  Timestamp of the current `STATUS` update  |
+|  WALLET_BALANCE_BEFORE_TRANSACTION  |  Retailer balance before the current sale  |
 
 ```
 
@@ -134,14 +134,14 @@ This dataset is simpler in nature if compared with the other 2, and as expected 
 
 ```{dropdown} Column Description
 
-|  **Column**  |  **Map to Loans**  |  **Description**  |
-|--------------|------------------------|------------------|
-|  DISCOUNT  |  -  |  Amount to be deducted from `ORDER_PRICE`  |
-|  MAIN_SYSTEM_ID  |  Table `foreign_key`  |  Retailer internal identification across ecommerce and fintech  |
-|  ORDER_CREATION_DATE  |  -  |  Timestamp when iventory purchase order is created  |
-|  ORDER_ID  |  -  |  Table index, unique identifier for orders |
-|  ORDER_PRICE  | - |  Invoice value *before* `DISCOUNT` is applied  |
-|  ORDER_PRICE_AFTER_DISCOUNT  |  -  |  Invoice value *after* `DISCOUNT` is applied  |
+|  **Column**  |  **Description**  |
+|--------------|------------------|
+|  DISCOUNT  |  Amount to be deducted from `ORDER_PRICE`  |
+|  MAIN_SYSTEM_ID  |  Retailer internal identification across ecommerce and fintech, table `foreign_key`  |
+|  ORDER_CREATION_DATE  |  Timestamp when inventory purchase order is created  |
+|  ORDER_ID  | Table index, unique identifier for orders |
+|  ORDER_PRICE  |  Invoice value *before* `DISCOUNT` is applied  |
+|  ORDER_PRICE_AFTER_DISCOUNT   |  Invoice value *after* `DISCOUNT` is applied  |
 
 ```
 
