@@ -24,8 +24,7 @@ if __name__ == "__main__":
     featureframe = (
         spark.read.option("mergeSchema", "true")
         .parquet(
-            f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/featureframe-maxdepth{maxdepth}.parquet"
-            # "data/featureframe-maxdepth2.parquet"
+            "data/featureframe-maxdepth2.parquet"
         )
         .drop("__index_level_0__")
         .coalesce(int(spark.sparkContext.getConf().get("spark.executor.instances", "2")))
@@ -96,7 +95,6 @@ if __name__ == "__main__":
     # Fit the model to the data and persist it
     model = pipeline.fit(featureframe)
     model.write().overwrite().save(
-        # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/assets/pca-model-maxdepth{maxdepth}.mllib"
         f"credit-risk/feature-engineering/pca-model-maxdepth{maxdepth}.mllib"
     )
 
@@ -106,6 +104,5 @@ if __name__ == "__main__":
     )
 
     selected_features.coalesce(96).write.mode("overwrite").parquet(
-        # f"data/pca-featureframe-maxdepth{maxdepth}.parquet"
-        f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/pca-featureframe-maxdepth{maxdepth}.parquet"
+        f"data/pca-featureframe-maxdepth{maxdepth}.parquet"
     )

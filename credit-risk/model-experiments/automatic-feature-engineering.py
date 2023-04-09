@@ -379,8 +379,7 @@ if __name__ == "__main__":
     )
 
     # Write featureframe to storage
-    # dest_path = f"./data/featureframe-maxdepth{maxdepth}.parquet/MAIN_SYSTEM_ID={selected_main_system_id}/part.snappy.parquet"
-    dest_path = f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/featureframe-maxdepth{maxdepth}.parquet/MAIN_SYSTEM_ID={selected_main_system_id}/part.snappy.parquet"
+    dest_path = f"./data/featureframe-maxdepth{maxdepth}.parquet/MAIN_SYSTEM_ID={selected_main_system_id}/part.snappy.parquet"
     if not os.path.exists(dest_path):
         _ = subprocess.run(["mkdir", "-p", dest_path.rsplit("/", 1)[-1]])
 

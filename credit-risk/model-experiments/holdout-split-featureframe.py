@@ -41,7 +41,6 @@ if __name__ == "__main__":
     # Load featureframes
     dfs_featureframe = spark.read.parquet(
         f"data/pca-featureframe-maxdepth{maxdepth}.parquet"
-        # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/pca-featureframe-maxdepth{maxdepth}.parquet"
     )
     # experiment_featureframe = spark.read.parquet(...)
 
@@ -92,7 +91,6 @@ if __name__ == "__main__":
         .parquet(
             f"data/test/pca-featureframe-maxdepth{maxdepth}.parquet"
             # f"data/test/full-featureframe-maxdepth{maxdepth}.parquet"
-            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/test/pca-featureframe-maxdepth{maxdepth}.parquet"
         )
     )
     # Dataset better suited for Pandas ML
@@ -112,7 +110,6 @@ if __name__ == "__main__":
         .parquet(
             f"data/test/pandas-pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
             # f"data/test/pandas-full-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
-            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/test/pandas-pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
         )
     )
 
@@ -135,7 +132,6 @@ if __name__ == "__main__":
         .parquet(
             f"data/train/pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
             # f"data/train/full-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
-            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/train/pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
         )
     )
     # Dataset better suited for Pandas ML
@@ -154,6 +150,5 @@ if __name__ == "__main__":
         .parquet(
             f"data/train/pandas-pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
             # f"data/train/pandas-full-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
-            # f"s3a://ml-production-fraud-sagemaker-data/otto.sperling/tmp/train/pandas-pca-featureframe-maxdepth{maxdepth}-target{target_col}.parquet"
         )
     )
