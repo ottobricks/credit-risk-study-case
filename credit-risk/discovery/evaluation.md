@@ -11,7 +11,7 @@ $$
 Lorem Ipsum
 $$
 
-Then, I will generate a Decision dataset with "yes/no" answers for loans based on 2 scenarios at fixed risk exposure: maximize profit, maximize growth. Note that this heavily depends on my [assumption](assumptions) that we have enough observations in Ecommerce to be able to forecast retailers' expenses with suppliers over time. Therefore, we must turn to results in [Testing Underlying Assumptions](testing-assumptions) to validate the sanity of this approach.
+Then, I will generate a Decision dataset with "yes/no" answers for loans based on 2 scenarios at fixed risk exposure: maximize profit, maximize growth. Note that this heavily depends on my [assumption](assumptions) that we have enough observations in Ecommerce to be able to forecast retailers' expenses with suppliers over time. Therefore, we must turn to results in [Testing Underlying Assumptions](../exploratory-analysis/test-assumption.md) to validate the sanity of this approach.
 
 Conversely, if the assumption does not hold, I will take the dummy approach mentioned a couple paragraphs above due to time constraints.
 

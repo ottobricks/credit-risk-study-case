@@ -23,7 +23,7 @@ I assume the Ecommerce dataset is complete for retailers in Loans dataset, i.e. 
 We can already see that this assumptions does not hold for retailers who've recently joined and already request loans. This is not a problem, it's just a way to segment default risk -- new and established retailers in this case. I choose to focus on established retailers for this case study.
 ```
 
-So, it becomes very clear that we must first assess the validity of this assumption before proceeding to hypothesis test. I address this topic in [Testing Underlying Assumptions](testing-assumptions). The result is ...
+So, it becomes very clear that we must first assess the validity of this assumption before proceeding to hypothesis test. I address this topic in [Testing Underlying Assumptions](../exploratory-analysis/test-assumption.md).
 
 ---
 
