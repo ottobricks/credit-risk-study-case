@@ -27,7 +27,7 @@ publish:
 	jupyter-book build --builder=html credit-risk/
 	cp -r credit-risk/_build docs
 	rm docs/html/index.html
-	cat << EOF > docs/index.html
+	cat << 'EOF' > docs/index.html
 	<meta http-equiv="Refresh" content="0; url=html/intro.html" />
 	EOF
 	touch .nojekyll
