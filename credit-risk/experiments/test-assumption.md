@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Testing Underlying Assumptions
+# Testing Assumptions
 
 As mentioned in [this methodology section](assumptions), ...
 
