@@ -9,6 +9,10 @@ parts:
     maxdepth: 2
     chapters:
       - file: discovery/methodology.md
+        sections:
+          - file: discovery/hypothesis.md
+          - file: discovery/data-leak.md
+          - file: discovery/evaluation.md
       - file: discovery/initial-data-discovery.md
       - file: discovery/data-profile-reports.md
         sections:
