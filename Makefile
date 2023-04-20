@@ -27,11 +27,8 @@ publish:
 	jupyter-book build --builder=html credit-risk/
 	cp -r credit-risk/_build docs
 	rm docs/html/index.html
-	cat << 'EOF' > docs/index.html
-	<meta http-equiv="Refresh" content="0; url=html/intro.html" />
-	EOF
-	touch docs/.nojekyll
-	git add .nojekyll \
-	&& git add docs/ \
+	echo '<meta http-equiv="Refresh" content="0; url=html/intro.html" />' > docs/index.html
+	touch docs/.nojekyll && git add docs/.nojekyll
+	git add docs/ \
 	&& git commit -m "Publish updates" \
 	&& git push
