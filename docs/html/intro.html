@@ -61,6 +61,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -353,6 +355,12 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methodology">Methodology</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conservative">Conservative</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambitious">Ambitious</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chapters">Chapters</a><ul class="nav section-nav flex-column">
 </ul>
 </li>
@@ -380,8 +388,59 @@ document.write(`
 </ul>
 <p>It goes without saying that this exercise can be enriched with many different data sources – e.g. CBE interest rate, inflation, information about retailers business segment, age of business, etc. But for the sake of brevity, I’ll work only with the data sets provided.</p>
 <p>I decided to set aside some time to go over the design and components of my (proposal) for a more mature automated decision-making system and suggestions about the current loan process in chapter <a class="reference internal" href="decision-api/overview.html"><span class="doc std std-doc">Credit Risk Decision API</span></a>. Of course, it won’t be extensive nor exhaustive of the possibilities since I must time-box it.</p>
+</section>
+<section id="methodology">
+<h2>Methodology<a class="headerlink" href="#methodology" title="Permalink to this heading">#</a></h2>
+<p>The beginner approach to the problem is to use <code class="docutils literal notranslate"><span class="pre">PAYMENT_STATUS</span> <span class="pre">!=</span> <span class="pre">'Paid'</span></code> as a target, and conduct this experiment as a simple binary classification problem. However, that approach ignores multiple issues, the first being low representation (i.e. class imbalance), too few positive observations even to use oversampling techniques.</p>
+<p>Another terrible side effect of such approach is that credit risk assessment becomes tied to information that is only available in the future (once retailer fully repays or defaults), meaning there is always a lag between decisions we make and their supporting evidence. This lag (e.g. 1 day on average) means decisions that expose us financially are made completely in the dark, without the possibility for real-time adjustment based on previous decisions. We’ll only learn about exposure vs. loss once annotations arrive. This issue is not limited to credit risk modelling; it’s far too common in risk assessment tasks in general.</p>
+<p>Thus, I will completely skip such methods based on parallel domain knowledge, previous experience, and quite frankly good common sense. Instead, I choose to model credit risk against information that is available to us previous to the loan request. This means we are able to adjust the decision-making nobs to fit a given risk appetite, and price it into the credit product.</p>
+<p>In this case study I focused on <strong>retailer’s estimated cash flow against previous 30-day history of purchases in our Ecommerce platform</strong> as a measure of how likely they are to be able to repay once the loan is due. There are many other ways to approach it, but I judge this to be enough for a case study. In the future, we could look at more robust risk modelling strategies; for instance, using our payment processing to offer retailers’ customers payments in installments (new credit product), and use those future payable as collateral for loans. This way, we could reduce interest rates for good retailers, while hedging our risk against their future revenue.</p>
+<p>Of course, this methodology is not free of caveats. For instance, forcing the decision-making to be “yes/no” based on only 1 data point is likely to cause many False Positives (we say “no” to good retailer). Again, I judge this to be an acceptable limitation for a case study.</p>
+</section>
+<section id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this heading">#</a></h2>
+<p>I split the result into 2 risk appetite tiers focused solely on user-base growth: <em>conservative</em> and <em>ambitious</em>.</p>
+<section id="conservative">
+<h3>Conservative<a class="headerlink" href="#conservative" title="Permalink to this heading">#</a></h3>
+<p>Conservative means that we are willing to approve a loan if:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+(loan\_amount &lt;= ecommerce\_average\_volume_{30days} + 1 * standard\_deviation_{30days}) \\
+AND \\
+(estimated\_spent &lt;= ecommerce\_average\_volume_{30days} + 1 * standard\_deviation_{30days})
+\end{split}\]</div>
+<p><em>Conservative</em> means we would have:</p>
+<ul class="simple">
+<li><p>approved X (currency) out of Y requested in total</p></li>
+<li><p>served X out of Y retailers that requested loans</p></li>
+<li><p>incurred into X <code class="docutils literal notranslate"><span class="pre">default_volume</span></code> (financial loss)</p></li>
+</ul>
+<p>Of course, we can always hedge losses with credit product pricing, but this goes far beyond the scope of a case study.</p>
+</section>
+<section id="ambitious">
+<h3>Ambitious<a class="headerlink" href="#ambitious" title="Permalink to this heading">#</a></h3>
+<p>Ambitious means that we are willing to approve a loan if the same formula above applies but with <span class="math notranslate nohighlight">\(2 * standard\_deviation_{30days}\)</span>, higher multiplier for standard deviation upper bound.</p>
+<p>By choosing to be ambitious, we are willing to provide loans to 13.6% more retailers, knowing these to be leverage-seekers. As mentioned before, hedging against financial loss via product pricing is a very important topic, but goes beyond the scope of this case study. However, just as food-for-thought, here are some parameters that have to be considered and others that can be adjusted:</p>
+<ul class="simple">
+<li><p>the current available lending pool volume</p></li>
+<li><p>the current exposure and coverage on volume already approved for lending in the period (e.g. daily)</p>
+<ul>
+<li><p>if current <code class="docutils literal notranslate"><span class="pre">volume_lent</span></code> is made up mostly of <em>conservative</em> loans, we can be more <em>ambitious</em> until we reach our financial exposure threshold, or are no longer interested in adding overhead to pricing for non-financial reasons (e.g. bad press on high rates – “abusive rates” is clickbait headline that unfortunately sells)</p></li>
+</ul>
+</li>
+<li><p>our assumed percent rate of <code class="docutils literal notranslate"><span class="pre">default_volume</span></code>: nob adjusted based on <code class="docutils literal notranslate"><span class="pre">standard_deviation</span></code> multiplier</p></li>
+<li><p>our <code class="docutils literal notranslate"><span class="pre">margin_multiplier</span></code>: nob adjusted based on growth vs. profit appetite</p></li>
+</ul>
+<p>These are just a few parameters that we could observe and manipulate to keep operations healthy while keeping financial exposure under control. There is so much more to explore, this is indeed very exciting.</p>
+<p>Finally, <em>ambitious</em> means we would have:</p>
+<ul class="simple">
+<li><p>approved X (currency) out of Y requested in total</p></li>
+<li><p>served X out of Y retailers that requested loans</p></li>
+<li></li>
+</ul>
 <hr class="docutils" />
 <p>The chapters in this book are meant to be read in order as they reflect the natural flow of exploration, then experimentation, then results.</p>
+</section>
 </section>
 <section id="chapters">
 <h2>Chapters<a class="headerlink" href="#chapters" title="Permalink to this heading">#</a></h2>
@@ -492,6 +551,12 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#methodology">Methodology</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conservative">Conservative</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ambitious">Ambitious</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chapters">Chapters</a><ul class="nav section-nav flex-column">
 </ul>
 </li>

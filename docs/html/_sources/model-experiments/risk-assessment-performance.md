@@ -149,7 +149,7 @@ merged_df.info()
 
 ## Make decision to approve or deny loans
 
-**SAFE_DECISION** is when:
+**CONSERVATIVE_DECISION** is when:
  - model predicts `SPENT` to be within 1 stddev of Ecommerce 30-days mean
  - `LOAN_AMOUNT` does not exceed 1 stddev of Ecommerce 30-days mean
 
@@ -160,7 +160,7 @@ merged_df.info()
 ```{code-cell} ipython3
 (
     merged_df.assign(
-        SAFE_DECISION=(
+        CONSERVATIVE_DECISION=(
             (merged_df["y_pred"] <= merged_df["ROLLINGMEAN_30DAYS__ORDER_PRICE__"] + merged_df["ROLLINGSTDDEV_30DAYS__ORDER_PRICE__"])
             & (merged_df["LOAN_AMOUNT"] <= merged_df["ROLLINGMEAN_30DAYS__ORDER_PRICE__"] + merged_df["ROLLINGSTDDEV_30DAYS__ORDER_PRICE__"])
         ),
@@ -171,7 +171,7 @@ merged_df.info()
     )
     [[
         "LOAN_ID",
-        "SAFE_DECISION",
+        "CONSERVATIVE_DECISION",
         "AMBITIOUS_DECISION"
     ]]
     .to_csv("../../risk-assessment-decisions.csv", header=True, index=False)
