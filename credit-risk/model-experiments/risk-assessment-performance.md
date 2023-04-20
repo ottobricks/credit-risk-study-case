@@ -174,7 +174,7 @@ merged_df.info()
         "CONSERVATIVE_DECISION",
         "AMBITIOUS_DECISION"
     ]]
-    .to_csv("../../risk-assessment-decisions.csv", header=True, index=False)
+    .to_csv("../../data/risk-assessment-decisions.csv", header=True, index=False)
 )
 ```
 
