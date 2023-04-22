@@ -1,4 +1,4 @@
-# Tiered Risk Model
+# Risk Segmentation
 
 
 

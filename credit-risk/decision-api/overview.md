@@ -9,7 +9,7 @@ Of course, all of this needs a lot of work and this is just a case study. So I d
 <div class="card">
   <div class="card-body">
     <button class="btn"><a href="./okrs.html">Objectives and Key Results</a></button><br>
-    <button class="btn"><a href="./tiered-risk-model.html">Tiered Risk Model</a></button><br>
+    <button class="btn"><a href="./tiered-risk-model.html">Risk Segmentation</a></button><br>
     <button class="btn"><a href="./user-story.html">User Story</a></button><br>
   </div>
 </div>
