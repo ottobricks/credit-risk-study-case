@@ -16,13 +16,13 @@ I decided to set aside some time to go over the design and components of my (pro
 ## Risk Modelling Beyond Ops Capacity 
 The beginner approach to the problem is to use `PAYMENT_STATUS != 'Paid'` as a target, and conduct this experiment as a simple binary classification problem. However, that approach ignores multiple issues, the first being low representation (i.e. class imbalance), too few positive observations even to use oversampling techniques.
 
-Another terrible side effect of such approach is that **credit risk assessment becomes tied to information that is only available in the future** (once retailer fully repays or defaults), meaning **there is always a lag between decisions we make and the evidence to estimate risk and exposure**. This lag (e.g. P95 in under 48 hours) means decisions that expose us financial loss are made in the dark, without the possibility for real-time adjustment of thresholds based on previous decisions. We'll only learn about exposure vs. realized loss once annotations arrive. This issue is not limited to credit risk modelling; it's far too common in risk assessment tasks in general.
+Another terrible side effect of such approach is that **credit risk assessment becomes tied to information that is only available in the future** (once retailer fully repays or defaults), meaning **there is always a lag between decisions we make and the evidence to estimate risk and exposure**. This lag (e.g. P95 in under 48 hours) means decisions that expose us financial to loss are made in the dark, without the possibility for real-time adjustment of thresholds based on previous decisions. We'll only learn about exposure vs. realized loss once annotations arrive. This issue is not limited to credit risk modelling; it's far too common in risk assessment tasks in general.
 
 Thus, I will completely skip such methods. This decision is based on my (parallel) domain knowledge, previous experience, and quite frankly good common sense. Instead, I choose to model credit risk against information that is available to us previous to the loan request. This means we are able to adjust the decision-making nobs to fit a given risk appetite, and price it into the credit product.
 
 In this case study I focused on **retailer's estimated cash flow against previous 30-day history of purchases in our Ecommerce platform** as a measure of how likely they are to be able to repay once the loan is due. There are many other ways to approach it, but I judge this to be enough for a case study. In the future, we could look at more robust risk modelling strategies; for instance, using our payment processing to offer retailers' customers payments in installments (new credit product), and use those future payable as collateral for loans. This way, we could reduce interest rates for good retailers, while hedging our exposure with their future revenue.
 
-Of course, this methodology is not free of caveats. For instance, forcing the decision-making to be "yes/no" based on only 1 data point is likely to cause many False Positives (we say "no" to good retailer). Again, I judge this to be an acceptable limitation for a case study, and have a brief discussion on risk mitigation strategies in [Risk Segmentation](decision-api/tiered-risk-model.md). 
+Of course, this methodology is not free of caveats. For instance, forcing the decision-making to be "yes/no" based on only 1 data point is likely to cause many False Positives (we say "no" to good retailer). Again, I judge this to be an acceptable limitation for a case study, and have a brief discussion on mitigating such risks in [Risk Segmentation](decision-api/tiered-risk-model.md). 
 
 ## Results
 
@@ -30,15 +30,15 @@ Of course, this methodology is not free of caveats. For instance, forcing the de
 This section is a summarized version of {ref}`result-assessment`
 ```
 
-Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations -- see (Splitting ML Dataset)[discovery/evaluation.html#splitting-ml-dataset] for more info.
+Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations -- see ()[splitting-ml-dataset] for more info.
 
 **Is that a problem?**
 
-There is no such thing as perfect method, but there are those objectively better. We are forced to choose where to place uncertainty:
+There is no such thing as perfect method, but there objectively better ones. We are forced to choose where to place uncertainty:
  - giving models all the data, increasing chance of overfitting (models memorize the data), thus weakening confidence in results
  - training models in "past" data and assessing them on "future" data, reducing the signal available for models to learn, but increasing a lot confidence on results
 
-The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishing performance), you want the funny friend, but what about for life?
+The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishingly unrealistic performance), you want the funny friend, but what about for life?
 
 Another point of attention is that I will consider `PAYMENT_STATUS in ('Unpaid', 'Partialy paid')` (\*partially) as *defaults*. I will also consider *defaults* all cases when the retailer is not able to make the payment on the first collection attempt. Let me explain. I understand retailers are not always to blame for missed collection attempt, it sometimes falls on our operations agents. This can definitely be addressed in the future with a separate track: optimizing ops agents schedules to maximize collection rates. However, for this case study, I'm going to limit the scope of our assessment, and my judgement is that there is also a component of timing in a retailer's ability to repay. This shifts the objective from being "we eventually want to collect debts" to "our forecast should also optimize for timing". Of course, this goes beyond the scope of a case study, but it is an interesting domain to explore.
 
