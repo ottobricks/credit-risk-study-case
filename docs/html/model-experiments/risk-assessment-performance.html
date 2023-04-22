@@ -190,7 +190,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../decision-api/overview.html">12. Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../decision-api/okrs.html">13. Objectives and Key Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../decision-api/tiered-risk-model.html">14. Tiered Risk Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../decision-api/tiered-risk-model.html">14. Risk Segmentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../decision-api/user-story.html">15. User Story</a></li>
 </ul>
 
@@ -357,6 +357,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-model-and-get-predictions">11.2. Load model and get predictions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#join-fields-to-generate-final-dataframe-and-report">11.3. Join fields to generate final dataframe and report</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-decision-to-approve-or-deny-loans">11.4. Make decision to approve or deny loans</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#result-assessment">11.5. Result Assessment</a></li>
 </ul>
             </nav>
         </div>
@@ -370,21 +371,14 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="results">
 <h1><span class="section-number">11. </span>Results<a class="headerlink" href="#results" title="Permalink to this heading">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">from</span> <span class="nn">flaml</span> <span class="kn">import</span> <span class="n">AutoML</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-</div>
-</div>
 <section id="load-data">
 <h2><span class="section-number">11.1. </span>Load data<a class="headerlink" href="#load-data" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecommerce_df</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
@@ -438,6 +432,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 RangeIndex: 656473 entries, 0 to 656472
@@ -455,7 +450,12 @@ memory usage: 25.0 MB
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">,</span> <span class="s2">&quot;LOAN_AMOUNT&quot;</span><span class="p">]</span>
 <span class="n">loans_df</span> <span class="o">=</span> <span class="p">(</span>
@@ -502,6 +502,7 @@ memory usage: 25.0 MB
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 Int64Index: 56296 entries, 0 to 56295
@@ -532,7 +533,12 @@ memory usage: 6.9 MB
 </section>
 <section id="load-model-and-get-predictions">
 <h2><span class="section-number">11.2. </span>Load model and get predictions<a class="headerlink" href="#load-model-and-get-predictions" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;assets/sagemaker-flaml-automl-regression-maxdepth2-targetSPENT-3.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
     <span class="n">automl</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
@@ -543,11 +549,17 @@ memory usage: 6.9 MB
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 </section>
 <section id="join-fields-to-generate-final-dataframe-and-report">
 <h2><span class="section-number">11.3. </span>Join fields to generate final dataframe and report<a class="headerlink" href="#join-fields-to-generate-final-dataframe-and-report" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">merged_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge_asof</span><span class="p">(</span>
     <span class="n">test_df</span><span class="p">,</span>
@@ -563,6 +575,7 @@ memory usage: 6.9 MB
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 Int64Index: 34418 entries, 0 to 56293
@@ -626,10 +639,94 @@ memory usage: 5.5 MB
         <span class="s2">&quot;CONSERVATIVE_DECISION&quot;</span><span class="p">,</span>
         <span class="s2">&quot;AMBITIOUS_DECISION&quot;</span>
     <span class="p">]]</span>
-    <span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;../../risk-assessment-decisions.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;../../data/risk-assessment-decisions.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
+</section>
+<section id="result-assessment">
+<span id="id1"></span><h2><span class="section-number">11.5. </span>Result Assessment<a class="headerlink" href="#result-assessment" title="Permalink to this heading">#</a></h2>
+<p>Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations – see (Splitting ML Dataset)[discovery/evaluation.html#splitting-ml-dataset] for more info.</p>
+<p><strong>Is that a problem?</strong></p>
+<p>There is no such thing as perfect method, but there are those objectively better. We are forced to choose where to place uncertainty:</p>
+<ul class="simple">
+<li><p>giving models all the data, increasing chance of overfitting (models memorize the data), thus weakening confidence in results</p></li>
+<li><p>training models in “past” data and assessing them on “future” data, reducing the signal available for models to learn, but increasing a lot confidence on results</p></li>
+</ul>
+<p>The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishing performance), you want the funny friend, but what about for life?</p>
+<p>Another point of attention is that I will consider <code class="docutils literal notranslate"><span class="pre">PAYMENT_STATUS</span> <span class="pre">in</span> <span class="pre">('Unpaid',</span> <span class="pre">'Partialy</span> <span class="pre">paid')</span></code> (*partially) as <em>defaults</em>. I will also consider <em>defaults</em> all cases when the retailer is not able to make the payment on the first collection attempt. Let me explain. I understand retailers are not always to blame for missed collection attempt, it sometimes falls on our operations agents. This can definitely be addressed in the future with a separate track: optimizing ops agents schedules to maximize collection rates. However, for this case study, I’m going to limit the scope of our assessment, and my judgement is that there is also a component of timing in a retailer’s ability to repay. This shifts the objective from being “we eventually want to collect debts” to “our forecast should also optimize for timing”. Of course, this goes beyond the scope of a case study, but it is an interesting domain to explore.</p>
+<p>With all that in mind, let’s first take a look at some broad metrics:</p>
+<div class="cell tag_hide-input tag_remove-stdout docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">SparkSession</span>
+<span class="kn">import</span> <span class="nn">pyspark.sql.types</span> <span class="k">as</span> <span class="nn">spark_dtype</span>
+
+
+<span class="c1"># Start Spark session just because I feel more comfortable with its API rather than Pandas</span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+
+<span class="c1"># Load Decisions and Loans datasets</span>
+<span class="n">decision_test_observations</span><span class="p">:</span> <span class="n">DataFrame</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">schema</span><span class="p">(</span>
+        <span class="n">spark_dtype</span><span class="o">.</span><span class="n">StructType</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">spark_dtype</span><span class="o">.</span><span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span> <span class="n">spark_dtype</span><span class="o">.</span><span class="n">LongType</span><span class="p">(),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="n">spark_dtype</span><span class="o">.</span><span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;CONSERVATIVE_DECISION&quot;</span><span class="p">,</span> <span class="n">spark_dtype</span><span class="o">.</span><span class="n">BooleanType</span><span class="p">(),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="n">spark_dtype</span><span class="o">.</span><span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;AMBITIOUS_DECISION&quot;</span><span class="p">,</span> <span class="n">spark_dtype</span><span class="o">.</span><span class="n">BooleanType</span><span class="p">(),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;../../data/risk-assessment-decisions.csv&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">loan_metadata</span><span class="p">:</span> <span class="n">DataFrame</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../data/Loans_Data.xlsx&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="c1"># Irrelevant columns for the current assessment</span>
+            <span class="s2">&quot;TOTAL_INITIAL_AMOUNT&quot;</span><span class="p">,</span> <span class="c1"># can be inferred from other columns</span>
+            <span class="s2">&quot;TOTAL_FINAL_AMOUNT&quot;</span><span class="p">,</span> <span class="c1"># can be inferred from other columns</span>
+            <span class="s2">&quot;INDEX&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;REPAYMENT_ID&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;RETAILER_ID&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;REPAYMENT_UPDATED&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;PAYMENT_AMOUNT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;LOAN_PAYMENT_DATE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;REPAYMENT_AMOUNT&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;CUMMULATIVE_OUTSTANDING&quot;</span><span class="p">,</span>
+
+        <span class="p">],</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+        <span class="n">MAIN_SYSTEM_ID</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
+        <span class="n">LOAN_ID</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
+        <span class="n">LOAN_ISSUANCE_DATE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;M8[ns]&quot;</span><span class="p">),</span>
+        <span class="n">LOAN_DUE_DATE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;INITIAL_DATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;M8[ns]&quot;</span><span class="p">),</span>
+        <span class="c1"># Financial info</span>
+        <span class="n">LOAN_AMOUNT</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_AMOUNT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+        <span class="n">INITIAL_COST</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;INITIAL_COST&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+        <span class="n">SPENT</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;SPENT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+        <span class="n">FIRST_TRIAL_BALANCE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;FIRST_TRIAL_BALANCE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+        <span class="n">FINAL_COST</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;FINAL_COST&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+        <span class="c1"># Label</span>
+        <span class="n">LABEL</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;PAYMENT_STATUS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span> <span class="o">!=</span> <span class="s2">&quot;paid&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;FIRST_TRIAL_BALANCE&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
 </div>
 </div>
 </section>
@@ -706,6 +803,7 @@ memory usage: 5.5 MB
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-model-and-get-predictions">11.2. Load model and get predictions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#join-fields-to-generate-final-dataframe-and-report">11.3. Join fields to generate final dataframe and report</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-decision-to-approve-or-deny-loans">11.4. Make decision to approve or deny loans</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#result-assessment">11.5. Result Assessment</a></li>
 </ul>
   </nav></div>
 
