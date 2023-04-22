@@ -25,7 +25,31 @@ In this case study I focused on **retailer's estimated cash flow against previou
 Of course, this methodology is not free of caveats. For instance, forcing the decision-making to be "yes/no" based on only 1 data point is likely to cause many False Positives (we say "no" to good retailer). Again, I judge this to be an acceptable limitation for a case study, and have a brief discussion on risk mitigation strategies in [Risk Segmentation](decision-api/tiered-risk-model.md). 
 
 ## Results
+
+```{note}
+This section is a summarized version of {ref}`result-assessment`
+```
+
+Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations -- see (Splitting ML Dataset)[discovery/evaluation.html#splitting-ml-dataset] for more info.
+
+**Is that a problem?**
+
+There is no such thing as perfect method, but there are those objectively better. We are forced to choose where to place uncertainty:
+ - giving models all the data, increasing chance of overfitting (models memorize the data), thus weakening confidence in results
+ - training models in "past" data and assessing them on "future" data, reducing the signal available for models to learn, but increasing a lot confidence on results
+
+The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishing performance), you want the funny friend, but what about for life?
+
+Another point of attention is that I will consider `PAYMENT_STATUS in ('Unpaid', 'Partialy paid')` (\*partially) as *defaults*. I will also consider *defaults* all cases when the retailer is not able to make the payment on the first collection attempt. Let me explain. I understand retailers are not always to blame for missed collection attempt, it sometimes falls on our operations agents. This can definitely be addressed in the future with a separate track: optimizing ops agents schedules to maximize collection rates. However, for this case study, I'm going to limit the scope of our assessment, and my judgement is that there is also a component of timing in a retailer's ability to repay. This shifts the objective from being "we eventually want to collect debts" to "our forecast should also optimize for timing". Of course, this goes beyond the scope of a case study, but it is an interesting domain to explore.
+
 I split the result into 2 risk appetite tiers focused solely on user-base growth: *conservative* and *ambitious*.
+
+[WIP] Ideas, definitely no time to cover all -- choose a couple:
+- daily rate of exposure (need to define exposure precisely, maybe stddev above 30-day mean predicted volume)
+- weekly rate of exposure vs. realized loss
+- recommend daily interest rates based on to cover previous week exposure (if time allows, account for seasonality)
+- daily rate of stale capital: LOAN_AMOUNT vs. SPENT
+- weekly projected growth vs. realized growth
 
 ### Conservative
 Conservative means that we are willing to approve a loan if:
@@ -40,8 +64,6 @@ $$
  - approved X (currency) out of Y requested in total
  - served X out of Y retailers that requested loans
  - incurred into X `default_volume` (financial loss)
-
-Of course, we can always hedge losses with credit product pricing, but this goes far beyond the scope of a case study.
 
 ### Ambitious
 Ambitious means that we are willing to approve a loan if the same formula above applies but with $2 * standard\_deviation_{30days}$, higher multiplier for standard deviation upper bound.
