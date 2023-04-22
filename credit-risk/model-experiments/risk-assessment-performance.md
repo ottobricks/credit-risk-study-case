@@ -19,6 +19,7 @@ import pickle
 from flaml import AutoML
 import pandas as pd
 import numpy as np
+
 ```
 
 ## Load data
@@ -73,6 +74,7 @@ ecommerce_df = (
     .reset_index(drop=True)
 )
 ecommerce_df.info()
+
 ```
 
 ```{code-cell} ipython3
@@ -118,6 +120,7 @@ test_df = pd.merge(
 ).drop_duplicates()
 
 test_df.info()
+
 ```
 
 ## Load model and get predictions
@@ -129,6 +132,7 @@ with open("assets/sagemaker-flaml-automl-regression-maxdepth2-targetSPENT-3.pkl"
 test_df = test_df.assign(
     y_pred=automl.predict(test_df.drop(metadata_cols + ["MAIN_SYSTEM_ID", "label"], axis=1))
 ).sort_values("LOAN_ISSUANCE_DATE")
+
 ```
 
 ## Join fields to generate final dataframe and report
@@ -145,6 +149,7 @@ merged_df = pd.merge_asof(
 ).query("LOAN_ISSUANCE_DATE > ORDER_CREATION_DATE")
 
 merged_df.info()
+
 ```
 
 ## Make decision to approve or deny loans
@@ -176,8 +181,90 @@ merged_df.info()
     ]]
     .to_csv("../../data/risk-assessment-decisions.csv", header=True, index=False)
 )
+
 ```
+
+## Result Assessment
+
+Results generated from Test Dataset only are more reliable, see (Splitting ML Dataset)[discovery/evaluation.html#splitting-ml-dataset] for more info. However, this means our result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations.
+
+**Is that a problem?**
+
+There is no such thing as perfect method, but there are those objectively better. We are forced to choose where to place uncertainty:
+ - giving models all the data, increasing chance of overfitting (models memorize the data), thus weakening confidence in results
+ - training models in "past" data and assessing them on "future" data, reducing the signal available for models to learn, but increasing a lot confidence on results
+
+The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishing performance), you want the funny friend, but what about for life?
+
+Another point of attention is that I will consider `PAYMENT_STATUS in ('Unpaid', 'Partialy paid')` as *defaults*. I will also consider *defaults* all cases when the retailer is not able to make the payment on the first collection attempt. Let me explain. I understand retailers are not always to blame for missed collection attempt, it sometimes falls on our operations agents. This can definitely be addressed in the future with a separate track: optimizing ops agents schedules to maximize collection rates. However, for this case study, I'm going to limit the scope of our assessment, and my judgement is that there is also a component of timing in a retailer's ability to repay. This shifts the objective from being "we eventually want to collect debts" to "our forecast should also optimize for timing". Of course, this goes beyond the scope of a case study, but it is an interesting domain to explore.
+
+With all that in mind, let's first take a look at some broad metrics:
 
 ```{code-cell} ipython3
+:tags: [hide-input,remove-stdout]
+from pyspark.sql import DataFrame, SparkSession
+import pyspark.sql.types as spark_dtype
+
+
+# Start Spark session just because I feel more comfortable with its API rather than Pandas
+spark = SparkSession.builder.getOrCreate()
+
+# Load Decisions and Loans datasets
+decision_test_observations: DataFrame = (
+    spark.read.option("header", "true")
+    .schema(
+        spark_dtype.StructType(
+            [
+                spark_dtype.StructField("LOAN_ID", spark_dtype.LongType(), nullable=False),
+                spark_dtype.StructField("CONSERVATIVE_DECISION", spark_dtype.BooleanType(), nullable=False),
+                spark_dtype.StructField("AMBITIOUS_DECISION", spark_dtype.BooleanType(), nullable=False),
+            ]
+        )
+    )
+    .csv("../../data/risk-assessment-decisions.csv")
+)
+loan_metadata: DataFrame = spark.createDataFrame(
+    pd.read_excel("../../data/Loans_Data.xlsx")
+    .drop(
+        [
+            # Irrelevant columns for the current assessment
+            "TOTAL_INITIAL_AMOUNT", # can be inferred from other columns
+            "TOTAL_FINAL_AMOUNT", # can be inferred from other columns
+            "INDEX",
+            "REPAYMENT_ID",
+            "RETAILER_ID",
+            "REPAYMENT_UPDATED",
+            "PAYMENT_AMOUNT",
+            "LOAN_PAYMENT_DATE",
+            "REPAYMENT_AMOUNT",
+            "CUMMULATIVE_OUTSTANDING",
+
+        ],
+        axis=1,
+    )
+    .assign(
+        MAIN_SYSTEM_ID=lambda x: x["MAIN_SYSTEM_ID"].astype("int64"),
+        LOAN_ID=lambda x: x["LOAN_ID"].astype("int64"),
+        LOAN_ISSUANCE_DATE=lambda x: x["LOAN_ISSUANCE_DATE"].astype("<M8[ns]"),
+        LOAN_DUE_DATE=lambda x: x["INITIAL_DATE"].astype("<M8[ns]"),
+        # Financial info
+        LOAN_AMOUNT=lambda x: x["LOAN_AMOUNT"].astype("float64"),
+        INITIAL_COST=lambda x: x["INITIAL_COST"].astype("float64"),
+        SPENT=lambda x: x["SPENT"].astype("float64"),
+        FIRST_TRIAL_BALANCE=lambda x: x["FIRST_TRIAL_BALANCE"].astype("float64"),
+        FINAL_COST=lambda x: x["FINAL_COST"].astype("float64"),
+        # Label
+        LABEL=lambda x: (
+            (x["PAYMENT_STATUS"].str.lower != "paid") or (x["FIRST_TRIAL_BALANCE"] >= 0)
+        ),
+    )
+)
 
 ```
+
+Ideas, definitely no time to cover all -- choose a couple:
+- daily rate of exposure (need to define exposure precisely, maybe stddev above 30-day mean predicted volume)
+- weekly rate of exposure vs. realized loss
+- recommend daily interest rates based on to cover previous week exposure (if time allows, account for seasonality)
+- daily rate of stale capital: LOAN_AMOUNT vs. SPENT
+- weekly projected growth vs. realized growth
