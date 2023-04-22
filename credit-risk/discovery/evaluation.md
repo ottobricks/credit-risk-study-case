@@ -15,6 +15,7 @@ Then, I will generate a Decision dataset with "yes/no" answers for loans based o
 
 Conversely, if the assumption does not hold, I will take the dummy approach mentioned a couple paragraphs above due to time constraints.
 
+(splitting-ml-dataset)=
 ## Splitting ML dataset
 
 Once again, in order to avoid Data Leak, we split our ML dataset (featureframe) into 3: Train, Validation and Test datasets. The Test dataset is used to generate final results and is not used during development. In real-life experiments, we shouldn't even process feature engineering scripts on them, but rather transform the data just before final evaluation of results. But due to time constraints, I decided that an adaptation of <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html" target="_blank">TimeSeriesSplit</a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html" target="_blank">StratifiedKFold</a> with holdout split are enough to mitigate Data Leak for the case study.
