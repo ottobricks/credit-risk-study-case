@@ -191,7 +191,7 @@ merged_df.info()
 (result-assessment)=
 ## Result Assessment
 
-Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations -- see (Splitting ML Dataset)[discovery/evaluation.html#splitting-ml-dataset] for more info.
+Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations -- see ()[splitting-ml-dataset] for more info.
 
 **Is that a problem?**
 
@@ -199,7 +199,7 @@ There is no such thing as perfect method, but there are those objectively better
  - giving models all the data, increasing chance of overfitting (models memorize the data), thus weakening confidence in results
  - training models in "past" data and assessing them on "future" data, reducing the signal available for models to learn, but increasing a lot confidence on results
 
-The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishing performance), you want the funny friend, but what about for life?
+The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishingly untrue tales), you want the funny friend, but what about for life?
 
 Another point of attention is that I will consider `PAYMENT_STATUS in ('Unpaid', 'Partialy paid')` (\*partially) as *defaults*. I will also consider *defaults* all cases when the retailer is not able to make the payment on the first collection attempt. Let me explain. I understand retailers are not always to blame for missed collection attempt, it sometimes falls on our operations agents. This can definitely be addressed in the future with a separate track: optimizing ops agents schedules to maximize collection rates. However, for this case study, I'm going to limit the scope of our assessment, and my judgement is that there is also a component of timing in a retailer's ability to repay. This shifts the objective from being "we eventually want to collect debts" to "our forecast should also optimize for timing". Of course, this goes beyond the scope of a case study, but it is an interesting domain to explore.
 
