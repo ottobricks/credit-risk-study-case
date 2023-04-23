@@ -191,7 +191,7 @@ merged_df.info()
 (result-assessment)=
 ## Result Assessment
 
-Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations -- see ()[splitting-ml-dataset] for more info.
+Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations -- see {ref}`splitting-ml-dataset` for more info.
 
 **Is that a problem?**
 

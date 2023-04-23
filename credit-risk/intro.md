@@ -30,7 +30,7 @@ Of course, this methodology is not free of caveats. For instance, forcing the de
 This section is a summarized version of {ref}`result-assessment`
 ```
 
-Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations -- see ()[splitting-ml-dataset] for more info.
+Result assessment is based only on 34,418 observations out of the 73,086 provided, roughly the 50% latest observations -- see {ref}`splitting-ml-dataset` for more info.
 
 **Is that a problem?**
 
