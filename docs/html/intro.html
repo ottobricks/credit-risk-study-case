@@ -413,14 +413,16 @@ document.write(`
 <p>The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishingly unrealistic performance), you want the funny friend, but what about for life?</p>
 <p>Another point of attention is that I will consider <code class="docutils literal notranslate"><span class="pre">PAYMENT_STATUS</span> <span class="pre">in</span> <span class="pre">('Unpaid',</span> <span class="pre">'Partialy</span> <span class="pre">paid')</span></code> (*partially) as <em>defaults</em>. I will also consider <em>defaults</em> all cases when the retailer is not able to make the payment on the first collection attempt. Let me explain. I understand retailers are not always to blame for missed collection attempt, it sometimes falls on our operations agents. This can definitely be addressed in the future with a separate track: optimizing ops agents schedules to maximize collection rates. However, for this case study, I’m going to limit the scope of our assessment, and my judgement is that there is also a component of timing in a retailer’s ability to repay. This shifts the objective from being “we eventually want to collect debts” to “our forecast should also optimize for timing”. Of course, this goes beyond the scope of a case study, but it is an interesting domain to explore.</p>
 <p>I split the result into 2 risk appetite tiers focused solely on user-base growth: <em>conservative</em> and <em>ambitious</em>.</p>
-<p>[WIP] Ideas, definitely no time to cover all – choose a couple:</p>
+<blockquote>
+<div><p>[WIP] Ideas, definitely no time to cover all – choose a couple:</p>
 <ul class="simple">
 <li><p>daily rate of exposure (need to define exposure precisely, maybe stddev above 30-day mean predicted volume)</p></li>
 <li><p>weekly rate of exposure vs. realized loss</p></li>
-<li><p>recommend daily interest rates based on to cover previous week exposure (if time allows, account for seasonality)</p></li>
+<li><p>recommend daily interest rates based to cover previous week exposure (if time allows, account for seasonality)</p></li>
 <li><p>daily rate of stale capital: LOAN_AMOUNT vs. SPENT</p></li>
 <li><p>weekly projected growth vs. realized growth</p></li>
 </ul>
+</div></blockquote>
 <section id="conservative">
 <h3>Conservative<a class="headerlink" href="#conservative" title="Permalink to this heading">#</a></h3>
 <p>Conservative means that we are willing to approve a loan if:</p>
@@ -434,7 +436,9 @@ AND \\
 <ul class="simple">
 <li><p>approved X (currency) out of Y requested in total</p></li>
 <li><p>served X out of Y retailers that requested loans</p></li>
-<li><p>incurred into X <code class="docutils literal notranslate"><span class="pre">default_volume</span></code> (financial loss)</p></li>
+<li><p>accepted exposure wow:</p></li>
+<li><p>realized loses wow:</p></li>
+<li><p>opportunity gap wow:</p></li>
 </ul>
 </section>
 <section id="ambitious">
@@ -456,7 +460,9 @@ AND \\
 <ul class="simple">
 <li><p>approved X (currency) out of Y requested in total</p></li>
 <li><p>served X out of Y retailers that requested loans</p></li>
-<li></li>
+<li><p>accepted exposure wow:</p></li>
+<li><p>realized loses wow:</p></li>
+<li><p>opportunity gap wow:</p></li>
 </ul>
 <hr class="docutils" />
 <p>The chapters in this book are meant to be read in order as they reflect the natural flow of exploration, then experimentation, then results.</p>

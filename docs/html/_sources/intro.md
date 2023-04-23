@@ -44,12 +44,13 @@ Another point of attention is that I will consider `PAYMENT_STATUS in ('Unpaid',
 
 I split the result into 2 risk appetite tiers focused solely on user-base growth: *conservative* and *ambitious*.
 
-[WIP] Ideas, definitely no time to cover all -- choose a couple:
-- daily rate of exposure (need to define exposure precisely, maybe stddev above 30-day mean predicted volume)
-- weekly rate of exposure vs. realized loss
-- recommend daily interest rates based on to cover previous week exposure (if time allows, account for seasonality)
-- daily rate of stale capital: LOAN_AMOUNT vs. SPENT
-- weekly projected growth vs. realized growth
+> [WIP] Ideas, definitely no time to cover all -- choose a couple:
+>
+> - daily rate of exposure (need to define exposure precisely, maybe stddev above 30-day mean predicted volume)
+> - weekly rate of exposure vs. realized loss
+> - recommend daily interest rates based to cover previous week exposure (if time allows, account for seasonality)
+> - daily rate of stale capital: LOAN_AMOUNT vs. SPENT
+> - weekly projected growth vs. realized growth
 
 ### Conservative
 Conservative means that we are willing to approve a loan if:
@@ -63,7 +64,9 @@ $$
 *Conservative* means we would have:
  - approved X (currency) out of Y requested in total
  - served X out of Y retailers that requested loans
- - incurred into X `default_volume` (financial loss)
+ - accepted exposure wow: 
+ - realized loses wow:
+ - opportunity gap wow: 
 
 ### Ambitious
 Ambitious means that we are willing to approve a loan if the same formula above applies but with $2 * standard\_deviation_{30days}$, higher multiplier for standard deviation upper bound.
@@ -80,7 +83,9 @@ By choosing to be ambitious, we are willing to provide loans to 13.6% more retai
 Finally, *ambitious* means we would have:
  - approved X (currency) out of Y requested in total
  - served X out of Y retailers that requested loans
- - 
+ - accepted exposure wow: 
+ - realized loses wow:
+ - opportunity gap wow:  
 
 ---
 
