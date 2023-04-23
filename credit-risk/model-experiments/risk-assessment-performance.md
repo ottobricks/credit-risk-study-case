@@ -195,11 +195,11 @@ Result assessment is based only on 34,418 observations out of the 73,086 provide
 
 **Is that a problem?**
 
-There is no such thing as perfect method, but there are those objectively better. We are forced to choose where to place uncertainty:
+There is no such thing as perfect method, but there objectively better ones. We are forced to choose where to place uncertainty:
  - giving models all the data, increasing chance of overfitting (models memorize the data), thus weakening confidence in results
  - training models in "past" data and assessing them on "future" data, reducing the signal available for models to learn, but increasing a lot confidence on results
 
-The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishing performance), you want the funny friend, but what about for life?
+The latter is objectively better. Think of it like this: is it better to have a funny friend that lies to you all the time, or the awkward one that is always there for you? For a party (i.e. boasting about astonishingly unrealistic performance), you want the funny friend, but what about for life?
 
 Another point of attention is that I will consider `PAYMENT_STATUS in ('Unpaid', 'Partialy paid')` (\*partially) as *defaults*. I will also consider *defaults* all cases when the retailer is not able to make the payment on the first collection attempt. Let me explain. I understand retailers are not always to blame for missed collection attempt, it sometimes falls on our operations agents. This can definitely be addressed in the future with a separate track: optimizing ops agents schedules to maximize collection rates. However, for this case study, I'm going to limit the scope of our assessment, and my judgement is that there is also a component of timing in a retailer's ability to repay. This shifts the objective from being "we eventually want to collect debts" to "our forecast should also optimize for timing". Of course, this goes beyond the scope of a case study, but it is an interesting domain to explore.
 
@@ -266,4 +266,49 @@ loan_metadata: DataFrame = spark.createDataFrame(
 )
 
 ```
+
+I split the result into 2 risk appetite tiers focused solely on user-base growth: *conservative* and *ambitious*.
+
+> [WIP] Ideas, definitely no time to cover all -- choose a couple:
+>
+> - daily rate of exposure (need to define exposure precisely, maybe stddev above 30-day mean predicted volume)
+> - weekly rate of exposure vs. realized loss
+> - recommend daily interest rates based to cover previous week exposure (if time allows, account for seasonality)
+> - daily rate of stale capital: LOAN_AMOUNT vs. SPENT
+> - weekly projected growth vs. realized growth
+
+### Conservative
+Conservative means that we are willing to approve a loan if:
+
+$$
+(loan\_amount <= ecommerce\_average\_volume_{30days} + 1 * standard\_deviation_{30days}) \\
+AND \\
+(estimated\_spent <= ecommerce\_average\_volume_{30days} + 1 * standard\_deviation_{30days})
+$$
+
+*Conservative* means we would have:
+ - approved X (currency) out of Y requested in total
+ - served X out of Y retailers that requested loans
+ - accepted exposure wow: 
+ - realized loses wow:
+ - opportunity gap wow: 
+
+### Ambitious
+Ambitious means that we are willing to approve a loan if the same formula above applies but with $2 * standard\_deviation_{30days}$, higher multiplier for standard deviation upper bound.
+
+By choosing to be ambitious, we are willing to provide loans to 13.6% more retailers, knowing these to be leverage-seekers. As mentioned before, hedging against financial loss via product pricing is a very important topic, but goes beyond the scope of this case study. However, just as food-for-thought, here are some parameters that have to be considered and others that can be adjusted:
+ - the current available lending pool volume
+ - the current exposure and coverage on volume already approved for lending in the period (e.g. daily)
+    - if current `volume_lent` is made up mostly of *conservative* loans, we can be more *ambitious* until we reach our financial exposure threshold, or are no longer interested in adding overhead to pricing for non-financial reasons (e.g. bad press on high rates -- "abusive rates" is clickbait headline that unfortunately sells)
+ - our assumed percent rate of `default_volume`: nob adjusted based on `standard_deviation` multiplier
+ - our `margin_multiplier`: nob adjusted based on growth vs. profit appetite
+
+ These are just a few parameters that we could observe and manipulate to keep operations healthy while keeping financial exposure under control. There is so much more to explore, this is indeed very exciting.
+
+Finally, *ambitious* means we would have:
+ - approved X (currency) out of Y requested in total
+ - served X out of Y retailers that requested loans
+ - accepted exposure wow: 
+ - realized loses wow:
+ - opportunity gap wow:
 
