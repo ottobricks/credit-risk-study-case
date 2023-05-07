@@ -208,7 +208,9 @@ With all that in mind, let's first take a look at some broad metrics:
 ```{code-cell} ipython3
 :tags: [hide-input,remove-stdout]
 from pyspark.sql import DataFrame, SparkSession
+from pyspark.sql.functions import expr
 import pyspark.sql.types as spark_dtype
+import pandas as pd
 
 
 # Start Spark session just because I feel more comfortable with its API rather than Pandas
@@ -228,44 +230,98 @@ decision_test_observations: DataFrame = (
     )
     .csv("../../data/risk-assessment-decisions.csv")
 )
-loan_metadata: DataFrame = spark.createDataFrame(
-    pd.read_excel("../../data/Loans_Data.xlsx")
-    .drop(
-        [
-            # Irrelevant columns for the current assessment
-            "TOTAL_INITIAL_AMOUNT", # can be inferred from other columns
-            "TOTAL_FINAL_AMOUNT", # can be inferred from other columns
-            "INDEX",
-            "REPAYMENT_ID",
-            "RETAILER_ID",
-            "REPAYMENT_UPDATED",
-            "PAYMENT_AMOUNT",
-            "LOAN_PAYMENT_DATE",
-            "REPAYMENT_AMOUNT",
-            "CUMMULATIVE_OUTSTANDING",
+loan_metadata: DataFrame = (
+    spark.createDataFrame(
+        pd.read_excel("../../data/Loans_Data.xlsx")
+        .drop(
+            [
+                # Irrelevant columns for the current assessment
+                "TOTAL_INITIAL_AMOUNT", # can be inferred from other columns
+                "TOTAL_FINAL_AMOUNT", # can be inferred from other columns
+                "INDEX",
+                "REPAYMENT_ID",
+                "RETAILER_ID",
+                "REPAYMENT_UPDATED",
+                "PAYMENT_AMOUNT",
+                "LOAN_PAYMENT_DATE",
+                "REPAYMENT_AMOUNT",
+                "CUMMULATIVE_OUTSTANDING",
 
-        ],
-        axis=1,
+            ],
+            axis=1,
+        )
+        .assign(
+            MAIN_SYSTEM_ID=lambda x: x["MAIN_SYSTEM_ID"].astype("int64"),
+            LOAN_ID=lambda x: x["LOAN_ID"].astype("int64"),
+            LOAN_ISSUANCE_DATE=lambda x: x["LOAN_ISSUANCE_DATE"].astype("<M8[ns]"),
+            LOAN_DUE_DATE=lambda x: x["INITIAL_DATE"].astype("<M8[ns]"),
+            # Financial info
+            LOAN_AMOUNT=lambda x: x["LOAN_AMOUNT"].astype("float64"),
+            INITIAL_COST=lambda x: x["INITIAL_COST"].astype("float64"),
+            SPENT=lambda x: x["SPENT"].astype("float64"),
+            FIRST_TRIAL_BALANCE=lambda x: x["FIRST_TRIAL_BALANCE"].astype("float64"),
+            FINAL_COST=lambda x: x["FINAL_COST"].astype("float64"),
+        )
     )
-    .assign(
-        MAIN_SYSTEM_ID=lambda x: x["MAIN_SYSTEM_ID"].astype("int64"),
-        LOAN_ID=lambda x: x["LOAN_ID"].astype("int64"),
-        LOAN_ISSUANCE_DATE=lambda x: x["LOAN_ISSUANCE_DATE"].astype("<M8[ns]"),
-        LOAN_DUE_DATE=lambda x: x["INITIAL_DATE"].astype("<M8[ns]"),
-        # Financial info
-        LOAN_AMOUNT=lambda x: x["LOAN_AMOUNT"].astype("float64"),
-        INITIAL_COST=lambda x: x["INITIAL_COST"].astype("float64"),
-        SPENT=lambda x: x["SPENT"].astype("float64"),
-        FIRST_TRIAL_BALANCE=lambda x: x["FIRST_TRIAL_BALANCE"].astype("float64"),
-        FINAL_COST=lambda x: x["FINAL_COST"].astype("float64"),
-        # Label
-        LABEL=lambda x: (
-            (x["PAYMENT_STATUS"].str.lower != "paid") or (x["FIRST_TRIAL_BALANCE"] >= 0)
-        ),
-    )
+    .join(decision_test_observations.select("LOAN_ID"), on="LOAN_ID", how="inner")
+    .withColumn("LABEL", expr("(lower(PAYMENT_STATUS) != 'paid') OR (FIRST_TRIAL_BALANCE < 0)"))
+    #.persist()
 )
 
+loan_metadata.selectExpr(
+    # Overview
+    "count(distinct LOAN_ID) as nunique_loans",
+    "count(distinct date_trunc('week', LOAN_ISSUANCE_DATE)) as nunique_weeks",
+    "format_string('%.2f', sum(LOAN_AMOUNT)) as total_amount_requested",
+    "format_string('%.2f', sum(SPENT)) as total_amount_spent",
+    "format_string('%.4f', 1 - sum(SPENT) / sum(LOAN_AMOUNT)) as percentage_amount_stale",
+    # "X as total_realized_loss_first_collection",
+    # Counts
+    "count(distinct LOAN_ID) filter (where LABEL = false) as nunique_loans_fullfiled_first_collection",
+    "count(distinct LOAN_ID) filter (where LABEL = true) as nunique_loans_defaulted_first_collection",
+).show(vertical=True)
+
 ```
+From the above summary table, we can see that we observe **373 positive default observations**, meaning loans that were not fully repaid in first collection attempt.
+
+```{code-cell} ipython3
+:tags: [hide-input,remove-stdout]
+import matplotlib.pyplot as plt
+
+wow_overview: DataFrame = (
+    loan_metadata.selectExpr(
+        "*",
+        "date_trunc('week', LOAN_ISSUANCE_DATE) as week_dt"
+    )
+    .groupBy("week_dt")
+    .agg(
+        expr("count(distinct LOAN_ID) as nunique_loans"),
+        expr("sum(LOAN_AMOUNT) as total_amount_requested"),
+        expr("sum(SPENT) as total_amount_spent"),
+    )
+    .selectExpr(
+        "week_dt",
+        "nunique_loans / (lag(nunique_loans) over (order by week_dt asc))as nunique_loans_weekly_growth",
+        "total_amount_requested / (lag(total_amount_requested) over (order by week_dt asc)) as total_amount_requested_weekly_growth",
+        "total_amount_spent / (lag(total_amount_spent) over (order by week_dt asc)) as total_amount_spent_weekly_growth",
+    )
+    .dropna()
+    .orderBy("week_dt")
+)
+
+plt.figure(figsize=(10, 6))
+wow_overview.toPandas().plot.hist(
+    bins='week_dt',
+    alpha=0.5,
+    label=['total_amount_requested_weekly_growth', 'total_amount_spent_weekly_growth']
+)
+plt.xlabel('Week')
+plt.ylabel('Total amount')
+plt.legend()
+plt.show()
+```
+
+
 
 I split the result into 2 risk appetite tiers focused solely on user-base growth: *conservative* and *ambitious*.
 
