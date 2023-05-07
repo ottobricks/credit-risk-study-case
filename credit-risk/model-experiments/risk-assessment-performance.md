@@ -16,17 +16,18 @@ kernelspec:
 
 ```{code-cell} ipython3
 :tags: [remove-cell]
+
 import pickle
 from flaml import AutoML
 import pandas as pd
 import numpy as np
-
 ```
 
 ## Load data
 
 ```{code-cell} ipython3
 :tags: [hide-input]
+
 ecommerce_df = (
     pd.read_csv(
         "../../data/Ecommerce_orders_Data.csv",
@@ -76,11 +77,11 @@ ecommerce_df = (
     .reset_index(drop=True)
 )
 ecommerce_df.info()
-
 ```
 
 ```{code-cell} ipython3
 :tags: [hide-input]
+
 metadata_cols = ["LOAN_ID", "LOAN_ISSUANCE_DATE", "LOAN_AMOUNT"]
 loans_df = (
     pd.read_excel("../../data/Loans_Data.xlsx")
@@ -123,26 +124,26 @@ test_df = pd.merge(
 ).drop_duplicates()
 
 test_df.info()
-
 ```
 
 ## Load model and get predictions
 
 ```{code-cell} ipython3
 :tags: [hide-input]
+
 with open("assets/sagemaker-flaml-automl-regression-maxdepth2-targetSPENT-3.pkl", "rb") as fp:
-    automl = pickle.load(fp)
+    automl: AutoML = pickle.load(fp)
 
 test_df = test_df.assign(
     y_pred=automl.predict(test_df.drop(metadata_cols + ["MAIN_SYSTEM_ID", "label"], axis=1))
 ).sort_values("LOAN_ISSUANCE_DATE")
-
 ```
 
 ## Join fields to generate final dataframe and report
 
 ```{code-cell} ipython3
 :tags: [hide-input]
+
 merged_df = pd.merge_asof(
     test_df,
     ecommerce_df,
@@ -154,7 +155,6 @@ merged_df = pd.merge_asof(
 ).query("LOAN_ISSUANCE_DATE > ORDER_CREATION_DATE")
 
 merged_df.info()
-
 ```
 
 ## Make decision to approve or deny loans
@@ -186,8 +186,8 @@ merged_df.info()
     ]]
     .to_csv("../../data/risk-assessment-decisions.csv", header=True, index=False)
 )
-
 ```
+
 (result-assessment)=
 ## Result Assessment
 
@@ -206,7 +206,8 @@ Another point of attention is that I will consider `PAYMENT_STATUS in ('Unpaid',
 With all that in mind, let's first take a look at some broad metrics:
 
 ```{code-cell} ipython3
-:tags: [hide-input,remove-stdout]
+:tags: [hide-input, remove-stdout]
+
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import expr
 import pyspark.sql.types as spark_dtype
@@ -263,6 +264,7 @@ loan_metadata: DataFrame = (
             FINAL_COST=lambda x: x["FINAL_COST"].astype("float64"),
         )
     )
+    .where("LOAN_ISSUANCE_DATE > '2021-12-31'")
     .join(decision_test_observations.select("LOAN_ID"), on="LOAN_ID", how="inner")
     .withColumn("LABEL", expr("(lower(PAYMENT_STATUS) != 'paid') OR (FIRST_TRIAL_BALANCE < 0)"))
     #.persist()
@@ -280,13 +282,20 @@ loan_metadata.selectExpr(
     "count(distinct LOAN_ID) filter (where LABEL = false) as nunique_loans_fullfiled_first_collection",
     "count(distinct LOAN_ID) filter (where LABEL = true) as nunique_loans_defaulted_first_collection",
 ).show(vertical=True)
-
 ```
-From the above summary table, we can see that we observe **373 positive default observations**, meaning loans that were not fully repaid in first collection attempt.
+
+From the above summary table, we can see that we observe **371 first-collection default observations**, meaning loans that were not fully repaid in first collection attempt.
 
 ```{code-cell} ipython3
-:tags: [hide-input,remove-stdout]
+plot_data.index.map(lambda x: str(x).split(" ")[0])
+```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
+
 
 wow_overview: DataFrame = (
     loan_metadata.selectExpr(
@@ -298,30 +307,74 @@ wow_overview: DataFrame = (
         expr("count(distinct LOAN_ID) as nunique_loans"),
         expr("sum(LOAN_AMOUNT) as total_amount_requested"),
         expr("sum(SPENT) as total_amount_spent"),
+        expr("abs(sum(FIRST_TRIAL_BALANCE) filter (where FIRST_TRIAL_BALANCE < 0)) as total_amount_loss"),
     )
     .selectExpr(
-        "week_dt",
+        "*",
         "nunique_loans / (lag(nunique_loans) over (order by week_dt asc))as nunique_loans_weekly_growth",
         "total_amount_requested / (lag(total_amount_requested) over (order by week_dt asc)) as total_amount_requested_weekly_growth",
         "total_amount_spent / (lag(total_amount_spent) over (order by week_dt asc)) as total_amount_spent_weekly_growth",
+        "total_amount_loss / (lag(total_amount_loss) over (order by week_dt asc)) as total_amount_loss_weekly_growth",
     )
     .dropna()
     .orderBy("week_dt")
 )
 
-plt.figure(figsize=(10, 6))
-wow_overview.toPandas().plot.hist(
-    bins='week_dt',
-    alpha=0.5,
-    label=['total_amount_requested_weekly_growth', 'total_amount_spent_weekly_growth']
+wow_overview.selectExpr("avg(nunique_loans_weekly_growth)", "avg(total_amount_requested_weekly_growth)", "avg(total_amount_spent_weekly_growth)").show(1, vertical=True)
+
+plot_data = wow_overview.toPandas().set_index("week_dt")
+fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, figsize=(15, 15))
+ax1_2 = ax1.twinx()
+ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
+ax1_2.yaxis.set_major_formatter(FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
+
+ax1_2.plot(
+    plot_data.index,
+    plot_data["total_amount_loss"],
+    color="orangered",
+    label="total_amount_loss",
 )
-plt.xlabel('Week')
-plt.ylabel('Total amount')
-plt.legend()
+ax1.bar(
+    plot_data.index,
+    plot_data["total_amount_requested"],
+    color="limegreen",
+    label="total_amount_requested",
+    width=5
+)
+ax1.bar(
+    plot_data.index,
+    plot_data["total_amount_spent"],
+    color="steelblue",
+    label="total_amount_spent",
+    width=5
+)
+
+ax1_2.set_ylabel("Absolute Loss",color="tab:red")
+ax1.set_title("Volume of Loans")
+ax1.set_xticks(plot_data.index)
+ax1.set_xticklabels(plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45) 
+
+bar3 = plot_data.plot.bar(
+    ax=ax2,
+    y=["nunique_loans"],
+    color=["slategrey"],
+)
+ax2.set_xlabel('Week')
+ax2.set_title("Number of Loans")
+# ax2.set_xticks(plot_data.index)
+ax2.set_xticklabels(plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
+ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
+
+
+ax1.legend()
 plt.show()
 ```
 
+In the plot above we see the evolution of amount growth for both `LOAN_AMOUNT` and `SPENT`
 
+> The large drop-off in the last week of October is explained by cut-off period finishing before the week end
+
++++
 
 I split the result into 2 risk appetite tiers focused solely on user-base growth: *conservative* and *ambitious*.
 
@@ -367,4 +420,3 @@ Finally, *ambitious* means we would have:
  - accepted exposure wow: 
  - realized loses wow:
  - opportunity gap wow:
-
