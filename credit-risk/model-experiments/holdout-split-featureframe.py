@@ -75,7 +75,7 @@ if __name__ == "__main__":
     # Stratified split based on the 'label' column
     featureframe = featureframe.withColumn(
         "stratified_split",
-        expr("percent_rank() over (partition by label order by LOAN_ID)")
+        expr("percent_rank() over (order by LOAN_ID)")
         # Assumes LOAN_ID is monotonically_increasing to avoid data leak
     ).persist()
 
