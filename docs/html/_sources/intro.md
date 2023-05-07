@@ -34,7 +34,7 @@ Result assessment is based only on 34,418 observations out of the 73,086 provide
 
 **Is that a problem?**
 
-There is no such thing as perfect method, but there objectively better ones. We are forced to choose where to place uncertainty:
+There is no such thing as perfect method, but there are objectively better ones. We are forced to choose where to place uncertainty:
  - giving models all the data, increasing chance of overfitting (models memorize the data), thus weakening confidence in results
  - training models in "past" data and assessing them on "future" data, reducing the signal available for models to learn, but increasing a lot confidence on results
 

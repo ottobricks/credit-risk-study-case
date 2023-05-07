@@ -510,28 +510,81 @@ memory usage: 25.0 MB
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Int64Index: 56296 entries, 0 to 56295
-Data columns (total 15 columns):
- #   Column                 Non-Null Count  Dtype         
----  ------                 --------------  -----         
- 0   LOAN_ID                56296 non-null  int64         
- 1   LOAN_ISSUANCE_DATE     56296 non-null  datetime64[ns]
- 2   LOAN_AMOUNT            56296 non-null  float64       
- 3   MAIN_SYSTEM_ID         56296 non-null  int64         
- 4   label                  56296 non-null  float64       
- 5   principal_component_0  56296 non-null  float64       
- 6   principal_component_1  56296 non-null  float64       
- 7   principal_component_2  56296 non-null  float64       
- 8   principal_component_3  56296 non-null  float64       
- 9   principal_component_4  56296 non-null  float64       
- 10  principal_component_5  56296 non-null  float64       
- 11  principal_component_6  56296 non-null  float64       
- 12  principal_component_7  56296 non-null  float64       
- 13  principal_component_8  56296 non-null  float64       
- 14  principal_component_9  56296 non-null  float64       
-dtypes: datetime64[ns](1), float64(12), int64(2)
-memory usage: 6.9 MB
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">38</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">metadata_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">,</span> <span class="s2">&quot;LOAN_AMOUNT&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">loans_df</span> <span class="o">=</span> <span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../data/Loans_Data.xlsx&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span>     <span class="n">loans_df</span><span class="p">[</span><span class="n">metadata_cols</span><span class="p">],</span>
+<span class="ne">---&gt; </span><span class="mi">38</span>     <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">&quot;../../data/test/pandas-pca-featureframe-maxdepth2-targetSPENT.parquet&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">MAIN_SYSTEM_ID</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)),</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span>     <span class="n">on</span><span class="o">=</span><span class="s2">&quot;LOAN_ID&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span> <span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">42</span> <span class="n">test_df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+
+<span class="nn">File ~/miniconda3/envs/credit-risk/lib/python3.10/site-packages/pandas/io/parquet.py:503,</span> in <span class="ni">read_parquet</span><span class="nt">(path, engine, columns, storage_options, use_nullable_dtypes, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">456</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">457</span><span class="sd"> Load a parquet object from the file path, returning a DataFrame.</span>
+<span class="g g-Whitespace">    </span><span class="mi">458</span><span class="sd"> </span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">499</span><span class="sd"> DataFrame</span>
+<span class="g g-Whitespace">    </span><span class="mi">500</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">501</span> <span class="n">impl</span> <span class="o">=</span> <span class="n">get_engine</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">503</span> <span class="k">return</span> <span class="n">impl</span><span class="o">.</span><span class="n">read</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">504</span>     <span class="n">path</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">505</span>     <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">506</span>     <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">507</span>     <span class="n">use_nullable_dtypes</span><span class="o">=</span><span class="n">use_nullable_dtypes</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">508</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">509</span> <span class="p">)</span>
+
+<span class="nn">File ~/miniconda3/envs/credit-risk/lib/python3.10/site-packages/pandas/io/parquet.py:244,</span> in <span class="ni">PyArrowImpl.read</span><span class="nt">(self, path, columns, use_nullable_dtypes, storage_options, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">241</span> <span class="k">if</span> <span class="n">manager</span> <span class="o">==</span> <span class="s2">&quot;array&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">242</span>     <span class="n">to_pandas_kwargs</span><span class="p">[</span><span class="s2">&quot;split_blocks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># type: ignore[assignment]</span>
+<span class="ne">--&gt; </span><span class="mi">244</span> <span class="n">path_or_handle</span><span class="p">,</span> <span class="n">handles</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;filesystem&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_get_path_or_handle</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">245</span>     <span class="n">path</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">246</span>     <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;filesystem&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">247</span>     <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span>     <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rb&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">249</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span>     <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">parquet</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span>         <span class="n">path_or_handle</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="g g-Whitespace">    </span><span class="mi">253</span>     <span class="p">)</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">(</span><span class="o">**</span><span class="n">to_pandas_kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~/miniconda3/envs/credit-risk/lib/python3.10/site-packages/pandas/io/parquet.py:102,</span> in <span class="ni">_get_path_or_handle</span><span class="nt">(path, fs, storage_options, mode, is_dir)</span>
+<span class="g g-Whitespace">     </span><span class="mi">92</span> <span class="n">handles</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">     </span><span class="mi">93</span> <span class="k">if</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span>     <span class="ow">not</span> <span class="n">fs</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span>     <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_dir</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span>     <span class="c1"># fsspec resources can also point to directories</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span>     <span class="c1"># this branch is used for example when reading from non-fsspec URLs</span>
+<span class="ne">--&gt; </span><span class="mi">102</span>     <span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">103</span>         <span class="n">path_or_handle</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">is_text</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">storage_options</span><span class="o">=</span><span class="n">storage_options</span>
+<span class="g g-Whitespace">    </span><span class="mi">104</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span>     <span class="n">fs</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">106</span>     <span class="n">path_or_handle</span> <span class="o">=</span> <span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
+
+<span class="nn">File ~/miniconda3/envs/credit-risk/lib/python3.10/site-packages/pandas/io/common.py:865,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">856</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">857</span>             <span class="n">handle</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">858</span>             <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">861</span>             <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">862</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">863</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">864</span>         <span class="c1"># Binary mode</span>
+<span class="ne">--&gt; </span><span class="mi">865</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">866</span>     <span class="n">handles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">868</span> <span class="c1"># Convert BytesIO or file objects passed with an encoding</span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;../../data/test/pandas-pca-featureframe-maxdepth2-targetSPENT.parquet&#39;
 </pre></div>
 </div>
 </div>
@@ -582,37 +635,6 @@ memory usage: 6.9 MB
 </div>
 </div>
 </details>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Int64Index: 34418 entries, 0 to 56293
-Data columns (total 20 columns):
- #   Column                               Non-Null Count  Dtype         
----  ------                               --------------  -----         
- 0   LOAN_ID                              34418 non-null  int64         
- 1   LOAN_ISSUANCE_DATE                   34418 non-null  datetime64[ns]
- 2   LOAN_AMOUNT                          34418 non-null  float64       
- 3   MAIN_SYSTEM_ID                       34418 non-null  int64         
- 4   label                                34418 non-null  float64       
- 5   principal_component_0                34418 non-null  float64       
- 6   principal_component_1                34418 non-null  float64       
- 7   principal_component_2                34418 non-null  float64       
- 8   principal_component_3                34418 non-null  float64       
- 9   principal_component_4                34418 non-null  float64       
- 10  principal_component_5                34418 non-null  float64       
- 11  principal_component_6                34418 non-null  float64       
- 12  principal_component_7                34418 non-null  float64       
- 13  principal_component_8                34418 non-null  float64       
- 14  principal_component_9                34418 non-null  float64       
- 15  y_pred                               34418 non-null  float64       
- 16  ORDER_CREATION_DATE                  34418 non-null  datetime64[ns]
- 17  ORDER_PRICE                          34418 non-null  float64       
- 18  ROLLINGMEAN_30DAYS__ORDER_PRICE__    34418 non-null  float64       
- 19  ROLLINGSTDDEV_30DAYS__ORDER_PRICE__  33152 non-null  float64       
-dtypes: datetime64[ns](2), float64(16), int64(2)
-memory usage: 5.5 MB
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="make-decision-to-approve-or-deny-loans">
@@ -672,7 +694,9 @@ memory usage: 5.5 MB
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">SparkSession</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">expr</span>
 <span class="kn">import</span> <span class="nn">pyspark.sql.types</span> <span class="k">as</span> <span class="nn">spark_dtype</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
 <span class="c1"># Start Spark session just because I feel more comfortable with its API rather than Pandas</span>
@@ -692,48 +716,106 @@ memory usage: 5.5 MB
     <span class="p">)</span>
     <span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">&quot;../../data/risk-assessment-decisions.csv&quot;</span><span class="p">)</span>
 <span class="p">)</span>
-<span class="n">loan_metadata</span><span class="p">:</span> <span class="n">DataFrame</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span>
-    <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../data/Loans_Data.xlsx&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">drop</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="c1"># Irrelevant columns for the current assessment</span>
-            <span class="s2">&quot;TOTAL_INITIAL_AMOUNT&quot;</span><span class="p">,</span> <span class="c1"># can be inferred from other columns</span>
-            <span class="s2">&quot;TOTAL_FINAL_AMOUNT&quot;</span><span class="p">,</span> <span class="c1"># can be inferred from other columns</span>
-            <span class="s2">&quot;INDEX&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;REPAYMENT_ID&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;RETAILER_ID&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;REPAYMENT_UPDATED&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;PAYMENT_AMOUNT&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;LOAN_PAYMENT_DATE&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;REPAYMENT_AMOUNT&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;CUMMULATIVE_OUTSTANDING&quot;</span><span class="p">,</span>
+<span class="n">loan_metadata</span><span class="p">:</span> <span class="n">DataFrame</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../../data/Loans_Data.xlsx&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="c1"># Irrelevant columns for the current assessment</span>
+                <span class="s2">&quot;TOTAL_INITIAL_AMOUNT&quot;</span><span class="p">,</span> <span class="c1"># can be inferred from other columns</span>
+                <span class="s2">&quot;TOTAL_FINAL_AMOUNT&quot;</span><span class="p">,</span> <span class="c1"># can be inferred from other columns</span>
+                <span class="s2">&quot;INDEX&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;REPAYMENT_ID&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;RETAILER_ID&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;REPAYMENT_UPDATED&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;PAYMENT_AMOUNT&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;LOAN_PAYMENT_DATE&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;REPAYMENT_AMOUNT&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;CUMMULATIVE_OUTSTANDING&quot;</span><span class="p">,</span>
 
-        <span class="p">],</span>
-        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="o">.</span><span class="n">assign</span><span class="p">(</span>
+            <span class="n">MAIN_SYSTEM_ID</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
+            <span class="n">LOAN_ID</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
+            <span class="n">LOAN_ISSUANCE_DATE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;M8[ns]&quot;</span><span class="p">),</span>
+            <span class="n">LOAN_DUE_DATE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;INITIAL_DATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;M8[ns]&quot;</span><span class="p">),</span>
+            <span class="c1"># Financial info</span>
+            <span class="n">LOAN_AMOUNT</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_AMOUNT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+            <span class="n">INITIAL_COST</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;INITIAL_COST&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+            <span class="n">SPENT</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;SPENT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+            <span class="n">FIRST_TRIAL_BALANCE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;FIRST_TRIAL_BALANCE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+            <span class="n">FINAL_COST</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;FINAL_COST&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
     <span class="p">)</span>
-    <span class="o">.</span><span class="n">assign</span><span class="p">(</span>
-        <span class="n">MAIN_SYSTEM_ID</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;MAIN_SYSTEM_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
-        <span class="n">LOAN_ID</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int64&quot;</span><span class="p">),</span>
-        <span class="n">LOAN_ISSUANCE_DATE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;M8[ns]&quot;</span><span class="p">),</span>
-        <span class="n">LOAN_DUE_DATE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;INITIAL_DATE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;&lt;M8[ns]&quot;</span><span class="p">),</span>
-        <span class="c1"># Financial info</span>
-        <span class="n">LOAN_AMOUNT</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;LOAN_AMOUNT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
-        <span class="n">INITIAL_COST</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;INITIAL_COST&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
-        <span class="n">SPENT</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;SPENT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
-        <span class="n">FIRST_TRIAL_BALANCE</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;FIRST_TRIAL_BALANCE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
-        <span class="n">FINAL_COST</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;FINAL_COST&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float64&quot;</span><span class="p">),</span>
-        <span class="c1"># Label</span>
-        <span class="n">LABEL</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span>
-            <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;PAYMENT_STATUS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span> <span class="o">!=</span> <span class="s2">&quot;paid&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;FIRST_TRIAL_BALANCE&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="p">),</span>
-    <span class="p">)</span>
+    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">decision_test_observations</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;LABEL&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;(lower(PAYMENT_STATUS) != &#39;paid&#39;) OR (FIRST_TRIAL_BALANCE &lt; 0)&quot;</span><span class="p">))</span>
+    <span class="c1">#.persist()</span>
 <span class="p">)</span>
+
+<span class="n">loan_metadata</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span>
+    <span class="c1"># Overview</span>
+    <span class="s2">&quot;count(distinct LOAN_ID) as nunique_loans&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;count(distinct date_trunc(&#39;week&#39;, LOAN_ISSUANCE_DATE)) as nunique_weeks&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;format_string(&#39;</span><span class="si">%.2f</span><span class="s2">&#39;, sum(LOAN_AMOUNT)) as total_amount_requested&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;format_string(&#39;</span><span class="si">%.2f</span><span class="s2">&#39;, sum(SPENT)) as total_amount_spent&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;format_string(&#39;</span><span class="si">%.4f</span><span class="s2">&#39;, 1 - sum(SPENT) / sum(LOAN_AMOUNT)) as percentage_amount_stale&quot;</span><span class="p">,</span>
+    <span class="c1"># &quot;X as total_realized_loss_first_collection&quot;,</span>
+    <span class="c1"># Counts</span>
+    <span class="s2">&quot;count(distinct LOAN_ID) filter (where LABEL = false) as nunique_loans_fullfiled_first_collection&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;count(distinct LOAN_ID) filter (where LABEL = true) as nunique_loans_defaulted_first_collection&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">vertical</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
-<div class="cell_output docutils container">
 </div>
+<p>From the above summary table, we can see that we observe <strong>373 positive default observations</strong>, meaning loans that were not fully repaid in first collection attempt.</p>
+<div class="cell tag_hide-input tag_remove-stdout docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">wow_overview</span><span class="p">:</span> <span class="n">DataFrame</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">loan_metadata</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span>
+        <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;date_trunc(&#39;week&#39;, LOAN_ISSUANCE_DATE) as week_dt&quot;</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;week_dt&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;count(distinct LOAN_ID) as nunique_loans&quot;</span><span class="p">),</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;sum(LOAN_AMOUNT) as total_amount_requested&quot;</span><span class="p">),</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;sum(SPENT) as total_amount_spent&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span>
+        <span class="s2">&quot;week_dt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nunique_loans / (lag(nunique_loans) over (order by week_dt asc))as nunique_loans_weekly_growth&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;total_amount_requested / (lag(total_amount_requested) over (order by week_dt asc)) as total_amount_requested_weekly_growth&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;total_amount_spent / (lag(total_amount_spent) over (order by week_dt asc)) as total_amount_spent_weekly_growth&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;week_dt&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">wow_overview</span><span class="o">.</span><span class="n">toPandas</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bins</span><span class="o">=</span><span class="s1">&#39;week_dt&#39;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;total_amount_requested_weekly_growth&#39;</span><span class="p">,</span> <span class="s1">&#39;total_amount_spent_weekly_growth&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Week&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Total amount&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>I split the result into 2 risk appetite tiers focused solely on user-base growth: <em>conservative</em> and <em>ambitious</em>.</p>
 <blockquote>
