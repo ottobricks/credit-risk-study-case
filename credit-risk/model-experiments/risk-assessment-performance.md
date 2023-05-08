@@ -411,7 +411,7 @@ wow_conservative: DataFrame = (
     .groupBy("week_dt")
     .agg(
         expr("count(distinct LOAN_ID) as nunique_loans"),
-        expr("count(distinct LOAN_ID) filter (where CONSERVATIVE_DECISION = true) as nunique_loans_approved"),
+        expr("count(distinct LOAN_ID) filter (where AMBITIOUS_DECISION = true) as nunique_loans_approved"),
         expr("count(distinct LOAN_ID) filter (where CONSERVATIVE_DECISION = true and FIRST_TRIAL_BALANCE < 0) as nunique_loans_approved_defaulted"),
         expr("count(distinct LOAN_ID) filter (where FIRST_TRIAL_BALANCE < 0) as nunique_loans_defaulted_gt"),
         # Volume
@@ -500,7 +500,7 @@ ax2.bar(
     width=bar_width
 )
 
-ax2.set_title("Requests closer inspection)")
+ax2.set_title("Requests closer inspection")
 ax2.set_xticks(x_values)
 ax2.set_xticklabels(conservative_plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
 ax2.legend()
@@ -599,3 +599,240 @@ Finally, *ambitious* means we would have:
  - accepted exposure wow: 
  - realized loses wow:
  - opportunity gap wow:
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
+import numpy as np
+
+wow_ambitious: DataFrame = (
+    loan_metadata.select(
+        "LOAN_ID",
+        "LOAN_AMOUNT",
+        "FIRST_TRIAL_BALANCE",
+        "LOAN_ISSUANCE_DATE",
+    )
+    .join(decision_test_observations, on="LOAN_ID")
+    .withColumn("week_dt", expr("date_trunc('week', LOAN_ISSUANCE_DATE)"))
+    .groupBy("week_dt")
+    .agg(
+        expr("count(distinct LOAN_ID) as nunique_loans"),
+        expr("count(distinct LOAN_ID) filter (where AMBITIOUS_DECISION = true) as nunique_loans_approved"),
+        expr("count(distinct LOAN_ID) filter (where AMBITIOUS_DECISION = true and FIRST_TRIAL_BALANCE < 0) as nunique_loans_approved_defaulted"),
+        expr("count(distinct LOAN_ID) filter (where FIRST_TRIAL_BALANCE < 0) as nunique_loans_defaulted_gt"),
+        # Volume
+        expr("sum(LOAN_AMOUNT) as total_amount_requested"),
+        expr("sum(LOAN_AMOUNT) filter (where AMBITIOUS_DECISION = true) as amount_approved"),
+        expr("sum(LOAN_AMOUNT) filter (where AMBITIOUS_DECISION = true and FIRST_TRIAL_BALANCE < 0) as amount_approved_defaulted"),
+        expr("sum(LOAN_AMOUNT) filter (where FIRST_TRIAL_BALANCE < 0) as total_amount_requested_defaulted_gt"),
+        # expr("sum(SPENT) as total_amount_spent"),
+        # expr("abs(sum(FIRST_TRIAL_BALANCE) filter (where FIRST_TRIAL_BALANCE < 0)) as total_amount_loss"),
+    )
+    .selectExpr(
+        "*",
+        "nunique_loans_approved / (lag(nunique_loans_approved) over (order by week_dt asc))as nunique_loans_approved_weekly_growth",
+        "nunique_loans_approved_defaulted / (lag(nunique_loans_approved_defaulted) over (order by week_dt asc))as nunique_loans_approved_defaulted_weekly_growth",
+        # "total_amount_requested / (lag(total_amount_requested) over (order by week_dt asc)) as total_amount_requested_weekly_growth",
+        # "total_amount_spent / (lag(total_amount_spent) over (order by week_dt asc)) as total_amount_spent_weekly_growth",
+        # "total_amount_loss / (lag(total_amount_loss) over (order by week_dt asc)) as total_amount_loss_weekly_growth",
+    )
+    .dropna()
+    .orderBy("week_dt")
+)
+
+wow_ambitious.where("week_dt < '2022-10-31'").selectExpr(
+    "avg(nunique_loans_approved_weekly_growth)",
+    "avg(nunique_loans_approved_defaulted_weekly_growth)",
+).show(1, vertical=True)
+
+ambitious_plot_data = wow_ambitious.toPandas().set_index("week_dt")
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(15, 12))
+bar_width = .4
+x_values = np.arange(len(ambitious_plot_data.index))
+
+ax1.bar(
+    # ambitious_plot_data.index,
+    x_values + bar_width / 2,
+    ambitious_plot_data["nunique_loans_defaulted_gt"].values,
+    color="red",
+    label="nunique_loans_defaulted_gt",
+    width=bar_width
+)
+ax1.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    ambitious_plot_data["nunique_loans"].values,
+    color="steelblue",
+    label="nunique_loans",
+    width=bar_width
+)
+ax1.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    ambitious_plot_data["nunique_loans_approved"].values,
+    color="limegreen",
+    label="nunique_loans_approved",
+    width=bar_width
+)
+ax1.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    ambitious_plot_data["nunique_loans_approved_defaulted"].values,
+    color="lightcoral",
+    label="nunique_loans_approved_defaulted",
+    width=bar_width
+)
+
+ax1.set_title("Number of Loans")
+ax1.set_xticks(x_values)
+ax1.set_xticklabels(ambitious_plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
+ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
+ax1.legend()
+
+ax2.bar(
+    # ambitious_plot_data.index,
+    x_values + bar_width / 2,
+    ambitious_plot_data["nunique_loans_defaulted_gt"].values,
+    color="red",
+    label="nunique_loans_defaulted_gt",
+    width=bar_width
+)
+ax2.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    ambitious_plot_data["nunique_loans_approved_defaulted"].values,
+    color="lightcoral",
+    label="nunique_loans_approved_defaulted",
+    width=bar_width
+)
+
+ax2.set_title("Requests closer inspection)")
+ax2.set_xticks(x_values)
+ax2.set_xticklabels(ambitious_plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
+ax2.legend()
+
+ax3.bar(
+    # ambitious_plot_data.index,
+    x_values + bar_width / 2,
+    ambitious_plot_data["total_amount_requested_defaulted_gt"].values,
+    color="red",
+    label="total_amount_requested_defaulted_gt",
+    width=bar_width
+)
+ax3.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    ambitious_plot_data["total_amount_requested"].values,
+    color="steelblue",
+    label="total_amount_requested",
+    width=bar_width
+)
+ax3.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    ambitious_plot_data["amount_approved"].values,
+    color="limegreen",
+    label="amount_approved",
+    width=bar_width
+)
+ax3.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    ambitious_plot_data["amount_approved_defaulted"].values,
+    color="lightcoral",
+    label="amount_approved_defaulted",
+    width=bar_width
+)
+
+ax3.set_title("Volume of Loans")
+ax3.set_xticks(x_values)
+ax3.set_xticklabels(ambitious_plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
+ax3.yaxis.set_major_formatter(FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
+ax3.legend()
+
+ax4.bar(
+    # ambitious_plot_data.index,
+    x_values + bar_width / 2,
+    ambitious_plot_data["total_amount_requested_defaulted_gt"].values,
+    color="red",
+    label="total_amount_requested_defaulted_gt",
+    width=bar_width
+)
+ax4.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    ambitious_plot_data["amount_approved_defaulted"].values,
+    color="lightcoral",
+    label="amount_approved_defaulted",
+    width=bar_width
+)
+
+ax4.set_title("Volume closer inspection")
+ax4.set_xticks(x_values)
+ax4.yaxis.set_major_formatter(FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
+ax4.set_xticklabels(ambitious_plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
+ax4.legend()
+
+plt.tight_layout()
+plt.show()
+```
+
+## Conservative vs Ambitious
+
+```{code-cell} ipython3
+fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(15, 7))
+bar_width = .4
+x_values = np.arange(len(ambitious_plot_data.index))
+
+ax1.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    conservative_plot_data["nunique_loans_approved_defaulted"].values,
+    color="lightcoral",
+    label="nunique_loans_approved_defaulted_conservative",
+    width=bar_width
+)
+ax1.bar(
+    # ambitious_plot_data.index,
+    x_values + bar_width / 2,
+    ambitious_plot_data["nunique_loans_approved_defaulted"].values,
+    color="firebrick",
+    label="nunique_loans_approved_defaulted_ambitious",
+    width=bar_width
+)
+
+ax1.set_title("Requests comparisson")
+ax1.set_xticks(x_values)
+ax1.set_xticklabels(ambitious_plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
+ax1.yaxis.set_major_formatter(FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
+ax1.legend()
+
+ax2.bar(
+    # ambitious_plot_data.index,
+    x_values - bar_width / 2,
+    conservative_plot_data["amount_approved_defaulted"].values,
+    color="red",
+    label="amount_approved_defaulted_conservative",
+    width=bar_width
+)
+ax2.bar(
+    # ambitious_plot_data.index,
+    x_values + bar_width / 2,
+    ambitious_plot_data["amount_approved_defaulted"].values,
+    color="lightcoral",
+    label="amount_approved_defaulted_ambitious",
+    width=bar_width
+)
+
+ax2.set_title("Volume comparisson")
+ax2.set_xticks(x_values)
+ax2.yaxis.set_major_formatter(FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
+ax2.set_xticklabels(ambitious_plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
+ax2.legend()
+
+plt.show()
+```
+
+```{code-cell} ipython3
+
+```
