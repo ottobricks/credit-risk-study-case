@@ -753,23 +753,8 @@ memory usage: 5.5 MB
 </div>
 </div>
 <p>From the above summary table, we can see that we observe <strong>371 first-collection default observations</strong>, meaning loans that were not fully repaid in first collection attempt.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">plot_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="ne">NameError</span>: name &#39;plot_data&#39; is not defined
-</pre></div>
-</div>
-</div>
-</div>
+<p>In the following plot we can see the volume of <code class="docutils literal notranslate"><span class="pre">LOAN_AMOUNT</span></code> (green) and <code class="docutils literal notranslate"><span class="pre">SPENT</span></code> (blue) over 10 weeks of testing period. The red line (right y-axis) shows the volume of failed first collection attempts that ocurred in reality. One other piece of information that becomes clear is our rate of <em>stale capital</em> in the difference between the green and blue bars: that gap represents money that is committed but not used, thus no fees, hence <em>stale capital</em>.</p>
+<p>I also plot the count of loans over the same period on the second plot; the large drop-off in the last week of October is explained by incomplete data and can be ignored.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -804,7 +789,11 @@ memory usage: 5.5 MB
     <span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;week_dt&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="n">wow_overview</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span><span class="s2">&quot;avg(nunique_loans_weekly_growth)&quot;</span><span class="p">,</span> <span class="s2">&quot;avg(total_amount_requested_weekly_growth)&quot;</span><span class="p">,</span> <span class="s2">&quot;avg(total_amount_spent_weekly_growth)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">vertical</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wow_overview</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;week_dt &lt; &#39;2022-10-31&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span>
+    <span class="s2">&quot;avg(nunique_loans_weekly_growth)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;avg(total_amount_requested_weekly_growth)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;avg(total_amount_spent_weekly_growth)&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">vertical</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">plot_data</span> <span class="o">=</span> <span class="n">wow_overview</span><span class="o">.</span><span class="n">toPandas</span><span class="p">()</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;week_dt&quot;</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
@@ -833,7 +822,7 @@ memory usage: 5.5 MB
     <span class="n">width</span><span class="o">=</span><span class="mi">5</span>
 <span class="p">)</span>
 
-<span class="n">ax1_2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Absolute Loss&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">)</span>
+<span class="n">ax1_2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Financial Loss Ground Truth&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Volume of Loans&quot;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">plot_data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">plot_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span> 
@@ -856,22 +845,48 @@ memory usage: 5.5 MB
 </div>
 </div>
 </details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:37 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:37 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
 </div>
-<p>In the plot above we see the evolution of amount growth for both <code class="docutils literal notranslate"><span class="pre">LOAN_AMOUNT</span></code> and <code class="docutils literal notranslate"><span class="pre">SPENT</span></code></p>
-<blockquote>
-<div><p>The large drop-off in the last week of October is explained by cut-off period finishing before the week end</p>
-</div></blockquote>
-<p>I split the result into 2 risk appetite tiers focused solely on user-base growth: <em>conservative</em> and <em>ambitious</em>.</p>
-<blockquote>
-<div><p>[WIP] Ideas, definitely no time to cover all – choose a couple:</p>
-<ul class="simple">
-<li><p>daily rate of exposure (need to define exposure precisely, maybe stddev above 30-day mean predicted volume)</p></li>
-<li><p>weekly rate of exposure vs. realized loss</p></li>
-<li><p>recommend daily interest rates based to cover previous week exposure (if time allows, account for seasonality)</p></li>
-<li><p>daily rate of stale capital: LOAN_AMOUNT vs. SPENT</p></li>
-<li><p>weekly projected growth vs. realized growth</p></li>
-</ul>
-</div></blockquote>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-RECORD 0-------------------------------------------------------
+ avg(nunique_loans_weekly_growth)          | 1.114742022449728  
+ avg(total_amount_requested_weekly_growth) | 1.1265760210218776 
+ avg(total_amount_spent_weekly_growth)     | 1.1250631960791917 
+
+23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:38 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:39 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:39 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:39 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:39 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:39 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:39 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:39 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:39 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<img alt="../_images/00348d2eb74f182f35a123d30beb3f9b343fcfafb13202a34d00ff26706cefa1.png" src="../_images/00348d2eb74f182f35a123d30beb3f9b343fcfafb13202a34d00ff26706cefa1.png" />
+</div>
+</div>
+<p>Now that we understand the Ground Truth (GT), I can benchmark my 2 <strong>Credit Rules</strong>: <em>conservative</em> and <em>ambitious</em>.</p>
 <section id="conservative">
 <h3><span class="section-number">11.5.1. </span>Conservative<a class="headerlink" href="#conservative" title="Permalink to this heading">#</a></h3>
 <p>Conservative means that we are willing to approve a loan if:</p>
@@ -889,6 +904,240 @@ AND \\
 <li><p>realized loses wow:</p></li>
 <li><p>opportunity gap wow:</p></li>
 </ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">wow_conservative</span><span class="p">:</span> <span class="n">DataFrame</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">loan_metadata</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+        <span class="s2">&quot;LOAN_ID&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;LOAN_AMOUNT&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;FIRST_TRIAL_BALANCE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;LOAN_ISSUANCE_DATE&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">decision_test_observations</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;LOAN_ID&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s2">&quot;week_dt&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;date_trunc(&#39;week&#39;, LOAN_ISSUANCE_DATE)&quot;</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="s2">&quot;week_dt&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;count(distinct LOAN_ID) as nunique_loans&quot;</span><span class="p">),</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;count(distinct LOAN_ID) filter (where CONSERVATIVE_DECISION = true) as nunique_loans_approved&quot;</span><span class="p">),</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;count(distinct LOAN_ID) filter (where CONSERVATIVE_DECISION = true and FIRST_TRIAL_BALANCE &lt; 0) as nunique_loans_approved_defaulted&quot;</span><span class="p">),</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;count(distinct LOAN_ID) filter (where FIRST_TRIAL_BALANCE &lt; 0) as nunique_loans_defaulted_gt&quot;</span><span class="p">),</span>
+        <span class="c1"># Volume</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;sum(LOAN_AMOUNT) as total_amount_requested&quot;</span><span class="p">),</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;sum(LOAN_AMOUNT) filter (where CONSERVATIVE_DECISION = true) as amount_approved&quot;</span><span class="p">),</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;sum(LOAN_AMOUNT) filter (where CONSERVATIVE_DECISION = true and FIRST_TRIAL_BALANCE &lt; 0) as amount_approved_defaulted&quot;</span><span class="p">),</span>
+        <span class="n">expr</span><span class="p">(</span><span class="s2">&quot;sum(LOAN_AMOUNT) filter (where FIRST_TRIAL_BALANCE &lt; 0) as total_amount_requested_defaulted_gt&quot;</span><span class="p">),</span>
+        <span class="c1"># expr(&quot;sum(SPENT) as total_amount_spent&quot;),</span>
+        <span class="c1"># expr(&quot;abs(sum(FIRST_TRIAL_BALANCE) filter (where FIRST_TRIAL_BALANCE &lt; 0)) as total_amount_loss&quot;),</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span>
+        <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nunique_loans_approved / (lag(nunique_loans_approved) over (order by week_dt asc))as nunique_loans_approved_weekly_growth&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nunique_loans_approved_defaulted / (lag(nunique_loans_approved_defaulted) over (order by week_dt asc))as nunique_loans_approved_defaulted_weekly_growth&quot;</span><span class="p">,</span>
+        <span class="c1"># &quot;total_amount_requested / (lag(total_amount_requested) over (order by week_dt asc)) as total_amount_requested_weekly_growth&quot;,</span>
+        <span class="c1"># &quot;total_amount_spent / (lag(total_amount_spent) over (order by week_dt asc)) as total_amount_spent_weekly_growth&quot;,</span>
+        <span class="c1"># &quot;total_amount_loss / (lag(total_amount_loss) over (order by week_dt asc)) as total_amount_loss_weekly_growth&quot;,</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">orderBy</span><span class="p">(</span><span class="s2">&quot;week_dt&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">wow_conservative</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;week_dt &lt; &#39;2022-10-31&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">selectExpr</span><span class="p">(</span>
+    <span class="s2">&quot;avg(nunique_loans_approved_weekly_growth)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;avg(nunique_loans_approved_defaulted_weekly_growth)&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">vertical</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">conservative_plot_data</span> <span class="o">=</span> <span class="n">wow_conservative</span><span class="o">.</span><span class="n">toPandas</span><span class="p">()</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;week_dt&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<span class="n">bar_width</span> <span class="o">=</span> <span class="mf">.4</span>
+<span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">conservative_plot_data</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">+</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;nunique_loans_defaulted_gt&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;nunique_loans_defaulted_gt&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;nunique_loans&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;steelblue&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;nunique_loans&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;nunique_loans_approved&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;limegreen&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;nunique_loans_approved&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;nunique_loans_approved_defaulted&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightcoral&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;nunique_loans_approved_defaulted&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Number of Loans&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">conservative_plot_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:,.0f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">+</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;nunique_loans_defaulted_gt&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;nunique_loans_defaulted_gt&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;nunique_loans_approved_defaulted&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightcoral&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;nunique_loans_approved_defaulted&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Ground Truth vs. Conservative (closer inspection)&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">conservative_plot_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+
+<span class="n">ax3</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">+</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;total_amount_requested_defaulted_gt&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;total_amount_requested_defaulted_gt&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;total_amount_requested&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;steelblue&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;total_amount_requested&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;amount_approved&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;limegreen&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;amount_approved&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;amount_approved_defaulted&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightcoral&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;amount_approved_defaulted&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Volume of Loans&quot;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">conservative_plot_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:,.0f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ax4</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">+</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;total_amount_requested_defaulted_gt&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;total_amount_requested_defaulted_gt&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="c1"># conservative_plot_data.index,</span>
+    <span class="n">x_values</span> <span class="o">-</span> <span class="n">bar_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">conservative_plot_data</span><span class="p">[</span><span class="s2">&quot;amount_approved_defaulted&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightcoral&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;amount_approved_defaulted&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span>
+<span class="p">)</span>
+
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Ground Truth vs. Conservative (closer inspection)&quot;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{:,.0f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">conservative_plot_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:40 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+-RECORD 0-----------------------------------------------------------------
+ avg(nunique_loans_approved_weekly_growth)           | 1.1074587260496336 
+ avg(nunique_loans_approved_defaulted_weekly_growth) | 1.0470072892397944 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:41 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:42 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+23/05/08 11:56:42 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+</pre></div>
+</div>
+<img alt="../_images/2922b0b3c29ef986adc1255af381e00d76a48d0d507b818e233c8f80ceff001f.png" src="../_images/2922b0b3c29ef986adc1255af381e00d76a48d0d507b818e233c8f80ceff001f.png" />
+</div>
+</div>
+<blockquote>
+<div><p>[WIP] Ideas, definitely no time to cover all – choose a couple:</p>
+<ul class="simple">
+<li><p>daily rate of exposure (need to define exposure precisely, maybe stddev above 30-day mean predicted volume)</p></li>
+<li><p>weekly rate of exposure vs. realized loss</p></li>
+<li><p>recommend daily interest rates based to cover previous week exposure (if time allows, account for seasonality)</p></li>
+<li><p>daily rate of stale capital: LOAN_AMOUNT vs. SPENT</p></li>
+<li><p>weekly projected growth vs. realized growth</p></li>
+</ul>
+</div></blockquote>
 </section>
 <section id="ambitious">
 <h3><span class="section-number">11.5.2. </span>Ambitious<a class="headerlink" href="#ambitious" title="Permalink to this heading">#</a></h3>
