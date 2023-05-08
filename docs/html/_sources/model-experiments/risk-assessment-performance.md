@@ -395,6 +395,8 @@ $$
  - opportunity gap wow: 
 
 ```{code-cell} ipython3
+:tags: [hide-input]
+
 import numpy as np
 
 wow_conservative: DataFrame = (
@@ -438,7 +440,7 @@ wow_conservative.where("week_dt < '2022-10-31'").selectExpr(
 ).show(1, vertical=True)
 
 conservative_plot_data = wow_conservative.toPandas().set_index("week_dt")
-fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(15, 15))
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(15, 12))
 bar_width = .4
 x_values = np.arange(len(conservative_plot_data.index))
 
@@ -498,10 +500,10 @@ ax2.bar(
     width=bar_width
 )
 
-ax2.set_title("Ground Truth vs. Conservative (closer inspection)")
+ax2.set_title("Requests closer inspection)")
 ax2.set_xticks(x_values)
 ax2.set_xticklabels(conservative_plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
-
+ax2.legend()
 
 ax3.bar(
     # conservative_plot_data.index,
@@ -559,11 +561,13 @@ ax4.bar(
     width=bar_width
 )
 
-ax4.set_title("Ground Truth vs. Conservative (closer inspection)")
+ax4.set_title("Volume closer inspection")
 ax4.set_xticks(x_values)
 ax4.yaxis.set_major_formatter(FuncFormatter(lambda x, _: '{:,.0f}'.format(x)))
 ax4.set_xticklabels(conservative_plot_data.index.map(lambda x: str(x).split(" ")[0]), rotation=45)
+ax4.legend()
 
+plt.tight_layout()
 plt.show()
 ```
 
