@@ -10,3 +10,4 @@ metastore_db/
 # temporary ignore
 credit-risk/discovery/data-profile-reports/ecommerce-profile-tsmode/
 credit-risk/discovery/data-profile-reports/fintech-profile-tsmode/
+.DS_Store
