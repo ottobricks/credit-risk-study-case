@@ -11,6 +11,6 @@ In order to conduct the case study, I was provided with 3 data sets:
 
 
 ## Document
-An web report is generated and available at:
+A web report is generated and available at:
 
 https://ottok92.github.io/credit-risk-study-case/html/intro.html
